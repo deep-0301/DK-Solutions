@@ -32,8 +32,8 @@
      A scripted demo that answers from a small knowledge base about Deep's services,
      the same way a client's assistant answers only from their own business info. */
   var KB = [
-    { k: ['hi', 'hello', 'hey', 'bonjour', 'salut'], a: 'Hi! I\'m Deep\'s AI assistant. Ask me what an AI website can do for your business, how long it takes, or how to get a free AI website check.' },
-    { k: ['services', 'service', 'offer', 'build', 'provide', 'sell'], a: 'Deep builds AI-powered websites for Canadian small businesses: an AI chat assistant trained on your business, automated booking and lead capture, AI search for your documents, AI-ready local SEO, and full redesigns. <a href="#services">See all services</a>.' },
+    { k: ['hi', 'hello', 'hey', 'bonjour', 'salut'], a: 'Hi! I\'m the DK Solutions AI assistant. Ask me what an AI website can do for your business, how long it takes, or how to get a free AI website check.' },
+    { k: ['services', 'service', 'offer', 'build', 'provide', 'sell'], a: 'DK Solutions builds AI-powered websites for Canadian small businesses: an AI chat assistant trained on your business, automated booking and lead capture, AI search for your documents, AI-ready local SEO, and full redesigns. <a href="#services">See all services</a>.' },
     { k: ['chatbot', 'assistant', 'bot', 'ai', 'chat', 'trained', 'train'], a: 'An assistant like me, trained only on your services, hours, prices and policies. It answers customers 24/7, books appointments and sends every lead to your inbox. If it doesn\'t know something, it hands the question to you instead of guessing.' },
     { k: ['price', 'cost', 'much', 'pricing', 'quote', 'budget', 'expensive', 'cheap', 'afford'], a: 'Every project gets its own fixed quote, free, before any work starts. Tell Deep a little about your business in the <a href="#contact">contact form</a> and you\'ll usually hear back within one business day.' },
     { k: ['long', 'time', 'timeline', 'weeks', 'fast', 'quick', 'when'], a: 'Most AI Starter sites go live in about 2 weeks, and AI Business sites in 3 to 4 weeks. Adding an assistant to an existing site can take just a few days.' },
@@ -42,7 +42,7 @@
     { k: ['privacy', 'data', 'safe', 'secure', 'pipeda', 'security'], a: 'Sites are set up with Canada\'s privacy law (PIPEDA) in mind: customers know they\'re talking to an AI, only needed details are collected, and conversations go to you, not into public AI training.' },
     { k: ['wrong', 'mistake', 'hallucinate', 'accurate', 'trust', 'reliable'], a: 'The assistant answers only from information you approve. You test it together with Deep before launch, and chats are reviewed afterwards so answers keep improving.' },
     { k: ['where', 'located', 'location', 'ottawa', 'canada', 'local', 'meet'], a: 'Deep is based in Ottawa, Ontario, and works with small businesses anywhere in Canada by phone and video. Happy to meet in person around Ottawa.' },
-    { k: ['who', 'deep', 'about', 'experience', 'background', 'qualified'], a: 'Deep Patel is an Ottawa developer with a Master of Engineering from Carleton University and a background in machine learning and full-stack web development. <a href="#about">More about Deep</a>.' },
+    { k: ['who', 'deep', 'dk', 'solutions', 'about', 'experience', 'background', 'qualified'], a: 'DK Solutions is run by Deep Patel, an Ottawa developer with a Master of Engineering from Carleton University and a background in machine learning and full-stack web development. <a href="#about">More about Deep</a>.' },
     { k: ['work', 'portfolio', 'examples', 'projects', 'past', 'example'], a: 'Recent work includes an AI rules assistant for ATU Local 279, an OCR timesheet app for Ottawa transit operators, and a website redesign for Safal Embedded Solution. <a href="#work">See the projects</a>.' },
     { k: ['contact', 'email', 'call', 'talk', 'reach', 'start', 'book', 'check', 'free'], a: 'The easiest way is the free AI website check: fill in the <a href="#contact">form</a> or email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>. Deep will reply within one business day.' }
   ];
@@ -94,7 +94,7 @@
 
     function openChat() {
       chat.hidden = false; fab.setAttribute('aria-expanded', 'true');
-      if (!started) { started = true; add('Hi! I\'m a live demo of the kind of AI assistant Deep builds for small businesses. Ask me anything about his services, or tap a question below.', 'bot'); }
+      if (!started) { started = true; add('Hi! I\'m a live demo of the kind of AI assistant DK Solutions builds for small businesses. Ask me anything about his services, or tap a question below.', 'bot'); }
       setTimeout(function () { input.focus(); }, 50);
     }
     function closeChat() { chat.hidden = true; fab.setAttribute('aria-expanded', 'false'); fab.focus(); }

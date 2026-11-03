@@ -1,8 +1,8 @@
-# Deep Patel Web
+# DK Solutions
 
-Portfolio and services site for Deep Patel, an Ottawa developer building AI-powered websites (AI chat assistants, booking and lead automation, AI search) for Canadian small businesses.
+Website for DK Solutions, Deep Patel's Ottawa studio building AI-powered websites (AI chat assistants, booking and lead automation, AI search) for Canadian small businesses.
 
-Live at **https://deep-0301.github.io/**
+Live at **https://deep-0301.github.io/DK-Solutions/**
 
 Plain HTML, CSS and JavaScript with no build step. GitHub Pages serves it straight from the `main` branch.
 
