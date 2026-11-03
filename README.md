@@ -8,7 +8,7 @@ Plain HTML, CSS and JavaScript with no build step. GitHub Pages serves it straig
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The whole one-page site: services, work, process, pricing, about, FAQ, contact |
+| `index.html` | The whole one-page site: services, work, process, packages, about, FAQ, contact |
 | `assets/css/style.css` | Styles. Colours are the variables at the top (light and dark). |
 | `assets/js/main.js` | Menu, theme toggle, scroll reveals, contact form |
 | `assets/img/` | Favicon, social preview image, project screenshots |
@@ -16,7 +16,7 @@ Plain HTML, CSS and JavaScript with no build step. GitHub Pages serves it straig
 
 ## Common edits
 
-- **Prices and packages:** the `#pricing` section in `index.html`.
+- **Packages:** the `#packages` section in `index.html`. No prices are shown on purpose; each package asks for a quote.
 - **Projects:** each project is an `<article class="work">` in `#work`. Screenshots are 960×600 WebP files in `assets/img/`.
 - **Contact form:** sends through EmailJS using the IDs at the top of `assets/js/main.js`. The template receives `user_name`, `user_email` and `message` (business, website, need and details combined). If sending fails, the visitor gets a mailto link instead.
 - **Custom domain:** add a `CNAME` file with the domain, then update the URLs in `index.html` (canonical, Open Graph, JSON-LD), `robots.txt` and `sitemap.xml`.
