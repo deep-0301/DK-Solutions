@@ -32,22 +32,23 @@
      A scripted demo that answers from a small knowledge base about Deep's services,
      the same way a client's assistant answers only from their own business info. */
   var KB = [
-    { k: ['hi', 'hello', 'hey', 'bonjour', 'salut'], a: 'Hi! I\'m the DK Solutions AI assistant. Ask me what an AI website can do for your business, how long it takes, or how to get a free AI website check.' },
-    { k: ['services', 'service', 'offer', 'build', 'provide', 'sell'], a: 'DK Solutions builds AI-powered websites for Canadian small businesses: an AI chat assistant trained on your business, automated booking and lead capture, AI search for your documents, AI-ready local SEO, and full redesigns. <a href="#services">See all services</a>.' },
-    { k: ['chatbot', 'assistant', 'bot', 'ai', 'chat', 'trained', 'train'], a: 'An assistant like me, trained only on your services, hours, prices and policies. It answers customers 24/7, books appointments and sends every lead to your inbox. If it doesn\'t know something, it hands the question to you instead of guessing.' },
-    { k: ['price', 'cost', 'much', 'pricing', 'quote', 'budget', 'expensive', 'cheap', 'afford'], a: 'Every project gets its own fixed quote, free, before any work starts. Tell Deep a little about your business in the <a href="#contact">contact form</a> and you\'ll usually hear back within one business day.' },
-    { k: ['long', 'time', 'timeline', 'weeks', 'fast', 'quick', 'when'], a: 'Most AI Starter sites go live in about 2 weeks, and AI Business sites in 3 to 4 weeks. Adding an assistant to an existing site can take just a few days.' },
-    { k: ['existing', 'already', 'wix', 'squarespace', 'wordpress', 'shopify', 'current', 'redesign', 'old'], a: 'Yes, an AI assistant can usually be added to the site you already have, including Wix, Squarespace, WordPress and Shopify. If the site is slow or outdated, Deep will tell you honestly whether a redesign makes more sense.' },
-    { k: ['french', 'francais', 'français', 'bilingual', 'language', 'quebec'], a: 'Oui! The assistant can reply in English or French, matching your customer\'s language, and the website itself can be fully bilingual.' },
-    { k: ['privacy', 'data', 'safe', 'secure', 'pipeda', 'security'], a: 'Sites are set up with Canada\'s privacy law (PIPEDA) in mind: customers know they\'re talking to an AI, only needed details are collected, and conversations go to you, not into public AI training.' },
-    { k: ['wrong', 'mistake', 'hallucinate', 'accurate', 'trust', 'reliable'], a: 'The assistant answers only from information you approve. You test it together with Deep before launch, and chats are reviewed afterwards so answers keep improving.' },
-    { k: ['where', 'located', 'location', 'ottawa', 'canada', 'local', 'meet'], a: 'Deep is based in Ottawa, Ontario, and works with small businesses anywhere in Canada by phone and video. Happy to meet in person around Ottawa.' },
-    { k: ['who', 'deep', 'dk', 'solutions', 'about', 'experience', 'background', 'qualified'], a: 'DK Solutions is run by Deep Patel, an Ottawa developer with a Master of Engineering from Carleton University and a background in machine learning and full-stack web development. <a href="#about">More about Deep</a>.' },
-    { k: ['work', 'portfolio', 'examples', 'projects', 'past', 'example'], a: 'Recent work includes an AI rules assistant for ATU Local 279, an OCR timesheet app for Ottawa transit operators, and a website redesign for Safal Embedded Solution. <a href="#work">See the projects</a>.' },
-    { k: ['contact', 'email', 'call', 'talk', 'reach', 'start', 'book', 'check', 'free'], a: 'The easiest way is the free AI website check: fill in the <a href="#contact">form</a> or email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>. Deep will reply within one business day.' }
+    { k: ['hi', 'hello', 'hey', 'bonjour', 'salut'], a: 'Hi! I\'m the DK Solutions assistant. Ask me about new websites, redesigns, timelines, or how to get a free website check.' },
+    { k: ['services', 'service', 'offer', 'build', 'provide', 'sell', 'make'], a: 'DK Solutions builds new websites and redesigns outdated ones for Canadian small businesses, plus local SEO, booking and quote forms, optional AI features and monthly care. <a href="#services">See all services</a>.' },
+    { k: ['new', 'online', 'start', 'launch'], a: 'A new website is designed around your business: mobile-first, fast, set up for Google, with a contact or booking form so visitors turn into customers. Most are live in 2 to 4 weeks.' },
+    { k: ['existing', 'already', 'wix', 'squarespace', 'wordpress', 'shopify', 'current', 'redesign', 'old', 'outdated', 'slow'], a: 'Yes, DK Solutions redesigns existing websites, including Wix, Squarespace and WordPress sites. You keep your address and Google rankings, and get a faster, modern site. The free website check tells you what to fix first.' },
+    { k: ['price', 'cost', 'much', 'pricing', 'quote', 'budget', 'expensive', 'cheap', 'afford'], a: 'Every project gets its own fixed quote, free, before any work starts. Tell Deep about your business in the <a href="#contact">contact form</a> and you\'ll usually hear back within one business day.' },
+    { k: ['long', 'time', 'timeline', 'weeks', 'fast', 'quick', 'when'], a: 'Most Starter websites go live in about 2 weeks and Business websites in 3 to 4 weeks. Redesigns depend on the size of your current site.' },
+    { k: ['seo', 'google', 'search', 'rank', 'found', 'maps'], a: 'Every site is built to be found: page titles, structured data, a sitemap, and a properly set up Google Business Profile so you show up on Google and Maps.' },
+    { k: ['chatbot', 'assistant', 'bot', 'ai', 'chat', 'automation'], a: 'AI features are optional extras. You\'re using one right now: an assistant that answers customer questions 24/7 from your own business info and passes anything else to you.' },
+    { k: ['french', 'francais', 'français', 'bilingual', 'language', 'quebec'], a: 'Oui! Websites can be built in English and French with a language switch.' },
+    { k: ['update', 'edit', 'change', 'maintain', 'care', 'maintenance', 'hosting'], a: 'You can make simple edits yourself and Deep will show you how. Or the optional care plan covers backups, updates and small changes every month.' },
+    { k: ['where', 'located', 'location', 'ottawa', 'canada', 'local', 'meet'], a: 'DK Solutions is based in Ottawa, Ontario, and works with small businesses anywhere in Canada by phone and video. Happy to meet in person around Ottawa.' },
+    { k: ['who', 'deep', 'dk', 'solutions', 'about', 'experience', 'background', 'qualified'], a: 'DK Solutions is run by Deep Patel, an Ottawa web developer with a Master of Engineering from Carleton University. <a href="#about">More about Deep</a>.' },
+    { k: ['work', 'portfolio', 'examples', 'projects', 'past', 'example'], a: 'Recent work includes a website redesign for Safal Embedded Solution, a rules assistant website for ATU Local 279, a timesheet web app for Ottawa transit operators, and event RSVP sites. <a href="#work">See the projects</a>.' },
+    { k: ['contact', 'email', 'call', 'talk', 'reach', 'book', 'check', 'free'], a: 'The easiest way is the free website check: fill in the <a href="#contact">form</a> or email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>. Deep replies within one business day.' }
   ];
-  var FALLBACK = 'Good question. I\'m a demo, so I only know about Deep\'s services. For anything else, send it through the <a href="#contact">contact form</a> and Deep will answer personally. That\'s exactly how a client\'s assistant hands off to them, too.';
-  var CHIPS = ['What can an AI assistant do?', 'How long does it take?', 'Can you add AI to my Wix site?', 'Does it speak French?', 'How do I get a quote?'];
+  var FALLBACK = 'Good question. I\'m a demo, so I only know about DK Solutions\' services. Send it through the <a href="#contact">contact form</a> and Deep will answer personally.';
+  var CHIPS = ['Can you redesign my website?', 'How long does a website take?', 'How do I get a quote?', 'Will I show up on Google?', 'Can it be in French?'];
 
   function answer(q) {
     var words = q.toLowerCase().replace(/[^a-zàâçéèêëîïôûùüÿñæœ0-9\s]/gi, ' ').split(/\s+/).filter(Boolean);
@@ -94,7 +95,7 @@
 
     function openChat() {
       chat.hidden = false; fab.setAttribute('aria-expanded', 'true');
-      if (!started) { started = true; add('Hi! I\'m a live demo of the kind of AI assistant DK Solutions builds for small businesses. Ask me anything about his services, or tap a question below.', 'bot'); }
+      if (!started) { started = true; add('Hi! I\'m a demo of an AI feature DK Solutions can add to your website. Ask me about websites, redesigns or quotes, or tap a question below.', 'bot'); }
       setTimeout(function () { input.focus(); }, 50);
     }
     function closeChat() { chat.hidden = true; fab.setAttribute('aria-expanded', 'false'); fab.focus(); }
@@ -115,7 +116,7 @@
     a.addEventListener('click', function () {
       if (!form) return;
       var plan = a.getAttribute('data-plan');
-      var map = { 'AI Starter': 'A new website with AI', 'AI Business': 'A new website with AI', 'AI Upgrade': 'Adding an AI assistant to my current site', 'AI care plan': 'Not sure yet' };
+      var map = { 'Starter website': 'A new website', 'Business website': 'A new website', 'Website redesign': 'A redesign of my current website', 'Care plan': 'Not sure yet' };
       form.need.value = map[plan] || form.need.value;
       if (!form.details.value) form.details.value = 'I\'m interested in the ' + plan + ' package. ';
     });
@@ -135,7 +136,7 @@
     });
   }
   function compose() {
-    return ['Business: ' + (form.business.value || '-'), 'Website: ' + (form.website.value || '-'), 'Interested in: ' + form.need.value, '', form.details.value || '(no message)'].join('\n');
+    return ['Business: ' + (form.business.value || '-'), 'Website: ' + (form.website.value || '-'), 'Needs: ' + form.need.value, '', form.details.value || '(no message)'].join('\n');
   }
   function setStatus(text, cls) { status.textContent = text; status.className = 'form-status ' + (cls || ''); }
 
@@ -158,7 +159,7 @@
       .then(function () { form.reset(); setStatus('Thanks! I\'ll get back to you within one business day.', 'ok'); })
       .catch(function () {
         var body = encodeURIComponent('Name: ' + form.user_name.value + '\nEmail: ' + form.user_email.value + '\n' + compose());
-        var link = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('AI website enquiry') + '&body=' + body;
+        var link = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Website enquiry') + '&body=' + body;
         status.className = 'form-status err';
         status.innerHTML = 'Sorry, that didn\'t send. <a href="' + link + '">Email me directly instead</a>.';
       })
