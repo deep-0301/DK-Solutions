@@ -291,3 +291,9 @@ p { margin: 0 0 1em; }
 .mock-chat p { margin: 0; font-size: .82rem; line-height: 1.35; }
 .js .mock-chat { opacity: 0; transform: translateY(10px); animation: msgin .5s ease 1s forwards; }
 .metric strong { font-size: 1rem; font-family: var(--mono); margin-bottom: 16px; }
+@media (min-width: 860px) {
+  .work.wide { grid-column: 1 / -1; display: grid; grid-template-columns: 1.15fr 1fr; }
+  .work.wide .work-img { border-bottom: 0; border-right: 1px solid var(--line); aspect-ratio: auto; min-height: 100%; }
+  .work.wide .work-body { padding: 34px; justify-content: center; }
+}
+.work.wide .work-img img { object-position: left top; }
