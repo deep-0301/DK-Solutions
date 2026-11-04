@@ -2,7 +2,7 @@
 
 Website for DK Solutions, Deep Patel's Ottawa studio that builds new websites and redesigns for Canadian small businesses, with optional AI features.
 
-Live at **https://dksolutions.ca/**
+Live at **https://dksolutions.dev/**
 
 Plain HTML, CSS and JavaScript with no build step. GitHub Pages serves it straight from the `main` branch.
 
