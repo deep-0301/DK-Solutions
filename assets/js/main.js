@@ -33,22 +33,22 @@
      the same way a client's assistant answers only from their own business info. */
   var KB = [
     { k: ['hi', 'hello', 'hey', 'bonjour', 'salut'], a: 'Hi! I\'m the DK Solutions assistant. Ask me about new websites, redesigns, timelines, or how to get a free website check.' },
-    { k: ['services', 'service', 'offer', 'build', 'provide', 'sell', 'make'], a: 'DK Solutions builds new websites and redesigns outdated ones for Canadian small businesses, plus local SEO, booking and quote forms, optional AI features and monthly care. <a href="#services">See all services</a>.' },
+    { k: ['services', 'service', 'offer', 'build', 'provide', 'sell', 'make'], a: 'DK Solutions builds new websites and redesigns outdated ones for small businesses anywhere in the world, plus local SEO, booking and quote forms, optional AI features and monthly care. <a href="#services">See all services</a>.' },
     { k: ['new', 'online', 'start', 'launch'], a: 'A new website is designed around your business: mobile-first, fast, set up for Google, with a contact or booking form so visitors turn into customers. Most are live in 2 to 4 weeks.' },
     { k: ['existing', 'already', 'wix', 'squarespace', 'wordpress', 'shopify', 'current', 'redesign', 'old', 'outdated', 'slow'], a: 'Yes, DK Solutions redesigns existing websites, including Wix, Squarespace and WordPress sites. You keep your address and Google rankings, and get a faster, modern site. The free website check tells you what to fix first.' },
     { k: ['price', 'cost', 'much', 'pricing', 'quote', 'budget', 'expensive', 'cheap', 'afford'], a: 'Every project gets its own fixed quote, free, before any work starts. Tell Deep about your business in the <a href="#contact">contact form</a> and you\'ll usually hear back within one business day.' },
     { k: ['long', 'time', 'timeline', 'weeks', 'fast', 'quick', 'when'], a: 'Most Starter websites go live in about 2 weeks and Business websites in 3 to 4 weeks. Redesigns depend on the size of your current site.' },
     { k: ['seo', 'google', 'search', 'rank', 'found', 'maps'], a: 'Every site is built to be found: page titles, structured data, a sitemap, and a properly set up Google Business Profile so you show up on Google and Maps.' },
     { k: ['chatbot', 'assistant', 'bot', 'ai', 'chat', 'automation'], a: 'AI features are optional extras. You\'re using one right now: an assistant that answers customer questions 24/7 from your own business info and passes anything else to you.' },
-    { k: ['french', 'francais', 'français', 'bilingual', 'language', 'quebec'], a: 'Oui! Websites can be built in English and French with a language switch.' },
+    { k: ['french', 'francais', 'français', 'bilingual', 'language', 'quebec'], a: 'Yes. Websites can be built in English plus another language, such as French or Spanish, with a language switch.' },
     { k: ['update', 'edit', 'change', 'maintain', 'care', 'maintenance', 'hosting'], a: 'You can make simple edits yourself and Deep will show you how. Or the optional care plan covers backups, updates and small changes every month.' },
-    { k: ['where', 'located', 'location', 'ottawa', 'canada', 'local', 'meet'], a: 'DK Solutions is based in Ottawa, Ontario, and works with small businesses anywhere in Canada by phone and video. Happy to meet in person around Ottawa.' },
+    { k: ['where', 'located', 'location', 'ottawa', 'canada', 'local', 'meet', 'country', 'usa', 'uk', 'outside', 'abroad', 'international', 'worldwide', 'remote'], a: 'DK Solutions is based in Ottawa, Canada, and works with small businesses anywhere in the world by email, phone and video. Happy to meet in person around Ottawa.' },
     { k: ['who', 'deep', 'dk', 'solutions', 'about', 'experience', 'background', 'qualified'], a: 'DK Solutions is run by Deep Patel, an Ottawa web developer with a Master of Engineering from Carleton University. <a href="#about">More about Deep</a>.' },
     { k: ['work', 'portfolio', 'examples', 'projects', 'past', 'example'], a: 'Recent work includes Listaro, a subscription web platform for Marketplace sellers (listaro.dev), a website redesign for Safal Embedded Solution, and a timesheet web app for Ottawa transit operators. <a href="#work">See the projects</a>.' },
     { k: ['contact', 'email', 'call', 'talk', 'reach', 'book', 'check', 'free'], a: 'The easiest way is the free website check: fill in the <a href="#contact">form</a> or email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>. Deep replies within one business day.' }
   ];
   var FALLBACK = 'Good question. I\'m a demo, so I only know about DK Solutions\' services. Send it through the <a href="#contact">contact form</a> and Deep will answer personally.';
-  var CHIPS = ['Can you redesign my website?', 'How long does a website take?', 'How do I get a quote?', 'Will I show up on Google?', 'Can it be in French?'];
+  var CHIPS = ['Can you redesign my website?', 'How long does a website take?', 'How do I get a quote?', 'Will I show up on Google?', 'Do you work outside Canada?'];
 
   function answer(q) {
     var words = q.toLowerCase().replace(/[^a-zàâçéèêëîïôûùüÿñæœ0-9\s]/gi, ' ').split(/\s+/).filter(Boolean);
