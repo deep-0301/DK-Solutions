@@ -1,6 +1,6 @@
 (function () {
-  // EmailJS settings (from the previous portfolio). The public key is meant to be visible in the browser.
-  var EMAILJS = { service: 'service_k88olpk', template: 'template_pp0l5z9', publicKey: 'QBmQSD4Bh7R2WzUED' };
+  // EmailJS settings (DK Solutions account; template sends to contact@dksolutions.dev). The public key is meant to be visible in the browser.
+  var EMAILJS = { service: 'service_dspk1yn', template: 'template_mdna45f', publicKey: 'fIxpV5-VgHExTa4hp' };
   var EMAIL = 'contact@dksolutions.dev';
 
   // Mobile menu
