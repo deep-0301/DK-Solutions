@@ -182,17 +182,6 @@ p { margin: 0 0 1em; }
 .care p { margin: 0; color: var(--muted); }
 
 /* About */
-.about-grid { display: grid; gap: 44px; align-items: center; }
-@media (min-width: 920px) { .about-grid { grid-template-columns: 1.2fr .8fr; } }
-.about-copy p { color: var(--muted); }
-.creds { list-style: none; padding: 0; margin: 26px 0 0; display: flex; flex-wrap: wrap; gap: 10px; }
-.creds li { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; padding: 10px 14px; font-size: .86rem; color: var(--muted); }
-.creds strong { display: block; color: var(--ink); }
-.quote { margin: 0; padding: 34px; position: relative; background: linear-gradient(160deg, rgba(139, 92, 246, .16), rgba(34, 211, 238, .06)); border-color: rgba(139, 92, 246, .35); }
-.quote::before { content: "\201C"; position: absolute; top: -6px; left: 24px; font-family: "Space Grotesk", sans-serif; font-size: 6rem; line-height: 1; color: var(--violet); }
-.quote blockquote { margin: 22px 0 18px; font-size: 1.1rem; }
-.quote figcaption { font-size: .9rem; color: var(--muted); }
-.quote figcaption strong { display: block; color: var(--ink); }
 
 /* FAQ */
 .faq { display: grid; gap: 10px; }
