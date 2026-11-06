@@ -2,11 +2,42 @@
   "id": "11-website-trends-2026",
   "topic": "Trends 2026",
   "scenes": [
-    { "type": "title", "emoji": "📈", "kicker": "Small business owners", "title": "3 website trends you *can't ignore* in 2026", "say": "Three website trends every small business should know about in 2026.", "cap": "3 website trends you *can't ignore* in 2026" },
-    { "type": "point", "n": "1", "title": "AI answers *before* people click", "body": "Google's AI Overviews and ChatGPT now answer questions directly, and they pull from websites.", "emoji": "🤖", "say": "One. AI answers come first. Google's AI Overviews and ChatGPT answer questions directly, and they pull that info from websites.", "cap": "*AI answers come first.* And they pull from websites." },
-    { "type": "point", "n": "1", "title": "So what do you do?", "body": "Clear service pages, a real FAQ, and hours that are *always correct.*", "emoji": "🤖", "say": "So give them something to read. Clear service pages, a real FAQ, and hours that are always correct.", "cap": "Clear services, a real *FAQ*, correct *hours.*" },
-    { "type": "point", "n": "2", "title": "Phone-first, *not* phone-friendly", "body": "Most local searches happen on a phone. One-tap call, big buttons, loads in seconds.", "emoji": "📱", "say": "Two. Phone first, not just phone friendly. Most local searches happen on a phone, so the call button and booking need to be one tap away.", "cap": "Most local searches happen *on a phone.*" },
-    { "type": "point", "n": "3", "title": "People expect *instant* answers", "body": "Online booking and chatbots answer at 11pm, when you're closed.", "emoji": "⚡", "say": "Three. People expect instant answers. Online booking and chatbots reply at eleven at night, when you're closed.", "cap": "Booking and chatbots reply *at 11pm.*" },
-    { "type": "end", "title": "Which one is your site *missing?*", "body": "Follow for a new trend every week.", "say": "Which one is your website missing? Follow for more.", "min": 2.4 }
+    {
+      "type": "visual",
+      "v": "chart",
+      "say": "Three website trends every small business should know about in 2026.",
+      "cap": "3 website trends you *can't ignore* in 2026"
+    },
+    {
+      "type": "visual",
+      "v": "search",
+      "say": "One. AI answers come first. Google's AI Overviews and ChatGPT answer questions directly, and they pull that info from websites.",
+      "cap": "*AI answers come first.* And they pull from websites."
+    },
+    {
+      "type": "visual",
+      "v": "checks",
+      "say": "So give them something to read. Clear service pages, a real FAQ, and hours that are always correct.",
+      "cap": "Clear services, a real *FAQ*, correct *hours.*"
+    },
+    {
+      "type": "visual",
+      "v": "phoneCall",
+      "say": "Two. Phone first, not just phone friendly. Most local searches happen on a phone, so the call button and booking need to be one tap away.",
+      "cap": "Most local searches happen *on a phone.*"
+    },
+    {
+      "type": "visual",
+      "v": "night",
+      "say": "Three. People expect instant answers. Online booking and chatbots reply at eleven at night, when you're closed.",
+      "cap": "Booking and chatbots reply *at 11pm.*"
+    },
+    {
+      "type": "end",
+      "title": "Which one is your site *missing?*",
+      "body": "Follow for a new trend every week.",
+      "say": "Which one is your website missing? Follow for more.",
+      "min": 2.4
+    }
   ]
 }

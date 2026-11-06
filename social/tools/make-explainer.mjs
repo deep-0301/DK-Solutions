@@ -16,6 +16,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import os from 'node:os';
 const { chromium } = createRequire(import.meta.url)('playwright');
+import { VIS_CSS, visuals } from './visuals.mjs';
 
 const W = 1080, H = 1920, FPS = 30, OUT = 0.32; // OUT = exit animation length (s)
 const here = path.dirname(new URL(import.meta.url).pathname);
@@ -119,7 +120,7 @@ h2{font-size:88px;line-height:1.06;letter-spacing:-.03em;font-weight:800}
 `;
 
 function frame(spec, st, from, to) {
-  return `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style></head>
+  return `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}${VIS_CSS}</style></head>
   <body style="--dur:${st.dur}s;--outAt:${(st.dur - OUT).toFixed(3)}s;--from:${(from * 100).toFixed(2)}%;--to:${(to * 100).toFixed(2)}%">
   <div class="bgl"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div><div class="grid"></div></div>
   <div class="top"><div class="chip">${esc(spec.topic || 'Website tips')}</div><div class="brand">${LOGO}<span>DK Solutions</span></div></div>
@@ -175,6 +176,9 @@ function steps(s) {
           say: s.messages[k].say, cap: s.messages[k].cap ?? s.messages[k].say, min: s.messages[k].min ?? 1.8, keep: k > 0,
         };
       });
+    case 'visual':
+      if (!visuals[s.v]) throw new Error('Unknown visual ' + s.v);
+      return [{ html: visuals[s.v]({ ...s, labelHtml: words(s.label) }), say: s.say, cap: s.cap ?? s.say, min: s.min, keep: s.keep }];
     case 'end':
       return one(`<div class="pop">${LOGO}</div><h2 style="--d:.25s">${words(s.title || 'Follow for more *website tips*')}</h2><div class="handle pop" ${d(0.9)}>@dksolutions.dev</div>${s.body ? `<div class="body in" ${d(1.2)}>${rich(s.body)}</div>` : ''}`, 'end');
     default:
@@ -191,6 +195,7 @@ async function main() {
   const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'explainer-'));
   const all = spec.scenes.flatMap(steps);
 
+  if (process.env.PREVIEW) return preview(spec, all, tmp);
   // 1. Voiceover per step.
   fs.writeFileSync(path.join(tmp, 'lines.json'), JSON.stringify(all.map((s) => plain(s.say || ''))));
   const durs = JSON.parse(execFileSync(process.env.PYTHON || 'python3',
@@ -243,6 +248,23 @@ async function main() {
   fs.copyFileSync(path.join(fdir, `${String(Math.min(48, n - 1)).padStart(5, '0')}.jpg`), path.join(root, 'reels', `${spec.id}.jpg`));
   fs.rmSync(tmp, { recursive: true, force: true });
   console.log(`built ${path.relative(process.cwd(), mp4)} (${t0.toFixed(1)}s, ${all.length} steps, ${n} frames)`);
+}
+
+// PREVIEW=1: one still per step at 2.6s, saved as a contact sheet (no voice, fast).
+async function preview(spec, all, tmp) {
+  const browser = await chromium.launch();
+  const page = await (await browser.newContext({ viewport: { width: W, height: H } })).newPage();
+  const files = [];
+  for (const [i, s] of all.entries()) {
+    s.dur = 4; s.voice = 3;
+    await page.setContent(frame(spec, s, i / all.length, (i + 1) / all.length), { waitUntil: 'load' });
+    await page.evaluate(() => { for (const a of document.getAnimations()) { a.pause(); a.currentTime = 2600; } });
+    const f = path.join(tmp, `p${i}.png`); await page.screenshot({ path: f }); files.push(f);
+  }
+  await browser.close();
+  const out = process.env.PREVIEW;
+  execFileSync('convert', [...files, '-resize', '300x', '+append', out]);
+  console.log('preview', out);
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });
