@@ -8,6 +8,7 @@ Reels that bring in small-business clients, posted automatically.
 - `tools/make-reel.mjs` builds a reel from a spec. `tools/post_reel.py` posts the next approved reel.
 - `.github/workflows/instagram.yml` runs the poster Tue, Thu and Sat at 15:30 UTC, and renews the token every Monday.
 - `profile/profile-photo.png` the profile picture (the DK logo).
+- Facebook Page + YouTube Shorts: the same approved reels are cross-posted. Setup in [CROSSPOST.md](CROSSPOST.md).
 
 All businesses in the reels are made up ("concept example" is in each caption). Don't put a real business, or a lead's mockup, in a public reel without the owner's written OK.
 
