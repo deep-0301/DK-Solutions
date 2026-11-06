@@ -1,0 +1,17 @@
+{
+  "id": "12-chatbot-explained",
+  "topic": "Chatbots explained",
+  "scenes": [
+    { "type": "title", "emoji": "💬", "kicker": "Explained in 30 seconds", "title": "What a website chatbot *actually* does", "say": "What does a website chatbot actually do for a small business? Watch.", "cap": "What a website chatbot *actually* does" },
+    { "type": "chat", "botName": "Fade District assistant", "messages": [
+      { "from": "user", "text": "Are you open Sunday?", "say": "It's 11pm. A customer asks: are you open Sunday?", "cap": "11pm. A customer asks: *are you open Sunday?*" },
+      { "from": "bot", "text": "Yes! Sunday 10am–4pm. Want me to book you in?", "say": "The chatbot answers in two seconds, and offers to book.", "cap": "Answered in *2 seconds.*" },
+      { "from": "user", "text": "Yes, 2pm for a skin fade", "say": "They pick a time.", "min": 1.6 },
+      { "from": "bot", "text": "Booked ✅ Sunday 2pm. See you then!", "say": "Booked. While the owner was asleep.", "cap": "Booked. *While the owner was asleep.*" }
+    ] },
+    { "type": "point", "n": "1", "title": "It learns *your* business", "body": "Your hours, services, location and FAQs. Not random internet answers.", "say": "How it works. One: it's trained on your own info. Your hours, services and FAQs.", "cap": "Trained on *your* hours, services and FAQs." },
+    { "type": "point", "n": "2", "title": "It answers *24/7*", "body": "The same questions you get every day, answered in seconds.", "say": "Two: it answers the questions you get every single day, around the clock.", "cap": "Answers the *same questions* you get daily. 24/7." },
+    { "type": "point", "n": "3", "title": "It hands off to *you*", "body": "If it doesn't know, it takes their details and sends them to you.", "say": "Three: when it doesn't know, it takes their details and sends them straight to you.", "cap": "Doesn't know? It *passes the customer to you.*" },
+    { "type": "end", "title": "Would you add one to *your* site?", "body": "Follow for more AI tips for small business.", "say": "Would you add one to your website? Follow for more.", "min": 2.4 }
+  ]
+}

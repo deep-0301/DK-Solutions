@@ -1,0 +1,18 @@
+{
+  "id": "10-how-fast-website-2026",
+  "topic": "Websites in 2026",
+  "scenes": [
+    { "type": "title", "emoji": "⏱️", "kicker": "Real question", "title": "How fast can a website be built *in 2026?*", "say": "How fast can a small business website actually be built in 2026?", "cap": "How fast can a website be built *in 2026?*" },
+    { "type": "compare", "title": "Then vs now", "left": { "h": "A few years ago", "v": "2–3 months", "items": ["Coded from scratch", "Weeks of back and forth", "Slow on phones"] }, "right": { "h": "Today", "v": "~1 week", "items": ["Modern tools + AI drafts", "Mobile-first by default", "Fast and Google-ready"] }, "say": "It used to take two or three months. Today, a simple five page site can go live in about a week.", "cap": "It used to take *months.* Now a simple site takes *about a week.*" },
+    { "type": "timeline", "title": "Here's a real 7-day plan", "items": [
+      { "d": "Day 1", "t": "Call, goals, *pick the pages*", "say": "Day one: a short call. What do customers need to find? That decides the pages." },
+      { "d": "Day 2", "t": "Homepage *design*", "say": "Day two: the homepage design, built for phones first." },
+      { "d": "Day 3–4", "t": "Build every page", "say": "Days three and four: every page gets built. AI helps with first drafts, a human checks everything.", "cap": "AI helps with first drafts. *A human checks everything.*" },
+      { "d": "Day 5", "t": "Booking, forms, *chatbot*", "say": "Day five: booking, contact forms, and an optional chatbot." },
+      { "d": "Day 6", "t": "Speed + *Google setup*", "say": "Day six: speed tests, and connecting it to Google so people can find you." },
+      { "d": "Day 7", "t": "*Launch* 🚀", "say": "Day seven: launch." }
+    ] },
+    { "type": "point", "n": "!", "title": "What slows it down?", "body": "Waiting on *photos, text and logins.* Have them ready and a week is realistic.", "say": "The biggest delay? Waiting on photos, text and logins. Have those ready and a week is realistic.", "cap": "Biggest delay: waiting on *photos, text and logins.*" },
+    { "type": "end", "title": "Follow for more *website tips*", "body": "New explainer every week.", "say": "Follow for more tips like this.", "min": 2.2 }
+  ]
+}

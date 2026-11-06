@@ -48,6 +48,15 @@ Repo **Settings → Secrets and variables → Actions → New repository secret*
 - **Actions → Post Instagram reel → Run workflow** with *Dry run* ticked. It shows what would post.
 - Tell Claude which reels are OK (or set `"approved": true` in `schedule.json`). The workflow posts the next approved one on the next Tue/Thu/Sat.
 
+## Explainer reels (voiceover + captions)
+The current schedule uses narrated explainers (`specs/10-13`), built with `tools/make-explainer.mjs`. The voice is Kokoro TTS (open source, github.com/thewh1teagle/kokoro-onnx).
+```bash
+pip install kokoro-onnx soundfile
+# download kokoro-v1.0.int8.onnx (save as kokoro.onnx) and voices-v1.0.bin from the kokoro-onnx "model-files-v1.0" release into one folder
+KOKORO_DIR=/path/to/that/folder node social/tools/make-explainer.mjs social/specs/12-chatbot-explained.json
+```
+Scene types: `title`, `point` (n, title, body), `stat` (value, label), `compare` (left/right: h, v, items), `timeline` (items: d, t, say), `chat` (messages: from user/bot, text, say), `end`. Every scene or item has `say` (spoken) and optional `cap` (on-screen caption, `*word*` highlights yellow).
+
 ## Making more reels
 ```bash
 node social/tools/make-reel.mjs social/specs/07-my-new-reel.json   # needs Node, Playwright, ffmpeg

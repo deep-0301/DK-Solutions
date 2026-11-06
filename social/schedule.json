@@ -2,175 +2,91 @@
   "_readme": "Reels the GitHub Action posts. It only posts entries with approved: true once post_after has passed, one per run (Tue/Thu/Sat). Set approved to true after Deep has watched the reel and OK'd the caption.",
   "posts": [
     {
-      "id": "01-bakery-before-after",
-      "video": "social/reels/01-bakery-before-after.mp4",
+      "id": "10-how-fast-website-2026",
+      "video": "social/reels/10-how-fast-website-2026.mp4",
       "post_after": "2026-11-10T15:00:00Z",
       "approved": false,
-      "caption": "This bakery's old website made people call to order a cake. Most people won't call. 📞❌\n\nThe new version puts the order button first, shows real reviews, and works properly on a phone.\n\n(Concept example. Your business could be next.)\n\nWant a free quote for your website? Link in bio or email contact@dksolutions.dev",
+      "caption": "How fast can a small business website be built in 2026? ⏱️\n\nA few years ago: 2 to 3 months. Today a simple 5-page site can go live in about a week. Here's what each day looks like, and the one thing that slows it down most (waiting on photos, text and logins).\n\nSave this for when you plan yours. Follow for more website explainers.",
       "hashtags": [
-        "#bakery",
-        "#bakerylife",
+        "#webdevelopment",
+        "#websitedesign",
         "#smallbusiness",
         "#webdesign",
-        "#websitedesign",
-        "#smallbusinessowner",
-        "#websiteredesign",
-        "#localbusiness",
-        "#webdesigner",
-        "#shopsmall"
+        "#smallbusinesstips",
+        "#websitetips",
+        "#ai",
+        "#chatbot",
+        "#entrepreneur",
+        "#tech2026"
       ]
     },
     {
-      "id": "04-tip-losing-customers",
-      "video": "social/reels/04-tip-losing-customers.mp4",
+      "id": "11-website-trends-2026",
+      "video": "social/reels/11-website-trends-2026.mp4",
       "post_after": "2026-11-12T15:00:00Z",
       "approved": false,
-      "caption": "3 quick checks for your website. Be honest 👀\n\n1. Can someone find your phone number in 3 seconds?\n2. Does it look good on a phone?\n3. Is the year in the footer from this decade?\n\nIf any answer is no, you're probably losing customers you never hear about.\n\nSave this and check your site tonight. Free quote: link in bio.",
+      "caption": "3 website trends every small business should know in 2026 📈\n\n1. AI answers come first. Google's AI Overviews and ChatGPT pull from websites, so clear services, FAQs and correct hours matter.\n2. Phone-first, not just phone-friendly.\n3. People expect instant answers, even at 11pm.\n\nWhich one is your site missing? Follow for a new trend every week.",
       "hashtags": [
-        "#marketingtips",
-        "#businesstips",
+        "#digitaltrends",
+        "#aisearch",
         "#smallbusiness",
         "#webdesign",
-        "#websitedesign",
-        "#smallbusinessowner",
-        "#websiteredesign",
-        "#localbusiness",
-        "#webdesigner",
-        "#shopsmall"
+        "#smallbusinesstips",
+        "#websitetips",
+        "#ai",
+        "#chatbot",
+        "#entrepreneur",
+        "#tech2026"
       ]
     },
     {
-      "id": "02-auto-before-after",
-      "video": "social/reels/02-auto-before-after.mp4",
+      "id": "12-chatbot-explained",
+      "video": "social/reels/12-chatbot-explained.mp4",
       "post_after": "2026-11-14T15:00:00Z",
       "approved": false,
-      "caption": "Great mechanics often have the worst websites. 🔧\n\nOld site: hidden phone number, placeholder text, no booking.\nNew site: book in 2 taps, call button always on screen, services and reviews at a glance.\n\n(Concept example.)\n\nRun a shop? Get a free website quote. Link in bio.",
+      "caption": "What does a website chatbot actually do? 💬 Explained in 30 seconds.\n\nIt learns your hours, services and FAQs, answers the same questions you get every day (24/7), and passes customers to you when it doesn't know.\n\nWould you add one to your website? Tell us in the comments.",
       "hashtags": [
-        "#autorepair",
-        "#mechanic",
+        "#aichatbot",
+        "#aiforbusiness",
         "#smallbusiness",
         "#webdesign",
-        "#websitedesign",
-        "#smallbusinessowner",
-        "#websiteredesign",
-        "#localbusiness",
-        "#webdesigner",
-        "#shopsmall"
+        "#smallbusinesstips",
+        "#websitetips",
+        "#ai",
+        "#chatbot",
+        "#entrepreneur",
+        "#tech2026"
       ]
     },
     {
-      "id": "05-tip-five-second-test",
-      "video": "social/reels/05-tip-five-second-test.mp4",
+      "id": "13-chatbot-vs-contact-form",
+      "video": "social/reels/13-chatbot-vs-contact-form.mp4",
       "post_after": "2026-11-17T15:00:00Z",
       "approved": false,
-      "caption": "Try the 5-second test on your homepage ⏱️\n\nShow it to a friend for 5 seconds, then ask: what do we do, where are we, and how do you book or buy?\n\nIf they can't answer all three, your first screen needs work. That's where every redesign we do starts.\n\nFree quote: link in bio.",
+      "caption": "Contact form vs chatbot 🥊\n\nA form makes people wait for a reply. A chatbot answers in seconds and can book on the spot.\n\nShould you delete your form? No. Keep both: the form for detailed requests, the chatbot for quick questions.\n\nFollow for more AI tips for small business.",
       "hashtags": [
-        "#businesstips",
-        "#ux",
+        "#aichatbot",
+        "#customerservice",
         "#smallbusiness",
         "#webdesign",
-        "#websitedesign",
-        "#smallbusinessowner",
-        "#websiteredesign",
-        "#localbusiness",
-        "#webdesigner",
-        "#shopsmall"
-      ]
-    },
-    {
-      "id": "03-barber-before-after",
-      "video": "social/reels/03-barber-before-after.mp4",
-      "post_after": "2026-11-19T15:00:00Z",
-      "approved": false,
-      "caption": "Barbers: your website should be booking chairs while you cut. 💈\n\nOld: \"call for appointments\", no hours, no photos.\nNew: 24/7 online booking, hours up top, 5-star reviews front and centre.\n\n(Concept example.)\n\nFree quote for barbers and salons. Link in bio.",
-      "hashtags": [
-        "#barbershop",
-        "#barberlife",
-        "#smallbusiness",
-        "#webdesign",
-        "#websitedesign",
-        "#smallbusinessowner",
-        "#websiteredesign",
-        "#localbusiness",
-        "#webdesigner",
-        "#shopsmall"
-      ]
-    },
-    {
-      "id": "06-tip-no-website",
-      "video": "social/reels/06-tip-no-website.mp4",
-      "post_after": "2026-11-21T15:00:00Z",
-      "approved": false,
-      "caption": "No website? Here's what happens when someone searches for you 👇\n\nThey Google you, find a competitor who has a website, and book with them instead.\n\nA simple site with your hours, photos and a book button is often all it takes to win them back.\n\nGet found. Get booked. Free quote: link in bio.",
-      "hashtags": [
-        "#googlebusiness",
-        "#localseo",
-        "#smallbusiness",
-        "#webdesign",
-        "#websitedesign",
-        "#smallbusinessowner",
-        "#websiteredesign",
-        "#localbusiness",
-        "#webdesigner",
-        "#shopsmall"
-      ]
-    },
-    {
-      "id": "07-stop-doing-this",
-      "video": "social/reels/07-stop-doing-this.mp4",
-      "post_after": "2026-11-24T15:00:00Z",
-      "approved": false,
-      "caption": "Stop doing these on your small business website 🚫\n\n1. \"Call for prices\" with no phone number in sight\n2. A contact form nobody answers\n3. A Facebook page instead of a real website\n4. Stock photos of people who don't work there\n\nHow many does your site have? Comment \"WEBSITE\" and we'll send you a free quote.",
-      "hashtags": [
+        "#smallbusinesstips",
         "#websitetips",
-        "#businesstips",
-        "#smallbusiness",
-        "#webdesign",
-        "#websitedesign",
-        "#smallbusinessowner",
-        "#websiteredesign",
-        "#localbusiness",
-        "#webdesigner",
-        "#shopsmall"
-      ]
-    },
-    {
-      "id": "08-pov-customer-googles-you",
-      "video": "social/reels/08-pov-customer-googles-you.mp4",
-      "post_after": "2026-11-26T15:00:00Z",
-      "approved": false,
-      "caption": "POV: it's 11pm, a customer finds you on Google and wants to book. 📱\n\nIf your website says \"call for appointment\", they book with the salon down the street.\n\nA booking-ready website works the night shift for you.\n\n(Concept example.) Free quote: link in bio.",
-      "hashtags": [
-        "#salonowner",
-        "#nailsalon",
-        "#smallbusiness",
-        "#webdesign",
-        "#websitedesign",
-        "#smallbusinessowner",
-        "#websiteredesign",
-        "#localbusiness",
-        "#webdesigner",
-        "#shopsmall"
-      ]
-    },
-    {
-      "id": "09-rate-this-website",
-      "video": "social/reels/09-rate-this-website.mp4",
-      "post_after": "2026-11-28T15:00:00Z",
-      "approved": false,
-      "caption": "Rate this café's website 1 to 10 👇 Then watch the redesign.\n\nWe gave the old one a 3/10: no menu, no hours, no way to order. The new one gets people ordering ahead in two taps.\n\n(Concept example.) Want an honest score for your site? Comment \"RATE\".",
-      "hashtags": [
-        "#cafe",
-        "#coffeeshop",
-        "#smallbusiness",
-        "#webdesign",
-        "#websitedesign",
-        "#smallbusinessowner",
-        "#websiteredesign",
-        "#localbusiness",
-        "#webdesigner",
-        "#shopsmall"
+        "#ai",
+        "#chatbot",
+        "#entrepreneur",
+        "#tech2026"
       ]
     }
+  ],
+  "_archived_marketing_reels": [
+    "01-bakery-before-after",
+    "04-tip-losing-customers",
+    "02-auto-before-after",
+    "05-tip-five-second-test",
+    "03-barber-before-after",
+    "06-tip-no-website",
+    "07-stop-doing-this",
+    "08-pov-customer-googles-you",
+    "09-rate-this-website"
   ]
 }
