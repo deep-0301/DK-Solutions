@@ -64,7 +64,7 @@ function sceneHtml(s, shots) {
         <div class="label ${good ? 'g' : 'b'}">${esc(s.label || (good ? 'After' : 'Before'))}</div>
         ${s.title ? `<div class="ptitle">${rich(s.title)}</div>` : ''}
         <div class="phone"><img src="${shots[s.site]}"></div>${notes}`,
-        `.label{position:absolute;top:170px;left:50%;transform:translateX(-50%);padding:14px 40px;border-radius:999px;font-weight:800;font-size:46px;letter-spacing:.08em;text-transform:uppercase}
+        `.label{position:absolute;top:170px;left:50%;transform:translateX(-50%);white-space:nowrap;padding:14px 40px;border-radius:999px;font-weight:800;font-size:46px;letter-spacing:.08em;text-transform:uppercase}
          .label.b{background:#ef4444;color:#fff}.label.g{background:#34d399;color:#062018}
          .ptitle{position:absolute;top:275px;left:60px;right:60px;text-align:center;font-size:44px;font-weight:700;letter-spacing:-.02em}
          .phone{position:absolute;top:370px;left:50%;transform:translateX(-50%);width:540px;height:1169px;border-radius:70px;background:#05070d;padding:16px;box-shadow:0 0 0 3px #2a3150,0 40px 120px rgba(0,0,0,.6)}
