@@ -1,0 +1,119 @@
+{
+  "_readme": "Reels the GitHub Action posts. It only posts entries with approved: true once post_after has passed, one per run (Tue/Thu/Sat). Set approved to true after Deep has watched the reel and OK'd the caption.",
+  "posts": [
+    {
+      "id": "01-bakery-before-after",
+      "video": "social/reels/01-bakery-before-after.mp4",
+      "post_after": "2026-11-10T15:00:00Z",
+      "approved": false,
+      "caption": "This bakery's old website made people call to order a cake. Most people won't call. 📞❌\n\nThe new version puts the order button first, shows real reviews, and works properly on a phone.\n\n(Concept example. Your business could be next.)\n\nWant a free quote for your website? Link in bio or email contact@dksolutions.dev",
+      "hashtags": [
+        "#bakery",
+        "#bakerylife",
+        "#smallbusiness",
+        "#webdesign",
+        "#websitedesign",
+        "#smallbusinessowner",
+        "#websiteredesign",
+        "#localbusiness",
+        "#webdesigner",
+        "#shopsmall"
+      ]
+    },
+    {
+      "id": "04-tip-losing-customers",
+      "video": "social/reels/04-tip-losing-customers.mp4",
+      "post_after": "2026-11-12T15:00:00Z",
+      "approved": false,
+      "caption": "3 quick checks for your website. Be honest 👀\n\n1. Can someone find your phone number in 3 seconds?\n2. Does it look good on a phone?\n3. Is the year in the footer from this decade?\n\nIf any answer is no, you're probably losing customers you never hear about.\n\nSave this and check your site tonight. Free quote: link in bio.",
+      "hashtags": [
+        "#marketingtips",
+        "#businesstips",
+        "#smallbusiness",
+        "#webdesign",
+        "#websitedesign",
+        "#smallbusinessowner",
+        "#websiteredesign",
+        "#localbusiness",
+        "#webdesigner",
+        "#shopsmall"
+      ]
+    },
+    {
+      "id": "02-auto-before-after",
+      "video": "social/reels/02-auto-before-after.mp4",
+      "post_after": "2026-11-14T15:00:00Z",
+      "approved": false,
+      "caption": "Great mechanics often have the worst websites. 🔧\n\nOld site: hidden phone number, placeholder text, no booking.\nNew site: book in 2 taps, call button always on screen, services and reviews at a glance.\n\n(Concept example.)\n\nRun a shop? Get a free website quote. Link in bio.",
+      "hashtags": [
+        "#autorepair",
+        "#mechanic",
+        "#smallbusiness",
+        "#webdesign",
+        "#websitedesign",
+        "#smallbusinessowner",
+        "#websiteredesign",
+        "#localbusiness",
+        "#webdesigner",
+        "#shopsmall"
+      ]
+    },
+    {
+      "id": "05-tip-five-second-test",
+      "video": "social/reels/05-tip-five-second-test.mp4",
+      "post_after": "2026-11-17T15:00:00Z",
+      "approved": false,
+      "caption": "Try the 5-second test on your homepage ⏱️\n\nShow it to a friend for 5 seconds, then ask: what do we do, where are we, and how do you book or buy?\n\nIf they can't answer all three, your first screen needs work. That's where every redesign we do starts.\n\nFree quote: link in bio.",
+      "hashtags": [
+        "#businesstips",
+        "#ux",
+        "#smallbusiness",
+        "#webdesign",
+        "#websitedesign",
+        "#smallbusinessowner",
+        "#websiteredesign",
+        "#localbusiness",
+        "#webdesigner",
+        "#shopsmall"
+      ]
+    },
+    {
+      "id": "03-barber-before-after",
+      "video": "social/reels/03-barber-before-after.mp4",
+      "post_after": "2026-11-19T15:00:00Z",
+      "approved": false,
+      "caption": "Barbers: your website should be booking chairs while you cut. 💈\n\nOld: \"call for appointments\", no hours, no photos.\nNew: 24/7 online booking, hours up top, 5-star reviews front and centre.\n\n(Concept example.)\n\nFree quote for barbers and salons. Link in bio.",
+      "hashtags": [
+        "#barbershop",
+        "#barberlife",
+        "#smallbusiness",
+        "#webdesign",
+        "#websitedesign",
+        "#smallbusinessowner",
+        "#websiteredesign",
+        "#localbusiness",
+        "#webdesigner",
+        "#shopsmall"
+      ]
+    },
+    {
+      "id": "06-tip-no-website",
+      "video": "social/reels/06-tip-no-website.mp4",
+      "post_after": "2026-11-21T15:00:00Z",
+      "approved": false,
+      "caption": "No website? Here's what happens when someone searches for you 👇\n\nThey Google you, find a competitor who has a website, and book with them instead.\n\nA simple site with your hours, photos and a book button is often all it takes to win them back.\n\nGet found. Get booked. Free quote: link in bio.",
+      "hashtags": [
+        "#googlebusiness",
+        "#localseo",
+        "#smallbusiness",
+        "#webdesign",
+        "#websitedesign",
+        "#smallbusinessowner",
+        "#websiteredesign",
+        "#localbusiness",
+        "#webdesigner",
+        "#shopsmall"
+      ]
+    }
+  ]
+}

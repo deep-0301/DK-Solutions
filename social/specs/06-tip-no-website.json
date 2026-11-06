@@ -1,0 +1,9 @@
+{
+  "id": "06-tip-no-website",
+  "scenes": [
+    { "type": "text", "kicker": "No website?", "title": "Here's what customers do when they *can't find yours.*", "duration": 2.8 },
+    { "type": "list", "title": "They...", "items": ["Search Google for you", "Find a competitor *with* a website", "Book with them instead"], "each": 1.9, "last": 2.6 },
+    { "type": "text", "kicker": "The fix", "title": "A simple site with *hours, photos and a book button.*", "sub": "That's often all it takes.", "duration": 3.0 },
+    { "type": "cta", "title": "Get found. *Get booked.*", "duration": 3.0 }
+  ]
+}
