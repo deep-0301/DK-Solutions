@@ -1,0 +1,231 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Aarav &amp; Meera · Wedding invitation (concept)</title>
+<meta name="robots" content="noindex">
+<!-- Concept example by DK Solutions: a made-up couple and wedding.
+     Opens like an invitation card, then auto-scrolls through the countdown,
+     events and venue in a loop (tap to restart), so it can be filmed on a
+     phone or tablet. window.update(t) drives every frame for video renders. -->
+<style>
+@font-face{font-family:Vibes;src:url(fonts/great-vibes-latin-400-normal.woff2)}
+@font-face{font-family:Corm;src:url(fonts/cormorant-garamond-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:Corm;src:url(fonts/cormorant-garamond-latin-600-normal.woff2);font-weight:600}
+@font-face{font-family:Corm;src:url(fonts/cormorant-garamond-latin-500-italic.woff2);font-style:italic}
+:root{--maroon:#5c1020;--deep:#3a0812;--gold:#c9a24a;--gold2:#f0d58c;--ivory:#fbf3e4;--mari:#f29f05;--rose:#d8476b}
+*{box-sizing:border-box;margin:0}
+html,body{height:100%;overflow:hidden;background:var(--deep)}
+body{font-family:Corm,serif;color:var(--maroon);-webkit-tap-highlight-color:transparent}
+#vp{position:fixed;inset:0;overflow:hidden}
+#page{position:absolute;left:0;right:0;top:0;will-change:transform}
+section{position:relative;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:9vh 7vw;overflow:hidden}
+.gold{color:var(--gold)}
+.kicker{font:600 clamp(11px,1.9vw,17px)/1 Corm,serif;letter-spacing:.32em;text-transform:uppercase}
+.script{font-family:Vibes,cursive;font-weight:400}
+h2.script{font-size:clamp(44px,9vw,92px);line-height:1;color:var(--maroon)}
+.rule{width:min(46vw,300px);height:18px;margin:2.2vh auto}
+
+/* 1. Invitation card with opening doors */
+#s1{background:radial-gradient(90% 60% at 50% 45%,#7a1a2c 0%,var(--maroon) 55%,var(--deep) 100%);color:var(--ivory)}
+#arch{position:absolute;left:50%;top:50%;width:min(84vw,62vh);transform:translate(-50%,-47%)}
+#s1 .inner{position:relative;z-index:2;max-width:min(64vw,46vh)}
+#s1 .kicker{color:var(--gold2)}
+#names{font-family:Vibes,cursive;font-size:clamp(56px,13vw,128px);line-height:.95;margin:3vh 0 1.4vh;color:var(--gold2);text-shadow:0 0 30px rgba(240,213,140,.35)}
+#names .amp{display:block;font-size:.55em;color:var(--ivory);margin:.5vh 0}
+.date{font:600 clamp(18px,3.4vw,30px)/1 Corm,serif;letter-spacing:.3em;margin-top:2vh}
+.small{font:italic 500 clamp(14px,2.4vw,21px)/1.4 Corm,serif;opacity:.85}
+.door{position:absolute;top:0;bottom:0;width:50.5%;z-index:5;background:
+  radial-gradient(circle at 50% 50%,transparent 0 34%,rgba(201,162,74,.0) 34%),
+  linear-gradient(135deg,#6b1626,#4a0b17);border:2px solid rgba(201,162,74,.6);overflow:hidden}
+.door svg{position:absolute;inset:0;width:100%;height:100%}
+#doorL{left:0;transform-origin:left center}
+#doorR{right:0;transform-origin:right center}
+#seal{position:absolute;left:50%;top:50%;width:clamp(90px,18vw,150px);aspect-ratio:1;transform:translate(-50%,-50%);z-index:6;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#f6dd95,#c9a24a 55%,#8a6a22);box-shadow:0 8px 30px rgba(0,0,0,.45),inset 0 0 0 6px rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;font:400 clamp(30px,6vw,52px)/1 Vibes,cursive;color:var(--maroon)}
+#garland{position:absolute;left:0;right:0;top:0;height:22vh;z-index:7;pointer-events:none}
+.petal{position:absolute;top:0;width:18px;height:26px;border-radius:70% 0 70% 0;z-index:8;pointer-events:none;opacity:.9}
+.diya{position:absolute;bottom:6vh;width:clamp(58px,11vw,96px);z-index:3}
+
+/* 2. Countdown */
+#s2{background:var(--ivory)}
+#s2::before{content:"";position:absolute;inset:3.5vw;border:1.5px solid var(--gold);border-radius:18px;pointer-events:none}
+.count{display:flex;gap:clamp(10px,2.4vw,22px);margin-top:3vh}
+.count div{width:clamp(70px,15vw,130px);padding:2.2vh 0 1.6vh;border-radius:14px;background:#fff;border:1.5px solid rgba(201,162,74,.6);box-shadow:0 12px 30px rgba(92,16,32,.08)}
+.count b{display:block;font:600 clamp(34px,7vw,64px)/1 Corm,serif;color:var(--maroon);font-variant-numeric:tabular-nums}
+.count span{font:600 clamp(10px,1.6vw,14px)/1 Corm,serif;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+.lotus{width:min(40vw,240px);margin-top:4vh}
+
+/* 3. Events */
+#s3{background:linear-gradient(#fbf3e4,#f6e6cc)}
+.events{display:grid;grid-template-columns:1fr 1fr;gap:clamp(12px,2.6vw,24px);width:min(86vw,720px);margin-top:3.5vh}
+.ev{background:#fffaf1;border-radius:18px 18px 18px 18px;padding:3vh 2vw 2.6vh;border:1.5px solid rgba(201,162,74,.55);box-shadow:0 16px 36px rgba(92,16,32,.1);opacity:0}
+.ev svg{width:clamp(44px,8vw,70px);height:clamp(44px,8vw,70px)}
+.ev h3{font:400 clamp(30px,5.6vw,52px)/1 Vibes,cursive;color:var(--maroon);margin:1vh 0 .6vh}
+.ev p{font:600 clamp(12px,2vw,17px)/1.45 Corm,serif;letter-spacing:.08em;color:#7a5a3a}
+
+/* 4. Venue */
+#s4{background:linear-gradient(#2a0610 0%,#6b1a2a 42%,#e07a4a 72%,#f6c37a 100%);color:var(--ivory);justify-content:flex-start;padding-top:12vh}
+#s4 h2.script{color:var(--gold2)}
+#palace{position:absolute;left:0;right:0;bottom:0;width:100%;height:52vh}
+.btns{display:flex;gap:14px;justify-content:center;margin-top:3vh;position:relative;z-index:3}
+.btn{font:600 clamp(13px,2.2vw,18px)/1 Corm,serif;letter-spacing:.18em;text-transform:uppercase;padding:1.8vh 4.6vw;border-radius:999px;border:1.5px solid var(--gold2);color:var(--gold2);position:relative;overflow:hidden}
+.btn.fill{background:var(--gold2);color:var(--maroon)}
+#ripple{position:absolute;left:50%;top:50%;width:20px;height:20px;border-radius:50%;background:rgba(92,16,32,.35);transform:translate(-50%,-50%) scale(0);opacity:0}
+.foot{position:absolute;bottom:2.4vh;left:0;right:0;z-index:3;font:600 11px/1 Corm,serif;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.75)}
+</style></head>
+<body>
+<div id="vp"><div id="page">
+
+<section id="s1">
+  <svg id="arch" viewBox="0 0 400 560" fill="none">
+    <defs><linearGradient id="g1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f0d58c"/><stop offset="1" stop-color="#b88a33"/></linearGradient></defs>
+    <path d="M30 560V250C30 150 110 90 200 20C290 90 370 150 370 250V560" stroke="url(#g1)" stroke-width="4"/>
+    <path d="M52 560V256C52 168 122 116 200 54C278 116 348 168 348 256V560" stroke="url(#g1)" stroke-width="1.5" opacity=".7"/>
+    <g fill="url(#g1)">
+      <circle cx="200" cy="20" r="7"/><path d="M200 0l5 12h-10z"/>
+      <circle cx="30" cy="250" r="5"/><circle cx="370" cy="250" r="5"/>
+    </g>
+    <g stroke="url(#g1)" stroke-width="1.2" opacity=".55">
+      <path d="M120 470c20-30 60-30 80 0c20-30 60-30 80 0"/><path d="M140 500c16-20 44-20 60 0c16-20 44-20 60 0"/>
+    </g>
+  </svg>
+  <div class="inner">
+    <div class="kicker">Together with their families</div>
+    <div id="names">Aarav<span class="amp">&amp;</span>Meera</div>
+    <div class="small">request the pleasure of your company</div>
+    <svg class="rule" viewBox="0 0 300 18"><path d="M0 9h120M180 9h120" stroke="#c9a24a" stroke-width="1.5"/><path d="M150 1l8 8-8 8-8-8z" fill="#c9a24a"/></svg>
+    <div class="date gold">14 · 02 · 2027</div>
+  </div>
+  <svg class="diya" style="left:12vw" viewBox="0 0 60 60"><path class="flame" d="M30 6c6 9 8 15 0 24c-8-9-6-15 0-24z" fill="#ffcf4a"/><path d="M6 36h48c-4 14-14 20-24 20S10 50 6 36z" fill="#c9a24a"/><ellipse cx="30" cy="36" rx="24" ry="5" fill="#8a5a1a"/></svg>
+  <svg class="diya" style="right:12vw" viewBox="0 0 60 60"><path class="flame" d="M30 6c6 9 8 15 0 24c-8-9-6-15 0-24z" fill="#ffcf4a"/><path d="M6 36h48c-4 14-14 20-24 20S10 50 6 36z" fill="#c9a24a"/><ellipse cx="30" cy="36" rx="24" ry="5" fill="#8a5a1a"/></svg>
+  <div class="door" id="doorL"><svg viewBox="0 0 200 600" preserveAspectRatio="none"><g stroke="#c9a24a" stroke-width="1.4" fill="none" opacity=".75"><rect x="22" y="30" width="156" height="540" rx="6"/><path d="M40 260c0-80 60-130 120-170M40 520V290"/><circle cx="100" cy="330" r="40"/><circle cx="100" cy="330" r="26"/></g></svg></div>
+  <div class="door" id="doorR"><svg viewBox="0 0 200 600" preserveAspectRatio="none"><g stroke="#c9a24a" stroke-width="1.4" fill="none" opacity=".75"><rect x="22" y="30" width="156" height="540" rx="6"/><path d="M160 260c0-80-60-130-120-170M160 520V290"/><circle cx="100" cy="330" r="40"/><circle cx="100" cy="330" r="26"/></g></svg></div>
+  <div id="seal">A&amp;M</div>
+</section>
+
+<section id="s2">
+  <div class="kicker gold">Save the date</div>
+  <h2 class="script" style="margin-top:1.6vh">The countdown begins</h2>
+  <div class="count"><div><b id="cd">98</b><span>Days</span></div><div><b id="ch">12</b><span>Hours</span></div><div><b id="cm">40</b><span>Mins</span></div><div><b id="cs">09</b><span>Secs</span></div></div>
+  <svg class="lotus" viewBox="0 0 240 110"><g fill="none" stroke="#c9a24a" stroke-width="1.6"><path d="M120 100C100 70 100 40 120 10c20 30 20 60 0 90z"/><path d="M118 100C80 90 64 64 66 34c30 10 46 36 52 66z"/><path d="M122 100c38-10 54-36 52-66-30 10-46 36-52 66z"/><path d="M116 102C70 104 40 86 24 62c36-4 66 12 92 40z"/><path d="M124 102c46 2 76-16 92-40-36-4-66 12-92 40z"/></g><path d="M20 104h200" stroke="#c9a24a"/></svg>
+</section>
+
+<section id="s3">
+  <div class="kicker gold">Four days of celebration</div>
+  <h2 class="script" style="margin-top:1.6vh">The festivities</h2>
+  <div class="events">
+    <div class="ev"><svg viewBox="0 0 60 60"><circle cx="30" cy="30" r="13" fill="#f2b705"/><g stroke="#f29f05" stroke-width="3" stroke-linecap="round"><path d="M30 6v7M30 47v7M6 30h7M47 30h7M13 13l5 5M42 42l5 5M47 13l-5 5M18 42l-5 5"/></g></svg><h3>Haldi</h3><p>Thu 11 Feb · 10 AM<br>Courtyard</p></div>
+    <div class="ev"><svg viewBox="0 0 60 60"><g fill="none" stroke="#7a3a1a" stroke-width="2.4" stroke-linecap="round"><path d="M22 52V30c0-4 6-4 6 0v-8c0-4 6-4 6 0v4c0-4 6-4 6 0v4c0-4 6-4 6 0v12c0 6-4 10-10 10H30c-4 0-8-4-8-0z"/><circle cx="36" cy="40" r="4"/><path d="M36 32v-2M36 50v-2M28 40h-2M46 40h-2"/></g></svg><h3>Mehendi</h3><p>Fri 12 Feb · 4 PM<br>Garden Lawn</p></div>
+    <div class="ev"><svg viewBox="0 0 60 60"><g fill="#5c1020"><path d="M24 12v28a7 7 0 1 1-4-6V16l24-6v26a7 7 0 1 1-4-6V16z"/></g></svg><h3>Sangeet</h3><p>Sat 13 Feb · 8 PM<br>The Grand Hall</p></div>
+    <div class="ev"><svg viewBox="0 0 60 60"><g fill="none" stroke="#c9a24a" stroke-width="2.4"><circle cx="23" cy="36" r="13"/><circle cx="37" cy="36" r="13"/></g><path d="M30 8l5 8h-10z" fill="#d8476b"/></svg><h3>Wedding</h3><p>Sun 14 Feb · 7 PM<br>Lakeside Gardens</p></div>
+  </div>
+</section>
+
+<section id="s4">
+  <div class="kicker" style="color:var(--gold2)">Join us at</div>
+  <h2 class="script" style="margin-top:1.6vh">Lakeside Gardens</h2>
+  <div class="small" style="margin-top:1vh">Udaipur, Rajasthan</div>
+  <div class="btns"><div class="btn fill" id="rsvp">RSVP<i id="ripple"></i></div><div class="btn">Directions</div></div>
+  <svg id="palace" viewBox="0 0 800 420" preserveAspectRatio="xMidYMax slice">
+    <defs><linearGradient id="wa" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#e0905a"/><stop offset="1" stop-color="#5a1a24"/></linearGradient></defs>
+    <circle id="sun" cx="400" cy="210" r="70" fill="#ffd98a" opacity=".85"/>
+    <g id="pal" fill="#3a0a14">
+      <rect x="150" y="190" width="500" height="80"/>
+      <rect x="250" y="150" width="300" height="50"/><rect x="330" y="110" width="140" height="50"/>
+      <path d="M340 112a60 60 0 0 1 120 0z"/><rect x="398" y="20" width="4" height="40"/>
+      <path d="M262 152a26 26 0 0 1 52 0zM486 152a26 26 0 0 1 52 0z"/>
+      <path d="M160 192a22 22 0 0 1 44 0zM596 192a22 22 0 0 1 44 0z"/>
+      <rect x="160" y="140" width="10" height="52"/><rect x="630" y="140" width="10" height="52"/>
+      <path d="M156 142l9-18 9 18zM626 142l9-18 9 18z"/>
+    </g>
+    <g fill="#ffcf6a" id="wins">
+      <rect x="190" y="215" width="16" height="26" rx="8"/><rect x="240" y="215" width="16" height="26" rx="8"/><rect x="290" y="215" width="16" height="26" rx="8"/><rect x="340" y="215" width="16" height="26" rx="8"/>
+      <rect x="444" y="215" width="16" height="26" rx="8"/><rect x="494" y="215" width="16" height="26" rx="8"/><rect x="544" y="215" width="16" height="26" rx="8"/><rect x="594" y="215" width="16" height="26" rx="8"/>
+      <rect x="386" y="210" width="28" height="60" rx="14"/><rect x="300" y="165" width="14" height="22" rx="7"/><rect x="486" y="165" width="14" height="22" rx="7"/><rect x="392" y="124" width="16" height="26" rx="8"/>
+    </g>
+    <rect y="270" width="800" height="150" fill="url(#wa)"/>
+    <g id="refl" opacity=".35" transform="translate(0 540) scale(1 -1)"><use href="#pal"/><use href="#wins"/></g>
+    <g id="ripples" stroke="#ffd98a" stroke-width="2" opacity=".5"><path d="M300 300h80M430 312h60M350 330h100M260 350h60M470 352h90"/></g>
+  </svg>
+  <div class="foot">Concept example · DK Solutions</div>
+</section>
+
+</div><div id="petals"></div>
+<svg id="garland" viewBox="0 0 1000 220" preserveAspectRatio="none"></svg>
+</div>
+<script>
+const DUR = 15;
+const ease = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+const clamp = (x, a = 0, b = 1) => Math.min(b, Math.max(a, x));
+const lerp = (a, b, k) => a + (b - a) * k;
+function track(tbl, t){for(let i=0;i<tbl.length-1;i++){const [t0,...a]=tbl[i],[t1,...b]=tbl[i+1];if(t<=t1){const k=ease((t-t0)/(t1-t0));return a.map((v,j)=>lerp(v,b[j],k));}}return tbl[tbl.length-1].slice(1);}
+// Scroll stops, in screens (section index). Timed on a 2.5 s bar grid.
+const SCROLL = [[0,0],[2.5,0],[5,1],[7.5,1],[10,2],[11.25,2],[13.75,3],[15,3]];
+const TAP = 14.1;
+const vh = () => window.innerHeight;
+const secs = [...document.querySelectorAll('section')];
+
+// Garland: marigold strands along a curve, with hanging tassels.
+const G = document.getElementById('garland');
+let gsvg = '';
+const strand = (x0, x1, sag, col) => {
+  for (let i = 0; i <= 26; i++) { const u = i / 26, x = lerp(x0, x1, u), y = 8 + Math.sin(u * Math.PI) * sag;
+    gsvg += `<circle cx="${x}" cy="${y}" r="${11 + (i % 3)}" fill="${i % 4 === 0 ? '#d8476b' : col}"/><circle cx="${x - 3}" cy="${y - 3}" r="4" fill="rgba(255,255,255,.25)"/>`; }
+};
+strand(-20, 500, 70, '#f29f05'); strand(500, 1020, 70, '#f2b705'); strand(-20, 1020, 130, '#f29f05');
+for (const x of [500, 120, 880]) { gsvg += `<g class="tassel" data-x="${x}">`; for (let j = 0; j < 7; j++) gsvg += `<circle cx="${x}" cy="${60 + j * 18}" r="${9 - j * .6}" fill="${j % 2 ? '#f2b705' : '#f29f05'}"/>`; gsvg += `<circle cx="${x}" cy="${190}" r="6" fill="#d8476b"/></g>`; }
+G.innerHTML = gsvg;
+const tassels = [...G.querySelectorAll('.tassel')];
+
+// Petals: fixed seeds, positions are a pure function of t.
+const P = document.getElementById('petals');
+let seed = 9; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+const petals = [...Array(20)].map((_, i) => { const d = document.createElement('div'); d.className = 'petal';
+  d.style.background = ['#d8476b', '#f29f05', '#f2b705', '#e8657f'][i % 4]; P.appendChild(d);
+  return { d, x: rnd() * 100, sp: 7 + rnd() * 8, ph: rnd(), sw: 20 + rnd() * 40, r: rnd() * 360 }; });
+
+const cd = ['cd', 'ch', 'cm', 'cs'].map((id) => document.getElementById(id));
+const flames = [...document.querySelectorAll('.flame')];
+const evs = [...document.querySelectorAll('.ev')];
+
+window.update = (t) => {
+  const H = vh();
+  const [s] = track(SCROLL, t);
+  document.getElementById('page').style.transform = `translateY(${-s * H}px)`;
+  // Doors open, seal fades and rises.
+  const o = ease(clamp((t - 0.5) / 1.9));
+  document.getElementById('doorL').style.transform = `perspective(1400px) rotateY(${o * 100}deg)`;
+  document.getElementById('doorR').style.transform = `perspective(1400px) rotateY(${-o * 100}deg)`;
+  const seal = document.getElementById('seal').style; seal.opacity = String(1 - clamp((t - 0.3) / 0.5)); seal.transform = `translate(-50%,-50%) scale(${1 + clamp((t - 0.3) / 0.5) * 0.4})`;
+  const inner = document.querySelector('#s1 .inner').style; const ik = ease(clamp((t - 1.3) / 1.4)); inner.opacity = String(ik); inner.transform = `translateY(${(1 - ik) * 30}px) scale(${0.96 + ik * 0.04})`;
+  // Garland sways, and lifts away as the page scrolls.
+  G.style.transform = `translateY(${-clamp(s) * 26}vh)`;
+  tassels.forEach((g, i) => g.setAttribute('transform', `rotate(${Math.sin(t * 1.6 + i) * 4} ${g.dataset.x} 50)`));
+  flames.forEach((f, i) => { const k = 1 + Math.sin(t * 19 + i * 2) * 0.06 + Math.sin(t * 7.3 + i) * 0.05; f.setAttribute('transform', `translate(30 30) scale(${2 - k} ${k}) translate(-30 -30)`); });
+  // Petals fall after the doors open.
+  petals.forEach((p) => { const life = ((t * p.sp) / 100 + p.ph) % 1, y = -5 + life * 112, show = t > 1.2 ? Math.min(1, (t - 1.2) * 2) : 0;
+    p.d.style.opacity = String(0.9 * show); p.d.style.transform = `translate(${p.x + Math.sin(t * 1.3 + p.r) * p.sw / 10}vw,${y}vh) rotate(${p.r + t * 90}deg)`; });
+  // Countdown ticks every second.
+  const left = 98 * 86400 + 12 * 3600 + 40 * 60 + 9 - Math.floor(t);
+  [Math.floor(left / 86400), Math.floor(left / 3600) % 24, Math.floor(left / 60) % 60, left % 60].forEach((v, i) => (cd[i].textContent = String(v).padStart(2, '0')));
+  cd[3].style.transform = `scale(${1 + 0.12 * Math.max(0, 1 - (t % 1) * 5)})`;
+  // Event cards rise in as the section arrives.
+  evs.forEach((e, i) => { const k = ease(clamp((t - 8.6 - i * 0.22) / 0.7)); e.style.opacity = String(k); e.style.transform = `translateY(${(1 - k) * 40}px)`; });
+  // Venue: sun sinks a little, water shimmers, RSVP gets a tap.
+  document.getElementById('sun').setAttribute('cy', String(200 + clamp((t - 11) / 4) * 30));
+  document.getElementById('ripples').setAttribute('transform', `translate(${Math.sin(t * 1.4) * 14} 0)`);
+  const rk = (t - TAP) / 0.6, rip = document.getElementById('ripple').style;
+  rip.opacity = rk > 0 && rk < 1 ? String(1 - rk) : '0'; rip.transform = `translate(-50%,-50%) scale(${Math.max(0, rk) * 14})`;
+  const rs = document.getElementById('rsvp'); rs.firstChild.textContent = t >= TAP + 0.3 ? 'See you there ✓' : 'RSVP';
+};
+update(0);
+
+// On a real phone or tablet: play the timeline in a loop; tap to restart.
+if (!navigator.webdriver) {
+  let t0 = performance.now();
+  const loop = (now) => { update(((now - t0) / 1000) % (DUR + 1.5)); requestAnimationFrame(loop); };
+  requestAnimationFrame(loop);
+  addEventListener('pointerdown', () => (t0 = performance.now()));
+}
+</script></body></html>
