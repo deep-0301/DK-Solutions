@@ -1,0 +1,112 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Northside Barber Co. concept</title>
+<!-- Fictional barbershop website concept by DK Solutions, for reels. Driven by window.update(t). -->
+<style>
+@font-face{font-family:Bebas;src:url(fonts/bebas-neue-latin-400-normal.woff2)}
+@font-face{font-family:DM;src:url(fonts/dm-sans-latin-400-normal.woff2);font-weight:400}
+@font-face{font-family:DM;src:url(fonts/dm-sans-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:DM;src:url(fonts/dm-sans-latin-700-normal.woff2);font-weight:700}
+*{box-sizing:border-box;margin:0}
+html,body{width:1440px;overflow:hidden;background:#0f0f10}
+body{font-family:DM,sans-serif;color:#f2efe9}
+#page{position:relative;width:1440px}
+nav{position:fixed;top:0;left:0;right:0;height:86px;display:flex;align-items:center;justify-content:space-between;padding:0 72px;z-index:20;background:rgba(15,15,16,.8);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,.06)}
+.logo{font:400 34px Bebas,sans-serif;letter-spacing:.06em}.logo span{color:#d4a64a}
+nav ul{display:flex;gap:40px;list-style:none;padding:0;font-size:16px;font-weight:500;color:#b9b4aa;letter-spacing:.04em;text-transform:uppercase}
+nav .cta{padding:13px 26px;border-radius:6px;background:#d4a64a;color:#111;font-weight:700;font-size:15px;letter-spacing:.06em;text-transform:uppercase}
+.hero{height:900px;position:relative;overflow:hidden;background:radial-gradient(800px 600px at 75% 55%,rgba(212,166,74,.18),transparent 70%),#0f0f10}
+.hero .copy{position:absolute;left:96px;top:220px;width:640px;z-index:5}
+.kick{font-size:15px;font-weight:700;letter-spacing:.24em;text-transform:uppercase;color:#d4a64a}
+.hero h1{font:400 132px/0.88 Bebas,sans-serif;letter-spacing:.01em;margin:24px 0 28px}
+.hero h1 span{color:#d4a64a}
+.hero p{font-size:21px;line-height:1.55;color:#b9b4aa;max-width:500px}
+.btns{display:flex;gap:14px;margin-top:38px}
+.b1{padding:20px 36px;border-radius:6px;background:#d4a64a;color:#111;font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase}
+.b2{padding:18px 34px;border-radius:6px;border:2px solid #f2efe9;font-weight:700;font-size:17px;letter-spacing:.06em;text-transform:uppercase}
+#pole{position:absolute;left:930px;top:120px;width:150px;height:640px;z-index:4}
+.pole-cap{position:absolute;left:-20px;right:-20px;height:46px;border-radius:24px;background:linear-gradient(90deg,#6b5a3a,#e9cf8f 45%,#8a7347);box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.pole-glass{position:absolute;top:40px;bottom:40px;left:0;right:0;border-radius:20px;overflow:hidden;box-shadow:inset -20px 0 40px rgba(0,0,0,.45),inset 18px 0 30px rgba(255,255,255,.25),0 30px 80px rgba(0,0,0,.6)}
+#stripes{position:absolute;left:0;right:0;top:-400px;height:1600px;background:repeating-linear-gradient(-35deg,#f4f1ea 0 40px,#c8202f 40px 80px,#f4f1ea 80px 120px,#1f4fa8 120px 160px)}
+#sc{position:absolute;left:1120px;top:300px;width:250px;height:250px;z-index:5;filter:drop-shadow(0 20px 30px rgba(0,0,0,.6))}
+.badge{position:absolute;left:1100px;top:650px;z-index:6;padding:20px 26px;border-radius:14px;background:#1b1b1d;border:1px solid rgba(255,255,255,.08);display:flex;gap:16px;align-items:center;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.badge b{font:400 40px Bebas,sans-serif;color:#d4a64a}.badge span{font-size:15px;color:#b9b4aa;line-height:1.3}
+.svc{padding:120px 96px;background:#151516}
+h2{font:400 96px/0.9 Bebas,sans-serif;letter-spacing:.01em}
+h2 span{color:#d4a64a}
+.list{margin-top:54px;display:grid;grid-template-columns:repeat(3,1fr);gap:26px}
+.item{padding:36px;border-radius:18px;background:#1d1d1f;border:1px solid rgba(255,255,255,.06);height:300px;display:flex;flex-direction:column;justify-content:space-between}
+.item .ic{width:84px;height:84px;border-radius:16px;background:rgba(212,166,74,.14);display:grid;place-items:center;font-size:44px}
+.item h3{font:400 44px Bebas,sans-serif;letter-spacing:.02em}
+.item p{color:#b9b4aa;font-size:17px;margin-top:6px}
+.book{padding:120px 96px;display:grid;grid-template-columns:1fr 1.1fr;gap:70px;align-items:center}
+.cal{border-radius:22px;background:#1b1b1d;border:1px solid rgba(255,255,255,.07);padding:36px;box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.cal .days{display:flex;gap:12px;margin-bottom:24px}
+.cal .d{flex:1;text-align:center;padding:14px 0;border-radius:10px;background:#242427;font-weight:700;color:#b9b4aa}
+.cal .d.on{background:#d4a64a;color:#111}
+.slots{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.slot{padding:18px 0;text-align:center;border-radius:10px;border:1px solid rgba(255,255,255,.12);font-weight:700;font-size:18px}
+.slot.off{opacity:.3;text-decoration:line-through}
+#confirm{margin-top:24px;padding:20px;border-radius:12px;background:#d4a64a;color:#111;text-align:center;font-weight:700;font-size:19px;letter-spacing:.04em;text-transform:uppercase}
+#cursor{position:fixed;left:0;top:0;width:34px;height:34px;z-index:50;filter:drop-shadow(0 3px 4px rgba(0,0,0,.5))}
+#ripple{position:fixed;width:80px;height:80px;margin:-40px 0 0 -40px;border-radius:50%;border:3px solid #d4a64a;z-index:49;opacity:0}
+</style></head><body>
+<nav><div class="logo">Northside <span>Barber Co.</span></div><ul><li>Services</li><li>Barbers</li><li>Gallery</li><li>Visit</li></ul><div class="cta">Book a chair</div></nav>
+<div id="page">
+<section class="hero">
+  <div class="copy"><div class="kick">Walk-ins welcome · Open till 8pm</div>
+    <h1>Fresh fades.<br><span>Zero waiting.</span></h1>
+    <p>Pick your barber, pick your time, and get a text when your chair is ready.</p>
+    <div class="btns"><div class="b1">Book a chair</div><div class="b2">Our work</div></div></div>
+  <div id="pole"><div class="pole-cap" style="top:0"></div><div class="pole-glass"><div id="stripes"></div></div><div class="pole-cap" style="bottom:0"></div></div>
+  <svg id="sc" viewBox="0 0 250 250">
+    <g id="bladeA"><path d="M125 125 L235 60 L240 72 Z" fill="#d9dde3"/><circle cx="70" cy="170" r="34" fill="none" stroke="#d4a64a" stroke-width="14"/><path d="M95 150 L125 125" stroke="#d4a64a" stroke-width="14" stroke-linecap="round"/></g>
+    <g id="bladeB"><path d="M125 125 L235 190 L240 178 Z" fill="#c3c8cf"/><circle cx="70" cy="80" r="34" fill="none" stroke="#d4a64a" stroke-width="14"/><path d="M95 100 L125 125" stroke="#d4a64a" stroke-width="14" stroke-linecap="round"/></g>
+    <circle cx="125" cy="125" r="9" fill="#f2efe9"/>
+  </svg>
+  <div class="badge"><b>5.0</b><span>★★★★★<br>380 Google reviews</span></div>
+</section>
+<section class="svc"><div class="kick">What we do</div><h2 style="margin-top:16px">Cuts that <span>last</span></h2>
+  <div class="list">
+    <div class="item"><div class="ic">💈</div><div><h3>Skin fade</h3><p>Clean, sharp, blended to the skin.</p></div></div>
+    <div class="item"><div class="ic">🧔</div><div><h3>Beard sculpt</h3><p>Shape, line-up and hot towel.</p></div></div>
+    <div class="item"><div class="ic">🪒</div><div><h3>Straight razor shave</h3><p>The full, old-school ritual.</p></div></div>
+  </div></section>
+<section class="book"><div><div class="kick">Book online</div><h2 style="margin-top:16px">Your chair,<br><span>your time</span></h2><p style="margin-top:24px;font-size:20px;color:#b9b4aa;line-height:1.55;max-width:460px">See open slots live. Booked in two taps, with a reminder text the day before.</p></div>
+  <div class="cal"><div class="days"><div class="d">Thu</div><div class="d">Fri</div><div class="d on">Sat</div><div class="d">Sun</div></div>
+    <div class="slots"><div class="slot off">9:00</div><div class="slot">10:30</div><div class="slot off">11:15</div><div class="slot" id="pick">1:00</div><div class="slot">2:30</div><div class="slot off">3:15</div><div class="slot">4:00</div><div class="slot">5:30</div></div>
+    <div id="confirm">Choose a time</div></div></section>
+</div>
+<div id="ripple"></div>
+<svg id="cursor" viewBox="0 0 24 24"><path d="M3 2l7.5 19 2.6-7.6L21 10.8z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+<script>
+const ease = (x) => x < 0 ? 0 : x > 1 ? 1 : x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const lerp = (a, b, k) => a + (b - a) * k;
+function track(tbl, t){for(let i=0;i<tbl.length-1;i++){const [t0,...a]=tbl[i],[t1,...b]=tbl[i+1];if(t<=t1){const k=ease((t-t0)/(t1-t0));return a.map((v,j)=>lerp(v,b[j],k));}}return tbl[tbl.length-1].slice(1);}
+const SCROLL = [[0,0],[2.8,0],[5.4,900],[7.4,900],[9.6,1580],[14,1580]];
+const CURSOR = [[0,1200,820],[2.4,1180,560],[2.8,1180,560],[5.4,700,620],[7.4,760,640],[9.6,1120,520],[10.6,1236,290],[12,1236,290],[12.6,1300,420],[14,1310,430]];
+const CLICK = 10.7;
+window.update = (t) => {
+  const [y] = track(SCROLL, t);
+  document.getElementById('page').style.transform = `translateY(${-y}px)`;
+  document.getElementById('stripes').style.transform = `translateY(${(t * 90) % 160}px)`;
+  document.getElementById('pole').style.transform = `translateY(${y * 0.2}px)`;
+  const snip = Math.abs(Math.sin(t * 3.2)) * 16;
+  document.getElementById('bladeA').setAttribute('transform', `rotate(${-snip} 125 125)`);
+  document.getElementById('bladeB').setAttribute('transform', `rotate(${snip} 125 125)`);
+  document.getElementById('sc').style.transform = `translateY(${Math.sin(t * 1.3) * 14 - y * 0.45}px) rotate(${-12 + Math.sin(t) * 4}deg)`;
+  document.querySelector('.badge').style.transform = `translateY(${Math.cos(t * 1.1) * 10 - y * 0.6}px)`;
+  const [cx, cy] = track(CURSOR, t);
+  document.getElementById('cursor').style.transform = `translate(${cx}px,${cy}px)`;
+  // Click on the 1:00 slot, then confirm
+  const pick = document.getElementById('pick'), conf = document.getElementById('confirm'), rip = document.getElementById('ripple');
+  const clicked = t >= CLICK;
+  pick.style.background = clicked ? '#d4a64a' : ''; pick.style.color = clicked ? '#111' : ''; pick.style.borderColor = clicked ? '#d4a64a' : '';
+  conf.textContent = t >= CLICK + 0.6 ? 'Booked ✓ Sat 1:00 PM' : clicked ? 'Confirm 1:00 PM' : 'Choose a time';
+  conf.style.background = t >= CLICK + 0.6 ? '#3ecf8e' : '#d4a64a';
+  const rk = (t - CLICK) / 0.6;
+  rip.style.opacity = rk > 0 && rk < 1 ? String(1 - rk) : '0';
+  rip.style.transform = `translate(${cx + 10}px,${cy + 10}px) scale(${0.3 + Math.max(0, rk) * 1.2})`;
+  rip.style.left = '0px'; rip.style.top = '0px';
+};
+update(0);
+</script></body></html>

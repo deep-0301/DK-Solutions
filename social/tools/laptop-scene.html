@@ -1,0 +1,157 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:DM;src:url(/social/concepts/fonts/dm-sans-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:Playfair;src:url(/social/concepts/fonts/playfair-display-latin-500-italic.woff2);font-style:italic}
+html,body{margin:0;width:1080px;height:1920px;overflow:hidden;background:#1a120c}
+canvas{display:block}
+#fx{position:absolute;inset:0;pointer-events:none;background:radial-gradient(120% 80% at 50% 45%,transparent 55%,rgba(10,5,2,.55) 100%)}
+#hook{position:absolute;left:70px;right:70px;top:250px;text-align:center;font:700 64px/1.1 DM,sans-serif;color:#fff;letter-spacing:-.02em;text-shadow:0 6px 30px rgba(0,0,0,.55);opacity:0}
+#hook i{font-family:Playfair,serif;font-weight:500;color:#ffd9a8}
+#tag{position:absolute;left:0;right:0;bottom:300px;text-align:center;font:700 34px DM,sans-serif;color:#fff;opacity:0;text-shadow:0 4px 20px rgba(0,0,0,.6)}
+#tag b{display:inline-block;margin-top:14px;padding:16px 34px;border-radius:999px;background:rgba(255,255,255,.16);backdrop-filter:blur(8px);border:2px solid rgba(255,255,255,.35)}
+</style>
+<script type="importmap">{"imports":{"three":"/three/build/three.module.js","three/addons/":"/three/examples/jsm/"}}</script>
+</head><body>
+<div id="fx"></div><div id="hook"></div><div id="tag"></div>
+<script type="module">
+import * as THREE from 'three';
+import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
+import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+
+const W = 1080, H = 1920;
+const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+renderer.setSize(W, H); renderer.setPixelRatio(1);
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 0.92;
+renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+document.body.prepend(renderer.domElement);
+
+const scene = new THREE.Scene();
+const pmrem = new THREE.PMREMGenerator(renderer);
+scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+scene.environmentIntensity = 0.55;
+
+function canvasTex(w, h, draw, repeat) {
+  const c = document.createElement('canvas'); c.width = w; c.height = h; draw(c.getContext('2d'), w, h);
+  const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8;
+  if (repeat) { t.wrapS = t.wrapT = THREE.RepeatWrapping; t.repeat.set(...repeat); }
+  return t;
+}
+let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+
+// Desk: warm oak planks
+const wood = canvasTex(2048, 2048, (g, w, h) => {
+  const planks = 6;
+  for (let p = 0; p < planks; p++) {
+    const y0 = (p * h) / planks, ph = h / planks;
+    const base = [112 + rnd() * 22, 70 + rnd() * 14, 42 + rnd() * 10];
+    g.fillStyle = `rgb(${base})`; g.fillRect(0, y0, w, ph);
+    for (let i = 0; i < 260; i++) {
+      const yy = y0 + rnd() * ph, a = rnd() * 0.12;
+      g.strokeStyle = `rgba(${rnd() < .5 ? '60,35,18' : '200,150,100'},${a})`; g.lineWidth = 1 + rnd() * 3;
+      g.beginPath(); g.moveTo(0, yy);
+      for (let x = 0; x <= w; x += 64) g.lineTo(x, yy + Math.sin(x * 0.004 + i) * 6 + (rnd() - .5) * 3);
+      g.stroke();
+    }
+    g.fillStyle = 'rgba(40,22,10,.55)'; g.fillRect(0, y0, w, 3);
+  }
+});
+const desk = new THREE.Mesh(new THREE.PlaneGeometry(4, 3), new THREE.MeshStandardMaterial({ map: wood, roughness: 0.55, metalness: 0 }));
+desk.rotation.x = -Math.PI / 2; desk.receiveShadow = true; scene.add(desk);
+
+// Wall with window light
+const wallTex = canvasTex(1024, 1024, (g, w, h) => {
+  const gr = g.createLinearGradient(0, 0, w, 0); gr.addColorStop(0, '#8a6d55'); gr.addColorStop(1, '#4a3526'); g.fillStyle = gr; g.fillRect(0, 0, w, h);
+  const gr2 = g.createLinearGradient(0, 0, 0, h); gr2.addColorStop(0, 'rgba(40,24,14,.55)'); gr2.addColorStop(.7, 'rgba(40,24,14,0)'); g.fillStyle = gr2; g.fillRect(0, 0, w, h);
+  g.filter = 'blur(38px)'; g.fillStyle = 'rgba(255,236,205,.6)';
+  for (let i = 0; i < 3; i++) g.fillRect(40 + i * 150, 60, 110, 760);
+  g.filter = 'blur(18px)';
+  for (let i = 0; i < 14; i++) { const x = rnd() * w, y = 80 + rnd() * 620, r = 18 + rnd() * 40; const rg = g.createRadialGradient(x, y, 0, x, y, r); rg.addColorStop(0, 'rgba(255,200,120,.95)'); rg.addColorStop(1, 'rgba(255,170,80,0)'); g.fillStyle = rg; g.beginPath(); g.arc(x, y, r, 0, 7); g.fill(); }
+  g.fillStyle = 'rgba(70,50,30,.5)'; g.fillRect(560, 700, 420, 20); g.fillRect(560, 470, 420, 16);
+  g.filter = 'none';
+});
+const wall = new THREE.Mesh(new THREE.PlaneGeometry(3, 1.2), new THREE.MeshBasicMaterial({ map: wallTex, toneMapped: true }));
+wall.position.set(0, 0.6, -1.1); scene.add(wall);
+
+// Laptop
+const alu = new THREE.MeshPhysicalMaterial({ color: 0x8e9197, metalness: 0.9, roughness: 0.38, clearcoat: 0.3 });
+const LW = 0.34, LD = 0.235, LT = 0.011;
+const laptop = new THREE.Group(); scene.add(laptop);
+const base = new THREE.Mesh(new RoundedBoxGeometry(LW, LT, LD, 4, 0.006), alu); base.position.y = LT / 2; base.castShadow = base.receiveShadow = true; laptop.add(base);
+const keysTex = canvasTex(1024, 512, (g, w, h) => {
+  g.fillStyle = '#16171a'; g.fillRect(0, 0, w, h);
+  const rows = 6, cols = 14, pad = 6, kw = (w - pad) / cols, kh = (h - pad) / rows;
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    let x = pad + c * kw, ww = kw - pad;
+    if (r === 5 && c > 3 && c < 10) { if (c !== 4) continue; ww = kw * 6 - pad; }
+    g.fillStyle = '#26282d'; g.beginPath(); g.roundRect(x, pad + r * kh, ww, kh - pad, 8); g.fill();
+  }
+});
+const kb = new THREE.Mesh(new THREE.PlaneGeometry(LW * 0.86, LD * 0.42), new THREE.MeshStandardMaterial({ map: keysTex, roughness: 0.6 }));
+kb.rotation.x = -Math.PI / 2; kb.position.set(0, LT + 0.0005, -LD * 0.17); laptop.add(kb);
+const pad = new THREE.Mesh(new RoundedBoxGeometry(LW * 0.38, 0.0008, LD * 0.3, 2, 0.0004), new THREE.MeshPhysicalMaterial({ color: 0xc3c6cb, metalness: 0.7, roughness: 0.25 }));
+pad.position.set(0, LT + 0.0004, LD * 0.28); laptop.add(pad);
+const hinge = new THREE.Group(); hinge.position.set(0, LT, -LD / 2 + 0.004); laptop.add(hinge);
+const lidH = 0.225;
+const lid = new THREE.Mesh(new RoundedBoxGeometry(LW, lidH, 0.006, 4, 0.0028), alu); lid.position.set(0, lidH / 2, -0.003); lid.castShadow = true; hinge.add(lid);
+const bezel = new THREE.Mesh(new THREE.PlaneGeometry(LW - 0.006, lidH - 0.006), new THREE.MeshStandardMaterial({ color: 0x050506, roughness: 0.2, metalness: 0.2 }));
+bezel.position.set(0, lidH / 2, 0.0002); hinge.add(bezel);
+const SW = LW - 0.022, SH = SW * 900 / 1440;
+const screenMat = new THREE.MeshBasicMaterial({ color: 0xffffff, toneMapped: false });
+const screen = new THREE.Mesh(new THREE.PlaneGeometry(SW, SH), screenMat);
+screen.position.set(0, lidH / 2 + 0.004, 0.0004); hinge.add(screen);
+// Glass reflection on the screen
+const glass = new THREE.Mesh(new THREE.PlaneGeometry(SW, SH), new THREE.MeshPhysicalMaterial({ color: 0xffffff, transparent: true, opacity: 0.06, roughness: 0.05, metalness: 0, transmission: 0, clearcoat: 1 }));
+glass.position.copy(screen.position); glass.position.z += 0.0003; hinge.add(glass);
+hinge.rotation.x = -0.32; // lid tilted back ~18°
+
+// Props: cup + saucer + beans
+const ceramic = new THREE.MeshPhysicalMaterial({ color: 0xf5f1ea, roughness: 0.25, clearcoat: 0.6 });
+const cupPts = [[0, 0], [0.028, 0], [0.032, 0.004], [0.036, 0.03], [0.04, 0.058], [0.041, 0.062], [0.038, 0.062], [0.034, 0.03], [0.03, 0.008], [0, 0.008]].map(([x, y]) => new THREE.Vector2(x, y));
+const cup = new THREE.Mesh(new THREE.LatheGeometry(cupPts, 48), ceramic); cup.castShadow = true;
+const coffee = new THREE.Mesh(new THREE.CircleGeometry(0.0375, 48), new THREE.MeshStandardMaterial({ color: 0x6b3b1c, roughness: 0.3 })); coffee.rotation.x = -Math.PI / 2; coffee.position.y = 0.054;
+const handle = new THREE.Mesh(new THREE.TorusGeometry(0.016, 0.0045, 12, 32, Math.PI * 1.3), ceramic); handle.position.set(0.042, 0.035, 0); handle.rotation.z = -Math.PI * 0.65; handle.castShadow = true;
+const saucer = new THREE.Mesh(new THREE.LatheGeometry([[0, 0], [0.07, 0], [0.074, 0.006], [0.07, 0.008], [0.03, 0.005], [0, 0.005]].map(([x, y]) => new THREE.Vector2(x, y)), 48), ceramic); saucer.castShadow = saucer.receiveShadow = true;
+const cupG = new THREE.Group(); cupG.add(saucer); const cupIn = new THREE.Group(); cupIn.position.y = 0.005; cupIn.add(cup, coffee, handle); cupG.add(cupIn);
+cupG.position.set(0.2, 0, 0.21); cupG.rotation.y = -0.6; scene.add(cupG);
+const beanMat = new THREE.MeshStandardMaterial({ color: 0x3d1f0c, roughness: 0.45 });
+for (let i = 0; i < 9; i++) {
+  const b = new THREE.Mesh(new THREE.SphereGeometry(0.008, 16, 12), beanMat); b.scale.set(1, 0.6, 0.72);
+  b.position.set(-0.2 + rnd() * 0.1, 0.005, 0.17 + rnd() * 0.1); b.rotation.y = rnd() * 6; b.castShadow = true; scene.add(b);
+}
+// Notebook
+const nb = new THREE.Mesh(new RoundedBoxGeometry(0.15, 0.008, 0.2, 2, 0.003), new THREE.MeshStandardMaterial({ color: 0x2f3b33, roughness: 0.8 }));
+nb.position.set(-0.27, 0.004, 0.05); nb.rotation.y = 0.35; nb.castShadow = nb.receiveShadow = true; scene.add(nb);
+
+// Lights
+scene.add(new THREE.HemisphereLight(0xfff1dd, 0x3a2414, 0.55));
+const sun = new THREE.DirectionalLight(0xffdcae, 2.1); sun.position.set(-1.2, 1.6, 0.6); sun.castShadow = true;
+sun.shadow.mapSize.set(2048, 2048); sun.shadow.camera.left = -0.6; sun.shadow.camera.right = 0.6; sun.shadow.camera.top = 0.6; sun.shadow.camera.bottom = -0.6; sun.shadow.radius = 6; sun.shadow.bias = -0.0005;
+scene.add(sun);
+const fill = new THREE.PointLight(0xffc890, 0.6, 3); fill.position.set(0.6, 0.5, 0.8); scene.add(fill);
+// Screen glow onto the desk
+const glow = new THREE.PointLight(0xfff3e6, 0.25, 0.8); glow.position.set(0, 0.12, 0.05); scene.add(glow);
+
+const camera = new THREE.PerspectiveCamera(28, W / H, 0.01, 20);
+const loader = new THREE.TextureLoader();
+const ease = (x) => (x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
+
+let opts = {};
+window.setup = (o) => { opts = o; document.getElementById('hook').innerHTML = o.hook || ''; document.getElementById('tag').innerHTML = o.tag || ''; };
+window.renderFrame = async (t, url) => {
+  const tex = await loader.loadAsync(url); tex.colorSpace = THREE.SRGBColorSpace; tex.anisotropy = 8;
+  if (screenMat.map) screenMat.map.dispose(); screenMat.map = tex; screenMat.needsUpdate = true;
+  const k = ease(Math.min(1, t / opts.dur));
+  // Camera: slow push-in with a small arc, looking at the screen.
+  const dist = 1.62 - 0.36 * k, ang = -0.14 + 0.2 * k;
+  camera.position.set(Math.sin(ang) * dist, 0.46 - 0.1 * k, Math.cos(ang) * dist + 0.05);
+  camera.lookAt(0, 0.06 - 0.01 * k, 0.03);
+  renderer.render(scene, camera);
+  const hk = document.getElementById('hook').style, tg = document.getElementById('tag').style;
+  const fade = (a, b, c, d2) => Math.max(0, Math.min(1, (t - a) / (b - a), (d2 - t) / (d2 - c)));
+  hk.opacity = fade(0.2, 0.7, opts.hookOut - 0.5, opts.hookOut); hk.transform = `translateY(${(1 - Math.min(1, (t - 0.2) / 0.5)) * 30}px)`;
+  tg.opacity = fade(opts.dur - 3, opts.dur - 2.4, opts.dur + 5, opts.dur + 6);
+};
+window.ready = true;
+</script></body></html>

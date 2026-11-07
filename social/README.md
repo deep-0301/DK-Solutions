@@ -57,6 +57,22 @@ KOKORO_DIR=/path/to/that/folder node social/tools/make-explainer.mjs social/spec
 ```
 Scene types: `title`, `point` (n, title, body), `stat` (value, label), `compare` (left/right: h, v, items), `timeline` (items: d, t, say), `chat` (messages: from user/bot, text, say), `end`. Every scene or item has `say` (spoken) and optional `cap` (on-screen caption, `*word*` highlights yellow).
 
+## Website-on-a-laptop concept reels
+
+Reels 20+ show a made-up business's website playing on a 3D laptop on a desk, with a slow camera push-in, a short hook, the same voice and a soft music bed.
+
+- `social/concepts/*.html`: the concept sites (1440x900). Each one exposes `window.update(t)` that sets scroll, cursor and animation for time `t`, so every frame is exact.
+- `social/tools/laptop-scene.html`: the three.js desk scene that puts each site frame on the laptop screen.
+- `social/specs/2x-*.json`: `{ id, site, dur, hook, hookOut, tag, say: [{at, text}], voice, speed }`.
+
+```bash
+npm i three@0.170.0   # anywhere; point THREE_DIR at node_modules/three
+THREE_DIR=... KOKORO_DIR=... PYTHON=... node social/tools/make-showcase.mjs social/specs/20-cafe-concept.json
+PREVIEW=out.png node social/tools/make-showcase.mjs social/specs/20-cafe-concept.json   # 4 stills only
+```
+
+Use made-up businesses only, and say "concept example" in the caption.
+
 ## Making more reels
 ```bash
 node social/tools/make-reel.mjs social/specs/07-my-new-reel.json   # needs Node, Playwright, ffmpeg

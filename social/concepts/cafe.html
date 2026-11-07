@@ -1,0 +1,135 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><title>Kettle &amp; Crema concept</title>
+<!-- Fictional café website concept by DK Solutions, for reels. Driven by window.update(t) so every frame is deterministic. -->
+<style>
+@font-face{font-family:Playfair;src:url(fonts/playfair-display-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:Playfair;src:url(fonts/playfair-display-latin-700-normal.woff2);font-weight:700}
+@font-face{font-family:Playfair;src:url(fonts/playfair-display-latin-500-italic.woff2);font-weight:500;font-style:italic}
+@font-face{font-family:DM;src:url(fonts/dm-sans-latin-400-normal.woff2);font-weight:400}
+@font-face{font-family:DM;src:url(fonts/dm-sans-latin-500-normal.woff2);font-weight:500}
+@font-face{font-family:DM;src:url(fonts/dm-sans-latin-700-normal.woff2);font-weight:700}
+*{box-sizing:border-box;margin:0}
+html,body{width:1440px;overflow:hidden;background:#f4ece1}
+body{font-family:DM,sans-serif;color:#2b1d14}
+#page{position:relative;width:1440px;will-change:transform}
+nav{position:fixed;top:0;left:0;right:0;height:86px;display:flex;align-items:center;justify-content:space-between;padding:0 72px;z-index:20;background:rgba(244,236,225,.82);backdrop-filter:blur(10px)}
+.logo{font:700 28px Playfair,serif;letter-spacing:-.01em}.logo i{font-style:italic;font-weight:500;color:#a0612e}
+nav ul{display:flex;gap:40px;list-style:none;padding:0;font-size:17px;font-weight:500;color:#5a4636}
+nav .cta{padding:13px 24px;border-radius:999px;background:#2b1d14;color:#f4ece1;font-weight:700;font-size:16px}
+section{position:relative}
+.hero{height:900px;overflow:hidden;background:radial-gradient(900px 700px at 72% 55%,#e7cfae 0%,rgba(231,207,174,0) 70%),#f4ece1}
+.hero .copy{position:absolute;left:96px;top:250px;width:560px;z-index:5}
+.kick{font-size:15px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#a0612e}
+.hero h1{font:500 92px/0.98 Playfair,serif;letter-spacing:-.03em;margin:22px 0 26px}
+.hero h1 i{color:#a0612e}
+.hero p{font-size:21px;line-height:1.55;color:#5a4636;max-width:470px}
+.btns{display:flex;gap:14px;margin-top:36px}
+.b1{padding:19px 34px;border-radius:999px;background:#a0612e;color:#fff;font-weight:700;font-size:18px;box-shadow:0 14px 30px rgba(160,97,46,.35)}
+.b2{padding:17px 32px;border-radius:999px;border:2px solid #2b1d14;font-weight:700;font-size:18px}
+#cupWrap{position:absolute;left:760px;top:150px;width:620px;height:620px;z-index:4}
+.bean{position:absolute;width:70px;height:48px;z-index:6;filter:drop-shadow(0 14px 14px rgba(60,30,10,.35))}
+.steam{position:absolute;left:880px;top:40px;width:380px;height:360px;z-index:5;opacity:.9}
+.stars{position:absolute;left:96px;bottom:70px;display:flex;gap:14px;align-items:center;font-size:16px;color:#5a4636}
+.stars b{color:#c98a2b;font-size:20px;letter-spacing:2px}
+.menu{padding:120px 96px 100px;background:#2b1d14;color:#f4ece1}
+.menu h2,.visit h2{font:500 68px/1 Playfair,serif;letter-spacing:-.02em}
+.menu h2 i{color:#e0a96d}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;margin-top:56px}
+.card{border-radius:30px;background:#3a281c;padding:30px;height:420px;display:flex;flex-direction:column;justify-content:space-between;transition:none}
+.card .ill{height:230px;border-radius:22px;display:grid;place-items:center}
+.card h3{font:500 32px Playfair,serif}
+.card .row{display:flex;justify-content:space-between;align-items:center;color:#cdb49a;font-size:17px}
+.card .add{width:52px;height:52px;border-radius:50%;background:#e0a96d;color:#2b1d14;display:grid;place-items:center;font-size:30px;font-weight:700}
+.visit{padding:120px 96px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.hours{margin-top:30px;display:grid;grid-template-columns:auto auto;gap:14px 50px;font-size:20px;color:#5a4636}
+.hours b{color:#2b1d14}
+.mapbox{height:460px;border-radius:36px;background:#e8d9c4;position:relative;overflow:hidden}
+.mapbox .road{position:absolute;background:#f8f1e7}
+.pin{position:absolute;left:50%;top:46%;width:64px;height:64px;margin:-64px 0 0 -32px;border-radius:50% 50% 50% 0;transform:rotate(-45deg);background:#a0612e;box-shadow:0 14px 30px rgba(160,97,46,.45)}
+.pin:after{content:"";position:absolute;inset:20px;border-radius:50%;background:#f4ece1}
+#cursor{position:fixed;left:0;top:0;width:34px;height:34px;z-index:50;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.35))}
+</style></head><body>
+<nav><div class="logo">Kettle <i>&amp;</i> Crema</div><ul><li>Menu</li><li>Our beans</li><li>Visit</li><li>Gift cards</li></ul><div class="cta">Order ahead</div></nav>
+<div id="page">
+<section class="hero">
+  <div class="copy">
+    <div class="kick">Small-batch roastery · Est. 2019</div>
+    <h1>Slow coffee for <i>warm</i> mornings</h1>
+    <p>Single-origin beans roasted in-house every Tuesday. Order ahead and skip the line.</p>
+    <div class="btns"><div class="b1">Order ahead</div><div class="b2">See the menu</div></div>
+  </div>
+  <svg class="steam" id="steam" viewBox="0 0 380 360"></svg>
+  <svg id="cupWrap" viewBox="0 0 620 620">
+    <defs>
+      <radialGradient id="saucer" cx="50%" cy="45%" r="55%"><stop offset="0" stop-color="#fffdf8"/><stop offset=".8" stop-color="#efe6d8"/><stop offset="1" stop-color="#d8c8b2"/></radialGradient>
+      <radialGradient id="cupg" cx="45%" cy="40%" r="60%"><stop offset="0" stop-color="#ffffff"/><stop offset=".85" stop-color="#f1e8dc"/><stop offset="1" stop-color="#cdbba3"/></radialGradient>
+      <radialGradient id="crema" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#d9a873"/><stop offset=".6" stop-color="#b9783f"/><stop offset=".92" stop-color="#7a4422"/><stop offset="1" stop-color="#5a2f16"/></radialGradient>
+      <filter id="soft"><feGaussianBlur stdDeviation="14"/></filter>
+    </defs>
+    <ellipse cx="320" cy="345" rx="270" ry="250" fill="rgba(60,30,10,.28)" filter="url(#soft)"/>
+    <circle cx="310" cy="310" r="270" fill="url(#saucer)"/>
+    <circle cx="310" cy="310" r="205" fill="#e9dccb"/>
+    <path d="M500 250 q95 -10 95 60 q0 70 -95 60" fill="none" stroke="#efe5d6" stroke-width="34" stroke-linecap="round"/>
+    <circle cx="310" cy="310" r="190" fill="url(#cupg)"/>
+    <g id="latte">
+      <circle cx="310" cy="310" r="160" fill="url(#crema)"/>
+      <path id="art" d="M310 400 C220 330 230 240 290 250 C305 252 310 265 310 272 C310 265 315 252 330 250 C390 240 400 330 310 400Z" fill="#fbf1e2" opacity=".95"/>
+      <path d="M310 272 L310 400" stroke="#e8cfae" stroke-width="5" opacity=".7"/>
+      <ellipse cx="310" cy="430" rx="40" ry="10" fill="#fbf1e2" opacity=".85"/>
+    </g>
+    <ellipse cx="250" cy="215" rx="60" ry="22" fill="#fff" opacity=".35" transform="rotate(-30 250 215)"/>
+  </svg>
+  <div id="beans"></div>
+  <div class="stars"><b>★★★★★</b> 4.9 from 1,200+ neighbours</div>
+</section>
+<section class="menu">
+  <div class="kick" style="color:#e0a96d">This week's menu</div>
+  <h2 style="margin-top:18px">Made slow, <i>poured fresh</i></h2>
+  <div class="cards">
+    <div class="card" id="c1"><div class="ill" style="background:radial-gradient(circle at 50% 45%,#c48a52 0 34%,#f7ecdc 35% 40%,#5b3a24 41%)"></div><div><h3>Oat flat white</h3><div class="row"><span>Double ristretto, silky oat</span><span class="add">+</span></div></div></div>
+    <div class="card" id="c2"><div class="ill" style="background:linear-gradient(180deg,#5b3a24 0 30%,#3a2416 30% 100%);position:relative"><div style="position:absolute;left:38%;top:22%;width:24%;height:64%;border-radius:12px 12px 30px 30px;background:linear-gradient(#e9c79d 0 25%,#6b3c1c 25%);box-shadow:inset 0 0 0 4px rgba(255,255,255,.25)"></div></div><div><h3>Cold brew tonic</h3><div class="row"><span>18-hour steep, citrus</span><span class="add">+</span></div></div></div>
+    <div class="card" id="c3"><div class="ill" style="background:radial-gradient(circle at 50% 50%,#e7b77a 0 22%,#c98a4a 23% 30%,#5b3a24 31%)"></div><div><h3>Maple croissant</h3><div class="row"><span>Baked here at 6am</span><span class="add">+</span></div></div></div>
+  </div>
+</section>
+<section class="visit">
+  <div><div class="kick">Come say hi</div><h2 style="margin-top:18px">Open early, <i style="color:#a0612e">every day</i></h2>
+    <div class="hours"><span>Mon to Fri</span><b>7am to 6pm</b><span>Sat and Sun</span><b>8am to 5pm</b></div>
+    <div class="btns"><div class="b1">Get directions</div><div class="b2">Call us</div></div></div>
+  <div class="mapbox"><div class="road" style="left:0;right:0;top:44%;height:44px"></div><div class="road" style="top:0;bottom:0;left:30%;width:40px"></div><div class="road" style="top:0;bottom:0;left:72%;width:30px;transform:rotate(12deg)"></div><div class="pin"></div></div>
+</section>
+</div>
+<svg id="cursor" viewBox="0 0 24 24"><path d="M3 2l7.5 19 2.6-7.6L21 10.8z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg>
+<script>
+const ease = (x) => x < 0 ? 0 : x > 1 ? 1 : x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
+const lerp = (a, b, k) => a + (b - a) * k;
+// Beans: fixed seeds so frames are repeatable
+const beansEl = document.getElementById('beans');
+const beanSVG = '<svg viewBox="0 0 70 48"><defs><radialGradient id="bg" cx="40%" cy="35%" r="70%"><stop offset="0" stop-color="#8a4f26"/><stop offset=".7" stop-color="#4a2510"/><stop offset="1" stop-color="#2a1206"/></radialGradient></defs><ellipse cx="35" cy="24" rx="33" ry="22" fill="url(#bg)"/><path d="M8 26 C22 14 46 34 62 20" stroke="#1d0b03" stroke-width="5" fill="none" stroke-linecap="round"/><ellipse cx="24" cy="14" rx="10" ry="4" fill="#fff" opacity=".18"/></svg>';
+const beans = [[700,130,1.1,-20],[1290,120,.8,30],[1350,600,1.2,60],[720,690,.9,-50],[1180,760,.7,10],[640,420,.6,80],[1380,360,.65,-30],[980,80,.55,45]].map(([x,y,s,r],i)=>{const e=document.createElement('div');e.className='bean';e.innerHTML=beanSVG;beansEl.appendChild(e);return {e,x,y,s,r,ph:i*1.3};});
+// Steam wisps
+const steam = document.getElementById('steam');
+const wisps = [0,1,2].map((i)=>{const p=document.createElementNS('http://www.w3.org/2000/svg','path');p.setAttribute('fill','none');p.setAttribute('stroke','rgba(255,255,255,.75)');p.setAttribute('stroke-width',String(14-i*3));p.setAttribute('stroke-linecap','round');p.style.filter='blur(6px)';steam.appendChild(p);return p;});
+const cursor = document.getElementById('cursor'), page = document.getElementById('page');
+const latte = document.getElementById('latte');
+// Timeline (seconds): idle on hero, scroll to menu, hover a card, scroll to visit.
+const SCROLL = [[0,0],[2.6,0],[5.6,980],[8.4,980],[11,1800],[14,1800]];
+const CURSOR = [[0,1100,820],[2.2,980,560],[2.6,980,560],[5.6,760,520],[6.6,760,560],[8.4,760,560],[11,1050,700],[14,1080,720]];
+function track(tbl, t){for(let i=0;i<tbl.length-1;i++){const [t0,...a]=tbl[i],[t1,...b]=tbl[i+1];if(t<=t1){const k=ease((t-t0)/(t1-t0));return a.map((v,j)=>lerp(v,b[j],k));}}return tbl[tbl.length-1].slice(1);}
+window.update = (t) => {
+  const [y] = track(SCROLL, t);
+  page.style.transform = `translateY(${-y}px)`;
+  // Parallax: cup slower, beans faster, gentle float
+  document.getElementById('cupWrap').style.transform = `translateY(${y*0.25}px) rotate(${t*6}deg)`;
+  latte.setAttribute('transform', `rotate(${Math.sin(t*0.6)*6} 310 310)`);
+  beans.forEach((b)=>{const fy=Math.sin(t*1.1+b.ph)*16, fx=Math.cos(t*.8+b.ph)*10;b.e.style.transform=`translate(${b.x+fx}px,${b.y+fy-y*(0.35+b.s*0.5)}px) rotate(${b.r+t*20*b.s}deg) scale(${b.s})`;});
+  wisps.forEach((p,i)=>{const o=t*1.4+i*2.1,amp=26+i*8;let d=`M${150+i*40} 340`;for(let k=1;k<=6;k++){const yy=340-k*55,xx=150+i*40+Math.sin(o+k*0.9)*amp*(k/6);d+=` S${xx+20} ${yy+25} ${xx} ${yy}`;}p.setAttribute('d',d);p.style.opacity=String(0.45+0.35*Math.sin(o*0.7));});
+  steam.style.transform = `translateY(${y*0.25}px)`;
+  const [cx, cy] = track(CURSOR, t);
+  cursor.style.transform = `translate(${cx}px,${cy}px)`;
+  // Card hover lift when cursor is over the first card
+  const hov = t > 5.9 && t < 8.6 ? ease(Math.min(1,(t-5.9)/0.5)) * (t>8.1?1-ease((t-8.1)/0.5):1) : 0;
+  const c1 = document.getElementById('c1');
+  c1.style.transform = `translateY(${-14*hov}px)`; c1.style.boxShadow = `0 ${30*hov}px ${60*hov}px rgba(0,0,0,${.45*hov})`; c1.style.background = hov ? `rgba(${58+40*hov},${40+20*hov},${28+8*hov},1)` : '';
+};
+update(0);
+</script></body></html>

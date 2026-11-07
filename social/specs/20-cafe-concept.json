@@ -1,0 +1,14 @@
+{
+  "id": "20-cafe-concept",
+  "site": "cafe.html",
+  "dur": 14,
+  "hook": "A café website that feels <i>warm</i> before you walk in ☕",
+  "hookOut": 3.4,
+  "tag": "Concept by DK Solutions<br><b>@dksolutions.dev</b>",
+  "say": [
+    { "at": 0.4, "text": "This is what a café website can feel like in 2026." },
+    { "at": 4.2, "text": "Steam that moves. Beans that float." },
+    { "at": 7.0, "text": "And the menu is one scroll away." },
+    { "at": 10.4, "text": "Hours, directions, done. Built in about a week." }
+  ]
+}
