@@ -1,12 +1,14 @@
 #!/usr/bin/env node
 // "Website concept on a laptop" reels: records an animated concept site
 // (social/concepts/*.html, driven by window.update(t)), puts it on the screen
-// of a 3D laptop on a desk (laptop-scene.html, three.js), adds a slow camera
-// push-in, hook text, voiceover (Kokoro) and a music bed.
+// of a 3D laptop on a desk (laptop-scene.html, three.js, depth of field and
+// bloom), with a cinematic camera move and an original music bed (score.py)
+// timed to the site's SCROLL and CLICK cues. No words by default; optional
+// voice lines (say) and hook text still work.
 //
 //   THREE_DIR=/path/to/node_modules/three KOKORO_DIR=... PYTHON=... \
 //   node social/tools/make-showcase.mjs social/specs/20-cafe-concept.json
-// Spec: { id, site: "cafe.html", dur, hook, tag, say: [{at, text}], voice, speed }
+// Spec: { id, site: "cafe.html", dur, bpm, mood: warm|dark, tag, hook?, say?: [{at, text}], voice, speed }
 // PREVIEW=out.png renders 4 stills only.
 
 import { createRequire } from 'node:module';
@@ -46,6 +48,12 @@ async function main() {
   // 1. Website frames.
   const site = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   await site.goto(`${base}/social/concepts/${spec.site}`); await site.waitForTimeout(400);
+  // Music cues: every move in the site's SCROLL table, plus its CLICK time.
+  const cues = await site.evaluate(() => ({
+    scroll: typeof SCROLL !== 'undefined' ? SCROLL : [],
+    clicks: typeof CLICK !== 'undefined' ? [CLICK] : [],
+  }));
+  const scrolls = cues.scroll.slice(1).map((p, i) => [cues.scroll[i][0], p[0], cues.scroll[i][1] !== p[1]]).filter((x) => x[2]).map(([a, b]) => [a, b]);
   for (const [i, t] of times.entries()) {
     await site.evaluate((t) => window.update(t), t);
     await site.screenshot({ path: path.join(sdir, `${String(i).padStart(5, '0')}.jpg`), type: 'jpeg', quality: 92 });
@@ -54,7 +62,7 @@ async function main() {
   const sc = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
   sc.on('pageerror', (e) => console.error('scene error', e));
   await sc.goto(`${base}/social/tools/laptop-scene.html`); await sc.waitForFunction(() => window.ready, null, { timeout: 60000 });
-  await sc.evaluate((o) => window.setup(o), { dur: spec.dur, hook: spec.hook, tag: spec.tag, hookOut: spec.hookOut || 3.2 });
+  await sc.evaluate((o) => window.setup(o), { dur: spec.dur, hook: spec.hook, tag: spec.tag, hookOut: spec.hookOut || 3.2, intro: scrolls.length ? scrolls[0][0] : 2.5 });
   const outs = [];
   for (const [i, t] of times.entries()) {
     const n = String(i).padStart(5, '0');
@@ -74,15 +82,15 @@ async function main() {
     lines.forEach((l, k) => { ains.push('-i', path.join(tmp, `${k}.wav`)); const ms = Math.round(l.at * 1000); amix.push(`[${k + 1}:a]aresample=44100,aformat=channel_layouts=stereo,adelay=${ms}|${ms}[v${k}]`); });
   }
   const D = spec.dur;
-  const chord = (f) => `sin(2*PI*${f}*t)+0.45*sin(2*PI*${f * 2}*t)+0.2*sin(2*PI*${f * 3}*t)`;
-  // Warm lo-fi style progression with a soft pulse (generated here, royalty free).
-  const prog = `if(lt(mod(t,8),2),${chord(174.61)}+${chord(220)}+${chord(261.63)},if(lt(mod(t,8),4),${chord(196)}+${chord(246.94)}+${chord(293.66)},if(lt(mod(t,8),6),${chord(164.81)}+${chord(196)}+${chord(246.94)},${chord(146.83)}+${chord(185)}+${chord(220)})))`;
-  const music = `aevalsrc='0.02*(${prog})*(0.7+0.3*pow(sin(PI*t*1.6),2))':s=44100:d=${D},lowpass=f=1500,aecho=0.8:0.6:180:0.25,aformat=channel_layouts=stereo,afade=t=in:d=1,afade=t=out:st=${D - 1.5}:d=1.5[m]`;
+  fs.writeFileSync(path.join(tmp, 'cues.json'), JSON.stringify({ dur: D, bpm: spec.bpm || 96, mood: spec.mood || 'warm', scrolls, clicks: cues.clicks }));
+  execFileSync(process.env.PYTHON || 'python3', [path.join(here, 'score.py'), path.join(tmp, 'music.wav'), path.join(tmp, 'cues.json')]);
+  ains.push('-i', path.join(tmp, 'music.wav'));
+  const music = `[${lines.length + 1}:a]aformat=channel_layouts=stereo,volume=${lines.length ? 0.45 : 1}[m]`;
   const mixIn = lines.map((_, k) => `[v${k}]`).join('') + '[m]';
   const mp4 = path.join(repo, 'social', 'reels', `${spec.id}.mp4`);
   sh(['-framerate', String(FPS), '-i', path.join(fdir, '%05d.jpg'), ...ains, '-filter_complex',
-    `${amix.length ? amix.join(';') + ';' : ''}${music};${mixIn}amix=inputs=${lines.length + 1}:duration=longest:normalize=0,atrim=0:${D},loudnorm=I=-15:TP=-1.5:LRA=11[a];[0:v]noise=alls=6:allf=t,format=yuv420p[v]`,
-    '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-preset', 'medium', '-crf', '23', '-r', String(FPS),
+    `${amix.length ? amix.join(';') + ';' : ''}${music};${mixIn}amix=inputs=${lines.length + 1}:duration=longest:normalize=0,atrim=0:${D},loudnorm=I=-15:TP=-1.5:LRA=11[a];[0:v]eq=contrast=1.06:saturation=1.06:gamma=0.98,colorbalance=rs=0.03:bs=-0.03:rh=0.02:bh=-0.03,vignette=angle=PI/5,noise=alls=5:allf=t,format=yuv420p[v]`,
+    '-map', '[v]', '-map', '[a]', '-c:v', 'libx264', '-preset', 'medium', '-crf', '21', '-r', String(FPS),
     '-c:a', 'aac', '-b:a', '160k', '-ar', '44100', '-movflags', '+faststart', '-t', String(D), mp4]);
   fs.copyFileSync(outs[Math.min(outs.length - 1, Math.round(FPS * 1.5))], path.join(repo, 'social', 'reels', `${spec.id}.jpg`));
   fs.rmSync(tmp, { recursive: true, force: true });

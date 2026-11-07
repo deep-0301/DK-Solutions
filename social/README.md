@@ -59,11 +59,11 @@ Scene types: `title`, `point` (n, title, body), `stat` (value, label), `compare`
 
 ## Website-on-a-laptop concept reels
 
-Reels 20+ show a made-up business's website playing on a 3D laptop on a desk, with a slow camera push-in, a short hook, the same voice and a soft music bed.
+Reels 20+ show a made-up business's website playing on a 3D laptop on a desk, shot like a film: depth of field, window light, string-light bokeh and a slow handheld camera move. No words: an original music bed (`social/tools/score.py`, numpy) is generated from the site's own `SCROLL` and `CLICK` timings, so the drums drop on the first scroll, each scroll gets a whoosh and a rising arpeggio, and a click gets a chime. Keep scroll moves on the bar grid (96 BPM = 2.5 s per bar).
 
 - `social/concepts/*.html`: the concept sites (1440x900). Each one exposes `window.update(t)` that sets scroll, cursor and animation for time `t`, so every frame is exact.
 - `social/tools/laptop-scene.html`: the three.js desk scene that puts each site frame on the laptop screen.
-- `social/specs/2x-*.json`: `{ id, site, dur, hook, hookOut, tag, say: [{at, text}], voice, speed }`.
+- `social/specs/2x-*.json`: `{ id, site, dur, bpm, mood: "warm" | "dark", tag }` (optional `hook` text and `say` voice lines still work).
 
 ```bash
 npm i three@0.170.0   # anywhere; point THREE_DIR at node_modules/three

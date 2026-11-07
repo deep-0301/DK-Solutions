@@ -112,8 +112,8 @@ const wisps = [0,1,2].map((i)=>{const p=document.createElementNS('http://www.w3.
 const cursor = document.getElementById('cursor'), page = document.getElementById('page');
 const latte = document.getElementById('latte');
 // Timeline (seconds): idle on hero, scroll to menu, hover a card, scroll to visit.
-const SCROLL = [[0,0],[2.6,0],[5.6,980],[8.4,980],[11,1800],[14,1800]];
-const CURSOR = [[0,1100,820],[2.2,980,560],[2.6,980,560],[5.6,760,520],[6.6,760,560],[8.4,760,560],[11,1050,700],[14,1080,720]];
+const SCROLL = [[0,0],[2.5,0],[5,980],[7.5,980],[10,1800],[15,1800]];
+const CURSOR = [[0,1100,820],[2.1,980,560],[2.5,980,560],[5,760,520],[6,760,560],[7.5,760,560],[10,1050,700],[15,1080,720]];
 function track(tbl, t){for(let i=0;i<tbl.length-1;i++){const [t0,...a]=tbl[i],[t1,...b]=tbl[i+1];if(t<=t1){const k=ease((t-t0)/(t1-t0));return a.map((v,j)=>lerp(v,b[j],k));}}return tbl[tbl.length-1].slice(1);}
 window.update = (t) => {
   const [y] = track(SCROLL, t);

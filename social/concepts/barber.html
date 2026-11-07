@@ -82,9 +82,9 @@ h2 span{color:#d4a64a}
 const ease = (x) => x < 0 ? 0 : x > 1 ? 1 : x < .5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2;
 const lerp = (a, b, k) => a + (b - a) * k;
 function track(tbl, t){for(let i=0;i<tbl.length-1;i++){const [t0,...a]=tbl[i],[t1,...b]=tbl[i+1];if(t<=t1){const k=ease((t-t0)/(t1-t0));return a.map((v,j)=>lerp(v,b[j],k));}}return tbl[tbl.length-1].slice(1);}
-const SCROLL = [[0,0],[2.8,0],[5.4,900],[7.4,900],[9.6,1580],[14,1580]];
-const CURSOR = [[0,1200,820],[2.4,1180,560],[2.8,1180,560],[5.4,700,620],[7.4,760,640],[9.6,1120,520],[10.6,1236,290],[12,1236,290],[12.6,1300,420],[14,1310,430]];
-const CLICK = 10.7;
+const SCROLL = [[0,0],[2.5,0],[5,900],[7.5,900],[10,1580],[15,1580]];
+const CURSOR = [[0,1200,820],[2.1,1180,560],[2.5,1180,560],[5,700,620],[7.5,760,640],[9.4,1120,520],[10.3,1236,290],[12,1236,290],[12.6,1300,420],[15,1310,430]];
+const CLICK = 10.625;
 window.update = (t) => {
   const [y] = track(SCROLL, t);
   document.getElementById('page').style.transform = `translateY(${-y}px)`;
