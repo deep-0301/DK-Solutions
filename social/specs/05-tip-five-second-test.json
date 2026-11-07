@@ -1,0 +1,9 @@
+{
+  "id": "05-tip-five-second-test",
+  "scenes": [
+    { "type": "text", "kicker": "Try this today", "title": "The *5-second* website test", "sub": "Show your homepage to a friend for 5 seconds. Then ask:", "duration": 3.2 },
+    { "type": "list", "title": "Can they tell you...", "items": ["*What* you do?", "*Where* you are?", "*How* to book or buy?"], "each": 1.8, "last": 2.6 },
+    { "type": "text", "kicker": "If they can't", "title": "Your website needs *a clearer first screen.*", "sub": "That's the fix we start every redesign with.", "duration": 3.0 },
+    { "type": "cta", "title": "Want a homepage that *passes the test?*", "duration": 3.0 }
+  ]
+}

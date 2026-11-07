@@ -1,0 +1,19 @@
+{
+  "id": "01-bakery-before-after",
+  "business": {
+    "name": "Maple & Crumb Bakery", "logo": "Maple & Crumb", "since": 2009, "copyright": 2013,
+    "oldBg": "#efe4c8", "oldBar": "#7a4b2a", "oldTitle": "#7a1f1f",
+    "marquee": "FRESH BREAD DAILY!!! Call to order cakes!!! FRESH BREAD DAILY!!!",
+    "color": "#c2410c", "color2": "#f59e0b", "emoji": "🥐",
+    "kicker": "Fresh daily · Order by 3pm", "headline": "Custom cakes & fresh bread, baked this morning.",
+    "sub": "Order online in 60 seconds and pick up on your way home.",
+    "cta": "Order a cake", "cta2": "See menu", "review": "4.9 from 310 Google reviews",
+    "services": [["Custom cakes", "Birthdays, weddings, any size."], ["Daily bread", "Sourdough, rye, baguettes."], ["Pastries", "Croissants out at 7am."], ["Catering", "Office trays, delivered."]]
+  },
+  "scenes": [
+    { "type": "text", "kicker": "Website makeover", "title": "This bakery was *losing cake orders* to its own website.", "duration": 2.8 },
+    { "type": "phone", "site": "before", "tone": "bad", "title": "Their old homepage", "notes": ["No way to order online", "Hours: \"see Facebook\"", "Broken image, © 2013", "Tiny text on phones"], "duration": 3.6 },
+    { "type": "phone", "site": "after", "tone": "good", "title": "Same bakery, new site", "notes": ["Order button up top", "Reviews front and centre", "Built for phones first", "Loads in under 2s"], "duration": 4.0, "transition": "wiperight" },
+    { "type": "cta", "title": "Is your website *losing you customers?*", "sub": "Get a free quote. New sites and redesigns for small businesses.", "duration": 3.2 }
+  ]
+}

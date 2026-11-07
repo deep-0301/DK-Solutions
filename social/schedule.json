@@ -1,0 +1,92 @@
+{
+  "_readme": "Reels the GitHub Action posts. It only posts entries with approved: true once post_after has passed, one per run (Tue/Thu/Sat). Set approved to true after Deep has watched the reel and OK'd the caption.",
+  "posts": [
+    {
+      "id": "10-how-fast-website-2026",
+      "video": "social/reels/10-how-fast-website-2026.mp4",
+      "post_after": "2026-11-10T15:00:00Z",
+      "approved": false,
+      "caption": "How fast can a small business website be built in 2026? ⏱️\n\nA few years ago: 2 to 3 months. Today a simple 5-page site can go live in about a week. Here's what each day looks like, and the one thing that slows it down most (waiting on photos, text and logins).\n\nSave this for when you plan yours. Follow for more website explainers.",
+      "hashtags": [
+        "#webdevelopment",
+        "#websitedesign",
+        "#smallbusiness",
+        "#webdesign",
+        "#smallbusinesstips",
+        "#websitetips",
+        "#ai",
+        "#chatbot",
+        "#entrepreneur",
+        "#tech2026"
+      ]
+    },
+    {
+      "id": "11-website-trends-2026",
+      "video": "social/reels/11-website-trends-2026.mp4",
+      "post_after": "2026-11-12T15:00:00Z",
+      "approved": false,
+      "caption": "3 website trends every small business should know in 2026 📈\n\n1. AI answers come first. Google's AI Overviews and ChatGPT pull from websites, so clear services, FAQs and correct hours matter.\n2. Phone-first, not just phone-friendly.\n3. People expect instant answers, even at 11pm.\n\nWhich one is your site missing? Follow for a new trend every week.",
+      "hashtags": [
+        "#digitaltrends",
+        "#aisearch",
+        "#smallbusiness",
+        "#webdesign",
+        "#smallbusinesstips",
+        "#websitetips",
+        "#ai",
+        "#chatbot",
+        "#entrepreneur",
+        "#tech2026"
+      ]
+    },
+    {
+      "id": "12-chatbot-explained",
+      "video": "social/reels/12-chatbot-explained.mp4",
+      "post_after": "2026-11-14T15:00:00Z",
+      "approved": false,
+      "caption": "What does a website chatbot actually do? 💬 Explained in 30 seconds.\n\nIt learns your hours, services and FAQs, answers the same questions you get every day (24/7), and passes customers to you when it doesn't know.\n\nWould you add one to your website? Tell us in the comments.",
+      "hashtags": [
+        "#aichatbot",
+        "#aiforbusiness",
+        "#smallbusiness",
+        "#webdesign",
+        "#smallbusinesstips",
+        "#websitetips",
+        "#ai",
+        "#chatbot",
+        "#entrepreneur",
+        "#tech2026"
+      ]
+    },
+    {
+      "id": "13-chatbot-vs-contact-form",
+      "video": "social/reels/13-chatbot-vs-contact-form.mp4",
+      "post_after": "2026-11-17T15:00:00Z",
+      "approved": false,
+      "caption": "Contact form vs chatbot 🥊\n\nA form makes people wait for a reply. A chatbot answers in seconds and can book on the spot.\n\nShould you delete your form? No. Keep both: the form for detailed requests, the chatbot for quick questions.\n\nFollow for more AI tips for small business.",
+      "hashtags": [
+        "#aichatbot",
+        "#customerservice",
+        "#smallbusiness",
+        "#webdesign",
+        "#smallbusinesstips",
+        "#websitetips",
+        "#ai",
+        "#chatbot",
+        "#entrepreneur",
+        "#tech2026"
+      ]
+    }
+  ],
+  "_archived_marketing_reels": [
+    "01-bakery-before-after",
+    "04-tip-losing-customers",
+    "02-auto-before-after",
+    "05-tip-five-second-test",
+    "03-barber-before-after",
+    "06-tip-no-website",
+    "07-stop-doing-this",
+    "08-pov-customer-googles-you",
+    "09-rate-this-website"
+  ]
+}

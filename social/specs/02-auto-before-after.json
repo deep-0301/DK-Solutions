@@ -1,0 +1,20 @@
+{
+  "id": "02-auto-before-after",
+  "business": {
+    "name": "Northline Auto Care", "logo": "Northline Auto", "since": 2001, "copyright": 2015,
+    "oldBg": "#dcdcdc", "oldBar": "#222", "oldTitle": "#003399",
+    "marquee": "OIL CHANGE SPECIALS!!! WE FIX ALL MAKES!!! OIL CHANGE SPECIALS!!!",
+    "oldBlurb": "Welcome to Northline Auto Care home page. We fix cars, trucks and more. For a quote please call during business hours or come by the shop. Lorem ipsum dolor sit amet consectetur.",
+    "dark": true, "color": "#dc2626", "color2": "#f97316", "emoji": "🔧",
+    "kicker": "Licensed techs · Same-day service", "headline": "Honest auto repair, done right the first time.",
+    "sub": "Clear estimates before any work. Book a time that suits you.",
+    "cta": "Book a service", "cta2": "Get estimate", "review": "4.8 from 420 Google reviews",
+    "services": [["Brakes", "Pads, rotors, steering."], ["Diagnostics", "Check-engine light explained."], ["Tires", "Swaps, storage, alignment."], ["Oil change", "In and out in 30 minutes."]]
+  },
+  "scenes": [
+    { "type": "text", "kicker": "Website makeover", "title": "Great mechanic. *Terrible website.*", "sub": "Here's what we changed.", "duration": 2.8 },
+    { "type": "phone", "site": "before", "tone": "bad", "title": "The old site", "notes": ["Phone number hidden", "Lorem ipsum text", "No booking", "Last updated 2015"], "duration": 3.6, "label": "Before" },
+    { "type": "phone", "site": "after", "tone": "good", "title": "The new site", "notes": ["Book in 2 taps", "Call button always visible", "Services at a glance", "Real Google reviews"], "duration": 4.0, "transition": "wiperight", "label": "After" },
+    { "type": "cta", "title": "Customers judge your shop by your *website first.*", "sub": "Free quote for new websites and redesigns.", "duration": 3.2 }
+  ]
+}

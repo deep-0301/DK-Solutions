@@ -1,0 +1,9 @@
+{
+  "id": "04-tip-losing-customers",
+  "scenes": [
+    { "type": "text", "kicker": "Small business tip", "title": "3 signs your website is *costing you customers*", "duration": 2.6 },
+    { "type": "list", "title": "Check yours right now:", "items": ["You can't find your phone number in *3 seconds*", "It looks broken or tiny on a phone", "The footer still says *© 2017*"], "each": 2.0, "last": 2.8 },
+    { "type": "text", "kicker": "Why it matters", "title": "Most visitors leave in *under 10 seconds* if they're confused.", "duration": 3.0 },
+    { "type": "cta", "duration": 3.0 }
+  ]
+}
