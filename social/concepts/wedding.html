@@ -193,7 +193,9 @@ const evs = [...document.querySelectorAll('.ev')];
 window.update = (t) => {
   const H = vh();
   const [s] = track(SCROLL, t);
-  document.getElementById('page').style.transform = `translateY(${-s * H}px)`;
+  const i0 = Math.min(secs.length - 1, Math.floor(s)), i1 = Math.min(secs.length - 1, i0 + 1);
+  const y = lerp(secs[i0].offsetTop, secs[i1].offsetTop, s - i0);
+  document.getElementById('page').style.transform = `translateY(${-y}px)`;
   // Doors open, seal fades and rises.
   const o = ease(clamp((t - 0.5) / 1.9));
   document.getElementById('doorL').style.transform = `perspective(1400px) rotateY(${o * 100}deg)`;
