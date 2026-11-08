@@ -46,7 +46,7 @@ async function main() {
   const times = preview ? [0.5, spec.dur * 0.35, spec.dur * 0.65, spec.dur - 0.5] : [...Array(Math.round(spec.dur * FPS)).keys()].map((i) => i / FPS);
 
   // 1. Website frames.
-  const site = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const site = await browser.newPage({ viewport: { width: spec.siteW || 1440, height: spec.siteH || 900 } });
   await site.goto(`${base}/social/concepts/${spec.site}`); await site.waitForTimeout(400);
   // Music cues: every move in the site's SCROLL table, plus its CLICK time.
   const cues = await site.evaluate(() => ({
@@ -62,7 +62,7 @@ async function main() {
   const sc = await browser.newPage({ viewport: { width: 1080, height: 1920 } });
   sc.on('pageerror', (e) => console.error('scene error', e));
   await sc.goto(`${base}/social/tools/laptop-scene.html`); await sc.waitForFunction(() => window.ready, null, { timeout: 60000 });
-  await sc.evaluate((o) => window.setup(o), { dur: spec.dur, hook: spec.hook, tag: spec.tag, hookOut: spec.hookOut || 3.2, intro: scrolls.length ? scrolls[0][0] : 2.5 });
+  await sc.evaluate((o) => window.setup(o), { dur: spec.dur, hook: spec.hook, tag: spec.tag, hookOut: spec.hookOut || 3.2, device: spec.device, intro: scrolls.length ? scrolls[0][0] : 2.5 });
   const outs = [];
   for (const [i, t] of times.entries()) {
     const n = String(i).padStart(5, '0');
