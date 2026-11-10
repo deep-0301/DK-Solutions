@@ -1,0 +1,233 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="assets/js/gsap.min.js"></script>
+<style>
+@font-face{font-family:Manrope;font-weight:500;src:url(assets/fonts/manrope-latin-500-normal.woff2)}
+@font-face{font-family:Manrope;font-weight:600;src:url(assets/fonts/manrope-latin-600-normal.woff2)}
+@font-face{font-family:Manrope;font-weight:700;src:url(assets/fonts/manrope-latin-700-normal.woff2)}
+@font-face{font-family:Corm;font-style:italic;font-weight:500;src:url(assets/fonts/cormorant-garamond-latin-500-italic.woff2)}
+*{box-sizing:border-box;margin:0}
+html,body{width:1080px;height:1920px;overflow:hidden;background:#efe5d6}
+#root{position:relative;width:1080px;height:1920px;overflow:hidden;font-family:Manrope,sans-serif;color:#2a1d14;
+  background:radial-gradient(120% 70% at 50% 0%,#f6eee2 0%,#efe5d6 55%,#e6d8c4 100%)}
+.grain{position:absolute;inset:0;opacity:.06;background-image:repeating-radial-gradient(circle at 17% 31%,#000 0 1px,transparent 1px 3px);pointer-events:none}
+
+/* headline */
+#head{position:absolute;left:0;right:0;top:150px;text-align:center}
+#h1{font-weight:700;font-size:92px;letter-spacing:-3px;line-height:1}
+#h2wrap{position:relative;height:104px;margin-top:10px}
+.h2{position:absolute;left:0;right:0;font-weight:700;font-size:92px;letter-spacing:-3px;line-height:1.1}
+#h2a{color:#e0592a}
+#h2b{color:#2f9a5b;opacity:0}
+#sub{margin-top:26px;font-weight:600;font-size:34px;color:#7b6656}
+#sub b{color:#2a1d14}
+
+/* device card */
+#card{position:absolute;left:90px;top:560px;width:900px;height:1060px;border-radius:34px;background:#fff;
+  box-shadow:0 40px 90px -30px rgba(80,45,15,.45),0 0 0 1px rgba(80,45,15,.08);overflow:hidden}
+.bar{height:58px;background:#f3ede6;display:flex;align-items:center;padding:0 24px;gap:10px;border-bottom:1px solid #e7ded3}
+.dot{width:14px;height:14px;border-radius:50%;background:#e3d6c8}
+.url{margin-left:18px;flex:1;height:32px;border-radius:16px;background:#fff;font-size:18px;color:#a8988a;display:flex;align-items:center;padding-left:18px;font-weight:600}
+.page{position:absolute;left:0;right:0;top:58px;bottom:0;overflow:hidden}
+#after{clip-path:inset(0 0 0 100%)}
+#wipe{opacity:0;position:absolute;top:58px;bottom:0;width:6px;left:100%;background:#2f9a5b;box-shadow:0 0 30px 6px rgba(47,154,91,.5)}
+
+/* BEFORE site: cluttered */
+#before{background:#efe4d2;padding:22px 30px;color:#b3a28f}
+.bnav{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:15px;color:#bfae9b;align-items:center}
+.blogo{font-family:Corm;font-style:italic;font-size:30px;color:#c9b59f;margin-right:16px}
+.bimgs{display:flex;gap:12px;margin:22px 0 18px}
+.bimgs svg{width:190px;height:120px;border-radius:4px}
+.btitle{font-family:Corm;font-style:italic;font-size:34px;color:#cdb9a3;margin-bottom:10px}
+.bp{font-size:15.5px;line-height:1.55;color:#bcab98;margin-bottom:10px;text-align:justify}
+.bfoot{position:absolute;right:30px;bottom:26px;font-size:12px;color:#cbbba8;text-align:right;line-height:1.5}
+
+/* AFTER site: clean */
+#after{background:#fffaf3}
+.ahead{display:flex;align-items:center;justify-content:space-between;padding:26px 40px}
+.alogo{font-weight:700;font-size:34px;letter-spacing:-1px;color:#2a1d14}
+.alogo span{color:#c8742f}
+.abtn-s{background:#2a1d14;color:#fffaf3;font-weight:700;font-size:22px;padding:14px 26px;border-radius:40px}
+.ahours{margin:4px 40px 0;display:inline-flex;align-items:center;gap:12px;background:#e9f5ec;color:#226e43;font-weight:700;font-size:24px;padding:12px 22px;border-radius:30px}
+.ahours i{width:12px;height:12px;border-radius:50%;background:#2f9a5b;display:block}
+.ahero{margin:26px 40px 0;height:360px;border-radius:26px;overflow:hidden}
+.ahero svg{width:100%;height:100%}
+.ah1{margin:34px 40px 0;font-weight:700;font-size:64px;line-height:1.02;letter-spacing:-2.4px;color:#2a1d14}
+.ap{margin:18px 40px 0;font-weight:500;font-size:27px;line-height:1.4;color:#6c5848}
+.abtn{margin:30px 40px 0;height:96px;border-radius:24px;background:#c8742f;color:#fff;font-weight:700;font-size:32px;display:flex;align-items:center;justify-content:center;gap:14px;box-shadow:0 18px 30px -14px rgba(200,116,47,.8)}
+
+/* marks */
+.mark{position:absolute;display:flex;align-items:center;gap:12px;transform:scale(0);transform-origin:30px 30px}
+.mark.rev{flex-direction:row-reverse;transform-origin:calc(100% - 30px) 30px}
+.mark .ic{width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex:none}
+.mark .lb{font-weight:700;font-size:26px;padding:10px 18px;border-radius:14px;white-space:nowrap}
+.x .ic{background:#e2452b;box-shadow:0 8px 22px -6px rgba(226,69,43,.8)}
+.x .lb{background:#fff;color:#c63a22;box-shadow:0 10px 26px -10px rgba(0,0,0,.35)}
+.ok .ic{background:#2f9a5b;box-shadow:0 8px 22px -6px rgba(47,154,91,.8)}
+.ok .lb{background:#fff;color:#226e43;box-shadow:0 10px 26px -10px rgba(0,0,0,.35)}
+.ring{position:absolute;border:5px solid #e2452b;border-radius:18px;opacity:0}
+
+.badge{position:absolute;top:476px;left:96px;font-weight:700;font-size:24px;letter-spacing:3px;padding:10px 20px;border-radius:12px;color:#fff}
+#bBefore{background:#e2452b}
+#bAfter{background:#2f9a5b;opacity:0}
+
+/* captions */
+#cap{position:absolute;left:0;right:0;top:1680px;text-align:center;height:120px}
+.c{position:absolute;left:0;right:0;font-weight:700;font-size:58px;letter-spacing:-1.5px;opacity:0}
+.c em{font-style:normal;color:#e0592a}
+.c.g em{color:#2f9a5b}
+
+/* end */
+#end{position:absolute;inset:0;background:#2a1d14;color:#fffaf3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;clip-path:circle(0% at 50% 60%)}
+#end .e1{font-weight:700;font-size:96px;letter-spacing:-3px;line-height:1.02}
+#end .e1 span{color:#f0a35e}
+#end .e2{margin-top:44px;font-weight:600;font-size:40px;color:#d9c6b3}
+#end .e2 b{display:inline-block;background:#f0a35e;color:#2a1d14;padding:6px 22px;border-radius:14px;margin:0 6px}
+#end .e3{margin-top:70px;font-weight:700;font-size:44px;color:#fffaf3}
+#end .e4{position:absolute;bottom:120px;font-weight:500;font-size:26px;color:#9c8774}
+</style>
+</head>
+<body>
+<div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920" data-fps="30">
+  <div id="head">
+    <div id="h1">This bakery site</div>
+    <div id="h2wrap"><div class="h2" id="h2a">is losing orders.</div><div class="h2" id="h2b">is fixed.</div></div>
+    <div id="sub">4 fixes. <b>Same photos, same colours, same words.</b></div>
+  </div>
+
+  <div id="card">
+    <div class="bar"><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="url">crumbandco.example</div></div>
+
+    <div class="page" id="before">
+      <div class="bnav"><span class="blogo">Crumb &amp; Co.</span><span>Home</span><span>About us</span><span>Our story</span><span>Breads</span><span>Pastries</span><span>Cakes</span><span>Catering</span><span>Gallery</span><span>Blog</span><span>Press</span><span>FAQ</span><span>Careers</span><span>Contact</span></div>
+      <div class="bimgs">
+        <svg viewBox="0 0 190 120" id="photoS1"></svg><svg viewBox="0 0 190 120" id="photoS2"></svg><svg viewBox="0 0 190 120" id="photoS3"></svg>
+      </div>
+      <div class="btitle">Welcome to our little corner of the neighbourhood</div>
+      <p class="bp">Crumb &amp; Co. began as a small dream in a home kitchen and has grown over many years into the bakery you see today. Every morning our bakers arrive long before sunrise to shape, proof and bake loaves by hand using slow fermentation and flour from local mills, because we believe good bread takes time and care and attention to detail.</p>
+      <p class="bp">We offer a wide range of sourdough, rye, baguettes, croissants, cinnamon buns, seasonal tarts and celebration cakes, as well as catering for offices and events. Please contact us by phone or visit in store to place an order. Custom cake orders require at least three days notice and a deposit. Gluten free options are available on some days, please ask our staff.</p>
+      <p class="bp">Thank you for supporting a small local business. We look forward to seeing you soon and sharing our love of baking with you and your family for many years to come.</p>
+      <p class="bp">Follow us on all our social channels for news, specials and behind the scenes photos. Sign up to our newsletter at the bottom of this page to receive updates. We also sell gift cards in store, and our bread is available at selected cafes and markets around town. Ask us about wholesale.</p>
+      <div class="bfoot">Hours: Tue–Fri 7:00–18:00, Sat 8:00–16:00, Sun 8:00–14:00, closed Mondays and holidays<br>Call us to order · 555-0142 · 12 Mill Lane</div>
+    </div>
+
+    <div class="page" id="after">
+      <div class="ahead"><div class="alogo">Crumb <span>&amp;</span> Co.</div><div class="abtn-s">Order</div></div>
+      <div class="ahours"><i></i>Open today · 7am to 6pm</div>
+      <div class="ahero"><svg viewBox="0 0 820 360" preserveAspectRatio="xMidYMid slice" id="photoL"></svg></div>
+      <div class="ah1">Fresh bread,<br>baked at 6am.</div>
+      <div class="ap">Sourdough, croissants and cakes, made by hand every morning.</div>
+      <div class="abtn">Order for pickup <span>→</span></div>
+    </div>
+    <div id="wipe"></div>
+
+
+    <div class="ring" id="r1" style="left:18px;top:338px;width:864px;height:560px"></div>
+    <div class="ring" id="r2" style="left:18px;top:72px;width:864px;height:86px"></div>
+    <div class="ring" id="r3" style="left:420px;top:930px;width:466px;height:60px"></div>
+
+    <div class="mark x" id="x1" style="left:190px;top:560px"><div class="ic"><svg width="28" height="28" viewBox="0 0 28 28"><path d="M6 6l16 16M22 6L6 22" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg></div><div class="lb">Can't read it</div></div>
+    <div class="mark x" id="x2" style="left:470px;top:180px"><div class="ic"><svg width="28" height="28" viewBox="0 0 28 28"><path d="M6 6l16 16M22 6L6 22" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg></div><div class="lb">14 links, no focus</div></div>
+    <div class="mark x" id="x3" style="left:110px;top:932px"><div class="ic"><svg width="28" height="28" viewBox="0 0 28 28"><path d="M6 6l16 16M22 6L6 22" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg></div><div class="lb">Hours hidden</div></div>
+    <div class="mark x" id="x4" style="left:250px;top:700px"><div class="ic"><svg width="28" height="28" viewBox="0 0 28 28"><path d="M6 6l16 16M22 6L6 22" stroke="#fff" stroke-width="5" stroke-linecap="round"/></svg></div><div class="lb">No order button</div></div>
+
+    <div class="mark ok" id="k1" style="left:520px;top:640px"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M6 15l6 6L24 8" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lb">Big and clear</div></div>
+    <div class="mark ok rev" id="k2" style="left:330px;top:92px"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M6 15l6 6L24 8" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lb">One menu button</div></div>
+    <div class="mark ok" id="k3" style="left:520px;top:162px"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M6 15l6 6L24 8" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lb">Hours up top</div></div>
+    <div class="mark ok" id="k4" style="left:470px;top:975px"><div class="ic"><svg width="30" height="30" viewBox="0 0 30 30"><path d="M6 15l6 6L24 8" stroke="#fff" stroke-width="5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div><div class="lb">Order in one tap</div></div>
+  </div>
+
+  <div class="badge" id="bBefore">BEFORE</div>
+  <div class="badge" id="bAfter">AFTER</div>
+  <div id="cap">
+    <div class="c" id="c1">Tiny <em>grey</em> text.</div>
+    <div class="c" id="c2">Too many <em>links.</em></div>
+    <div class="c" id="c3">Hours at the <em>bottom.</em></div>
+    <div class="c" id="c4">No way to <em>order.</em></div>
+    <div class="c g" id="c5">Same bakery. <em>More orders.</em></div>
+  </div>
+
+  <div id="end">
+    <div class="e1">Is your site<br><span>losing orders?</span></div>
+    <div class="e2">Comment <b>FIX</b> for a free look</div>
+    <div class="e3">@dksolutions.dev</div>
+    <div class="e4">Concept example · made-up bakery</div>
+  </div>
+  <div class="grain"></div>
+
+  <audio id="music" class="clip" src="assets/music.wav" data-start="0" data-duration="15" data-track-index="2"></audio>
+</div>
+
+<script>
+(function(){
+  // one original "photo" drawn in SVG, reused in both versions (same photos)
+  function photo(w,h,kind){
+    var s='<defs><linearGradient id="bg'+kind+'" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#7a4a26"/><stop offset="1" stop-color="#3d2312"/></linearGradient>'+
+      '<radialGradient id="lf'+kind+'" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#e9b36d"/><stop offset=".6" stop-color="#c47a38"/><stop offset="1" stop-color="#8a4f22"/></radialGradient></defs>'+
+      '<rect width="'+w+'" height="'+h+'" fill="url(#bg'+kind+')"/>'+
+      '<rect y="'+(h*0.72)+'" width="'+w+'" height="'+(h*0.28)+'" fill="#d9c2a0"/>';
+    var n = kind==='L'?3:1, cx=[0.28,0.55,0.8];
+    for(var i=0;i<n;i++){
+      var x=(n===1?0.5:cx[i])*w, y=h*0.66, rx=(n===1?0.34:0.16)*w, ry=h*(n===1?0.3:0.26);
+      s+='<ellipse cx="'+x+'" cy="'+(y+ry*0.55)+'" rx="'+rx*1.02+'" ry="'+ry*0.25+'" fill="rgba(0,0,0,.25)"/>';
+      s+='<ellipse cx="'+x+'" cy="'+y+'" rx="'+rx+'" ry="'+ry+'" fill="url(#lf'+kind+')"/>';
+      for(var k=-1;k<=1;k++) s+='<path d="M'+(x+k*rx*0.4-rx*0.18)+' '+(y-ry*0.5)+' q'+(rx*0.18)+' '+(ry*0.5)+' '+(rx*0.36)+' '+(ry*0.9)+'" stroke="#f3d39c" stroke-width="'+(rx*0.06)+'" fill="none" stroke-linecap="round" opacity=".85"/>';
+    }
+    for(var j=0;j<18;j++){ s+='<circle cx="'+((j*97)%w)+'" cy="'+(h*0.78+(j*37)%(h*0.2))+'" r="'+(1.5+(j%3))+'" fill="#f6ead6" opacity=".7"/>'; }
+    return s;
+  }
+  document.getElementById('photoL').innerHTML=photo(820,360,'L');
+  ['photoS1','photoS2','photoS3'].forEach(function(id,i){document.getElementById(id).innerHTML=photo(190,120,'S'+i);});
+
+  var tl = gsap.timeline({paused:true});
+  var B = 0.625; // one beat at 96 BPM
+  // intro
+  tl.from('#h1',{y:60,opacity:0,duration:0.6,ease:'power3.out'},0.1)
+    .from('#h2a',{y:60,opacity:0,duration:0.6,ease:'power3.out'},0.35)
+    .from('#sub',{y:30,opacity:0,duration:0.5,ease:'power2.out'},0.7)
+    .from('#card',{y:420,rotation:-4,opacity:0,duration:1.1,ease:'power4.out'},1.0)
+    .from('#bBefore',{scale:0,duration:0.4,ease:'back.out(3)'},2.0)
+    .to('#card',{scale:1.02,duration:5,ease:'none'},2.5);
+
+  // problems, one every 2 beats
+  var xs=[['#x1','#c1','#r1'],['#x2','#c2','#r2'],['#x3','#c3','#r3'],['#x4','#c4',null]];
+  xs.forEach(function(a,i){
+    var t=3.125+i*2*B;
+    tl.to(a[0],{scale:1,duration:0.35,ease:'back.out(2.6)'},t);
+    if(a[2]) tl.fromTo(a[2],{opacity:0,scale:1.08},{opacity:1,scale:1,duration:0.3,ease:'power2.out'},t-0.05).to(a[2],{opacity:0,duration:0.3},t+1.0);
+    tl.fromTo(a[1],{opacity:0,y:40,scale:0.9},{opacity:1,y:0,scale:1,duration:0.3,ease:'back.out(2)'},t);
+    tl.to(a[1],{opacity:0,y:-30,duration:0.2,ease:'power2.in'},t+2*B-0.2);
+    tl.fromTo('#card',{x:0},{keyframes:[{x:-10,duration:0.05},{x:8,duration:0.05},{x:0,duration:0.05}]},t);
+  });
+
+  // the fix: wipe left at 7.5
+  var W=7.5;
+  tl.to('.x',{scale:0,duration:0.25,stagger:0.04,ease:'power2.in'},W-0.25)
+    .to('#after',{clipPath:'inset(0 0 0 0%)',duration:0.75,ease:'power3.inOut'},W)
+    .set('#wipe',{opacity:1},W).to('#wipe',{left:'-6px',duration:0.75,ease:'power3.inOut'},W)
+    .to('#bBefore',{opacity:0,duration:0.2},W)
+    .to('#bAfter',{opacity:1,duration:0.3},W+0.5)
+    .to('#h2a',{y:-60,opacity:0,duration:0.35,ease:'power2.in'},W+0.2)
+    .fromTo('#h2b',{y:60,opacity:0},{y:0,opacity:1,duration:0.45,ease:'back.out(2)'},W+0.45)
+    .to('#card',{scale:1.0,duration:0.75,ease:'power3.inOut'},W);
+  // checks, one every beat
+  ['#k1','#k2','#k3','#k4'].forEach(function(k,i){ tl.to(k,{scale:1,duration:0.35,ease:'back.out(2.6)'},8.75+i*B); });
+  tl.fromTo('#c5',{opacity:0,y:40},{opacity:1,y:0,duration:0.4,ease:'back.out(2)'},9.0);
+  tl.to('#card',{y:-20,duration:3,ease:'sine.inOut'},9.0);
+
+  // end card at 12.5
+  tl.to('#end',{clipPath:'circle(150% at 50% 60%)',duration:0.7,ease:'power3.inOut'},12.5)
+    .from('#end .e1',{y:60,opacity:0,duration:0.5,ease:'power3.out'},12.85)
+    .from('#end .e2',{y:40,opacity:0,duration:0.45,ease:'power3.out'},13.1)
+    .from('#end .e3',{y:30,opacity:0,duration:0.4,ease:'power3.out'},13.3)
+    .from('#end .e4',{opacity:0,duration:0.4},13.5)
+    .set({},{},15);
+
+  window.__timelines = window.__timelines || {};
+  window.__timelines["main"] = tl;
+})();
+</script>
+</body>
+</html>

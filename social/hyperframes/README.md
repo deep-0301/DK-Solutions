@@ -13,3 +13,10 @@ npx hyperframes render --quality looks -o out.mp4
 ```
 
 The phone screen is an HTML-in-canvas subtree, so the site's `vh`/`vw` become container units of a 390x844 screen, drawn at 2x.
+
+## Before/after fix and UI showcase reels
+
+- `site-fix/`: a made-up bakery site, first cluttered with red X marks on four problems, then wiped to the fixed version with green checks, ending on "Comment FIX". Reel 26.
+- `glass-booking/`: a glass booking card on a moving gold ribbon background, tapped through day, time, guests and confirm, with its CSS typed in a code panel. Reel 27.
+
+Each folder has `index.html` (plain GSAP, no 3D) and `cues.json` for `social/tools/score.py`. To render, copy the folder into a HyperFrames project with `assets/js/gsap.min.js`, the Manrope and Cormorant fonts in `assets/fonts/`, and `assets/music.wav` from `python score.py assets/music.wav cues.json`, then run `npx hyperframes render --quality looks -o out.mp4`.
