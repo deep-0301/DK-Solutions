@@ -14,9 +14,14 @@ npx hyperframes render --quality looks -o out.mp4
 
 The phone screen is an HTML-in-canvas subtree, so the site's `vh`/`vw` become container units of a 390x844 screen, drawn at 2x.
 
-## Before/after fix and UI showcase reels
+## Voiced reels: before/after fix and UI showcase
 
-- `site-fix/`: a made-up bakery site, first cluttered with red X marks on four problems, then wiped to the fixed version with green checks, ending on "Comment FIX". Reel 26.
-- `glass-booking/`: a glass booking card on a moving gold ribbon background, tapped through day, time, guests and confirm, with its CSS typed in a code panel. Reel 27.
+- `site-fix/`: a made-up bakery site, first cluttered with red X marks on four problems, then wiped to the fixed version with green checks, ending on "Comment FIX". Reel 26, about 58 s.
+- `glass-booking/`: a glass booking card on a moving gold ribbon background, tapped through day, time, guests and confirm, then its CSS typed and highlighted line by line, ending on "Comment BOOK". Reel 27, about 48 s.
 
-Each folder has `index.html` (plain GSAP, no 3D) and `cues.json` for `social/tools/score.py`. To render, copy the folder into a HyperFrames project with `assets/js/gsap.min.js`, the Manrope and Cormorant fonts in `assets/fonts/`, and `assets/music.wav` from `python score.py assets/music.wav cues.json`, then run `npx hyperframes render --quality looks -o out.mp4`.
+Each folder has `index.src.html` (plain GSAP, no 3D), `lines.json` (the voiceover, one line each) and `voice.json` (gaps between lines and music cues tied to lines). The animation and the subtitles are timed to the voice takes, so a new recording only needs a rebuild:
+
+1. Put the takes in `<project>/vo/0.wav, 1.wav, ...` (`python ../tools/tts.py <kokoro_dir> lines.json vo af_heart 1.0`, or Deep's own recordings as wav).
+2. Put `assets/js/gsap.min.js` and the Manrope and Cormorant fonts in `assets/fonts/`.
+3. `python build-voiced.py <project>` writes `index.html`, `assets/music.wav` and `assets/audio.wav` (voice over ducked music, -14 LUFS).
+4. `npx hyperframes render --quality looks -o out.mp4`.
