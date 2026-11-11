@@ -221,7 +221,12 @@ p { margin: 0 0 1em; }
 @media (min-width: 720px) { .site-footer { padding-bottom: 28px; } }
 .footer-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: center; }
 .footer-row p { margin: 0; }
-.footer-row nav { display: flex; gap: 18px; }
+.footer-row nav { display: flex; flex-wrap: wrap; gap: 18px; }
+.social-link { display: inline-flex; align-items: center; gap: 6px; }
+.social-link svg { flex: none; }
+.contact-social { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.social-chip { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); text-decoration: none; font-weight: 600; font-size: .92rem; transition: border-color .2s, background .2s; }
+.social-chip:hover, .social-chip:focus-visible { border-color: var(--violet); background: color-mix(in srgb, var(--violet) 12%, transparent); }
 .footer-row a { text-decoration: none; font-weight: 500; }
 .footer-row a:hover { color: var(--ink); }
 
