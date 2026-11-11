@@ -2,11 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>DK Solutions | Websites for Small Businesses</title>
 <meta name="description" content="DK Solutions designs and builds modern websites for small businesses anywhere: new websites, redesigns of outdated sites, local SEO, booking forms and smart AI features. Based in Canada, working worldwide. Free website check.">
 <link rel="canonical" href="https://dksolutions.dev/">
-<meta name="theme-color" content="#070a14">
+<meta name="theme-color" content="#05060c">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="DK Solutions">
 <meta property="og:title" content="DK Solutions: modern websites for small businesses">
@@ -18,16 +18,16 @@
 <script>document.documentElement.classList.add('js');</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=4">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="assets/css/style.css?v=5">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"DK Solutions","url":"https://dksolutions.dev/","email":"contact@dksolutions.dev","description":"Website design and development for small businesses anywhere: new websites, redesigns, local SEO and smart AI features.","areaServed":"Worldwide","sameAs":["https://www.instagram.com/dksolutions.dev/","https://www.facebook.com/profile.php?id=61596513503412","https://www.youtube.com/@dksolutionsdev"],"founder":{"@type":"Person","name":"Deep Patel","sameAs":["https://github.com/deep-0301","https://medium.com/@deep0301"]}}
 </script>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<div class="bg-grid" aria-hidden="true"></div>
-<div class="bg-glow" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><i></i></div>
+<div class="space" aria-hidden="true"><div class="space-floor"></div></div>
 
 <header class="site-header" id="top">
   <div class="wrap header-row">
@@ -36,13 +36,17 @@
       <span>DK <em>Solutions</em></span>
     </a>
     <nav class="nav" id="site-nav" aria-label="Main">
-      <a href="#services">Services</a>
       <a href="#work">Work</a>
+      <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="#packages">Packages</a>
       <a href="#faq">FAQ</a>
       <a class="btn btn-sm" href="#contact">Free website check</a>
     </nav>
+    <button class="icon-btn motion-btn" type="button" data-motion-toggle aria-pressed="false" aria-label="Pause motion" title="Pause motion">
+      <svg class="i-pause" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>
+      <svg class="i-play" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 4v16l13-8z"/></svg>
+    </button>
     <button class="icon-btn menu-btn" type="button" data-menu-toggle aria-label="Open menu" aria-expanded="false" aria-controls="site-nav">
       <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
     </button>
@@ -51,15 +55,15 @@
 
 <main id="main">
 
-<section class="hero">
+<section class="hero" id="hero">
   <div class="wrap hero-grid">
     <div class="hero-copy">
       <p class="pill"><span class="dot" aria-hidden="true"></span>Websites for small businesses, anywhere</p>
-      <h1>Modern websites that <span class="grad">win you customers.</span></h1>
+      <h1>Websites built <span class="depth-word" data-text="in depth.">in depth.</span></h1>
       <p class="lead">DK Solutions designs and builds new websites, and rebuilds outdated ones, for shops, trades, clinics, restaurants and service businesses, wherever they are. Fast on every phone, easy to find on Google, and ready for smart AI features when you want them.</p>
       <div class="hero-cta">
         <a class="btn" href="#contact">Get a free website check</a>
-        <a class="btn btn-ghost" href="#work">See my work</a>
+        <a class="btn btn-ghost" href="#work">See the work</a>
       </div>
       <ul class="hero-points">
         <li>Free, fixed quotes</li>
@@ -68,113 +72,49 @@
       </ul>
     </div>
 
-    <div class="hero-visual" aria-hidden="true">
-      <div class="browser">
-        <div class="browser-bar"><i></i><i></i><i></i><span>yourbusiness.com</span></div>
-        <div class="browser-body">
-          <div class="mock-nav"><b></b><span></span><span></span><span></span><em></em></div>
-          <div class="mock-hero">
-            <div class="mock-lines"><b></b><b></b><span></span><span></span><em>Book now</em></div>
-            <div class="mock-img"></div>
-          </div>
-          <div class="mock-cards"><div></div><div></div><div></div></div>
-        </div>
-        <div class="mock-chat"><span class="avatar">AI</span><p>Hi! Want to book a visit this week?</p></div>
+    <div class="hero-stage" aria-hidden="true">
+      <!-- CSS 3D poster: shows instantly, and stays as the scene when WebGL is off or motion is reduced -->
+      <div class="stack" data-stack>
+        <div class="layer l0"><span class="bar"><i></i><i></i><i></i><em>yourbusiness.com</em></span></div>
+        <div class="layer l1"><b class="logo"></b><span class="links"><i></i><i></i><i></i></span><b class="cta"></b></div>
+        <div class="layer l2"><span class="h"></span><span class="h short"></span><span class="t"></span><span class="t"></span><b class="cta">Book now</b></div>
+        <div class="layer l3"><span class="img"></span></div>
+        <div class="layer l4"><span class="c"></span><span class="c"></span><span class="c"></span></div>
+        <div class="layer l5"><span class="bubble"><b>AI</b>Hi! Want to book a visit this week?</span></div>
       </div>
+      <canvas class="hero-canvas" data-hero-canvas></canvas>
       <div class="float f1"><strong>98</strong><span>Mobile speed score</span></div>
       <div class="float f2"><strong>Page 1</strong><span>Built for Google search</span></div>
+      <p class="stage-hint">Scroll to assemble</p>
     </div>
   </div>
+  <a class="scroll-cue" href="#work" aria-label="Scroll to the next section"><span></span></a>
 </section>
 
-<section class="strip" aria-label="What every site includes">
-  <div class="wrap strip-row">
-    <span>New websites</span>
-    <span>Redesigns</span>
-    <span>Mobile-first</span>
-    <span>Google-ready SEO</span>
-    <span>Smart AI features</span>
-    <span>Accessible (WCAG 2.1 AA)</span>
-  </div>
-</section>
-
-<section class="section" id="why">
-  <div class="wrap">
-    <div class="section-head">
-      <p class="eyebrow">// sound familiar?</p>
-      <h2>Your customers look you up on their phone first.</h2>
-      <p class="sub">If your website is slow, hard to use on a phone, or missing, they call the next business on the list. I fix that.</p>
-    </div>
-    <div class="grid-3">
-      <article class="metric">
-        <strong>01</strong>
-        <h3>"We don't have a website yet."</h3>
-        <p>You run on word of mouth and a Facebook page. A professional website makes you look established and shows up when people search for what you do in your city.</p>
-      </article>
-      <article class="metric">
-        <strong>02</strong>
-        <h3>"Our site is old and slow."</h3>
-        <p>It was built years ago, breaks on phones and nobody remembers the login. I rebuild it on a modern, fast setup and keep your Google rankings and old links working.</p>
-      </article>
-      <article class="metric">
-        <strong>03</strong>
-        <h3>"It doesn't bring in any work."</h3>
-        <p>Visitors leave without calling. I make it obvious what you offer, where you are and how to reach you, with tap-to-call, quote forms and online booking.</p>
-      </article>
-    </div>
-  </div>
-</section>
-
-<section class="section" id="services">
-  <div class="wrap">
-    <div class="section-head">
-      <p class="eyebrow">// services</p>
-      <h2>Everything your business website needs, from one developer.</h2>
-    </div>
-    <div class="grid-3">
-      <article class="card service">
-        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM2 18h20v2H2z"/></svg></div>
-        <h3>New websites</h3>
-        <p>A custom website designed around your business, your customers and your area. Help with the writing and photos included if you need it.</p>
-      </article>
-      <article class="card service">
-        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg></div>
-        <h3>Website redesigns</h3>
-        <p>Turn an outdated or slow site into a modern one. Same address, cleaner design, faster pages, and redirects so you keep your search traffic.</p>
-      </article>
-      <article class="card service">
-        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.4-1.41 1.4-5.4-5.39A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg></div>
-        <h3>Local SEO &amp; Google Business Profile</h3>
-        <p>Show up for "near me" searches on Google and Maps, and in AI search answers, with proper page titles, structured data and a tuned Google Business Profile.</p>
-      </article>
-      <article class="card service">
-        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V9h14z"/></svg></div>
-        <h3>Booking, quote &amp; contact forms</h3>
-        <p>Online booking, quote requests and order forms that land straight in your inbox or a Google Sheet, without extra monthly app fees where possible.</p>
-      </article>
-      <article class="card service">
-        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 4h16v12H7l-3 3zm4 5h2v2H8zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg></div>
-        <h3>Smart AI features</h3>
-        <p>Optional extras that make your site work harder: an AI assistant that answers customer questions 24/7, smart search, and automatic follow-ups. Try the demo in the corner.</p>
-      </article>
-      <article class="card service">
-        <div class="ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg></div>
-        <h3>Care &amp; updates</h3>
-        <p>Hosting help, backups, security updates and small text or photo changes every month, so your website never goes stale.</p>
-      </article>
-    </div>
+<section class="marquee" aria-label="What every site includes">
+  <div class="marquee-track">
+    <ul>
+      <li>New websites</li><li>Redesigns</li><li>Mobile-first</li><li>Google-ready SEO</li><li>Booking &amp; quote forms</li><li>Smart AI features</li><li>Accessible (WCAG 2.1 AA)</li>
+    </ul>
+    <ul aria-hidden="true">
+      <li>New websites</li><li>Redesigns</li><li>Mobile-first</li><li>Google-ready SEO</li><li>Booking &amp; quote forms</li><li>Smart AI features</li><li>Accessible (WCAG 2.1 AA)</li>
+    </ul>
   </div>
 </section>
 
 <section class="section" id="work">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">// recent work</p>
+      <p class="eyebrow"><span>01</span> Recent work</p>
       <h2>Websites and web apps already in use.</h2>
     </div>
-    <div class="work-grid">
-      <article class="work wide">
-        <a class="work-img" href="https://listaro.dev/" target="_blank" rel="noopener"><img src="assets/img/work-listaro.webp" alt="Listaro dashboard showing templates, posts this month, new leads and success rate" width="960" height="600" loading="lazy"></a>
+    <div class="work-list">
+      <article class="work" data-depth>
+        <a class="device tilt" href="https://listaro.dev/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <span class="device-bar"><i></i><i></i><i></i><em>listaro.dev</em></span>
+          <img src="assets/img/work-listaro.webp" alt="" width="960" height="600" loading="lazy" decoding="async">
+          <span class="device-glare"></span>
+        </a>
         <div class="work-body">
           <p class="tag">SaaS website &amp; web app</p>
           <h3>Listaro</h3>
@@ -184,8 +124,12 @@
           <a class="link" href="https://listaro.dev/" target="_blank" rel="noopener">Visit listaro.dev <span aria-hidden="true">&rarr;</span></a>
         </div>
       </article>
-      <article class="work">
-        <a class="work-img" href="https://ses-india.com/" target="_blank" rel="noopener"><img src="assets/img/work-ses.webp" alt="Homepage of the Safal Embedded Solution website" width="960" height="600" loading="lazy"></a>
+      <article class="work flip" data-depth>
+        <a class="device tilt" href="https://ses-india.com/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <span class="device-bar"><i></i><i></i><i></i><em>ses-india.com</em></span>
+          <img src="assets/img/work-ses.webp" alt="" width="960" height="600" loading="lazy" decoding="async">
+          <span class="device-glare"></span>
+        </a>
         <div class="work-body">
           <p class="tag">Business website redesign</p>
           <h3>Safal Embedded Solution</h3>
@@ -194,8 +138,12 @@
           <a class="link" href="https://ses-india.com/" target="_blank" rel="noopener">Visit the live site <span aria-hidden="true">&rarr;</span></a>
         </div>
       </article>
-      <article class="work">
-        <a class="work-img" href="https://github.com/deep-0301/TimekeepingOC" target="_blank" rel="noopener"><img src="assets/img/work-timekeeping.webp" alt="Run Number Timesheet web app search screen" width="960" height="600" loading="lazy"></a>
+      <article class="work" data-depth>
+        <a class="device tilt" href="https://github.com/deep-0301/TimekeepingOC" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
+          <span class="device-bar"><i></i><i></i><i></i><em>timesheet app</em></span>
+          <img src="assets/img/work-timekeeping.webp" alt="" width="960" height="600" loading="lazy" decoding="async">
+          <span class="device-glare"></span>
+        </a>
         <div class="work-body">
           <p class="tag">Web app</p>
           <h3>Run Number Timesheet</h3>
@@ -208,29 +156,97 @@
   </div>
 </section>
 
+<section class="section" id="why">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow"><span>02</span> Sound familiar?</p>
+      <h2>Your customers look you up on their phone first.</h2>
+      <p class="sub">If your website is slow, hard to use on a phone, or missing, they call the next business on the list. I fix that.</p>
+    </div>
+    <div class="grid-3 why-grid">
+      <article class="panel tilt" data-depth>
+        <strong class="big-num">01</strong>
+        <h3>"We don't have a website yet."</h3>
+        <p>You run on word of mouth and a Facebook page. A professional website makes you look established and shows up when people search for what you do in your city.</p>
+      </article>
+      <article class="panel tilt" data-depth>
+        <strong class="big-num">02</strong>
+        <h3>"Our site is old and slow."</h3>
+        <p>It was built years ago, breaks on phones and nobody remembers the login. I rebuild it on a modern, fast setup and keep your Google rankings and old links working.</p>
+      </article>
+      <article class="panel tilt" data-depth>
+        <strong class="big-num">03</strong>
+        <h3>"It doesn't bring in any work."</h3>
+        <p>Visitors leave without calling. I make it obvious what you offer, where you are and how to reach you, with tap-to-call, quote forms and online booking.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="services">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow"><span>03</span> Services</p>
+      <h2>Everything your business website needs, from one developer.</h2>
+    </div>
+    <div class="grid-3 services">
+      <article class="panel tilt service" data-depth>
+        <div class="cube" aria-hidden="true"><i></i><i></i><i></i><svg viewBox="0 0 24 24"><path d="M4 5h16v11H4zM2 18h20v2H2z"/></svg></div>
+        <h3>New websites</h3>
+        <p>A custom website designed around your business, your customers and your area. Help with the writing and photos included if you need it.</p>
+      </article>
+      <article class="panel tilt service" data-depth>
+        <div class="cube" aria-hidden="true"><i></i><i></i><i></i><svg viewBox="0 0 24 24"><path d="M12 4V1L8 5l4 4V6a6 6 0 1 1-6 6H4a8 8 0 1 0 8-8z"/></svg></div>
+        <h3>Website redesigns</h3>
+        <p>Turn an outdated or slow site into a modern one. Same address, cleaner design, faster pages, and redirects so you keep your search traffic.</p>
+      </article>
+      <article class="panel tilt service" data-depth>
+        <div class="cube" aria-hidden="true"><i></i><i></i><i></i><svg viewBox="0 0 24 24"><path d="M10 2a8 8 0 0 1 6.32 12.9l5.39 5.4-1.41 1.4-5.4-5.39A8 8 0 1 1 10 2zm0 2a6 6 0 1 0 0 12 6 6 0 0 0 0-12z"/></svg></div>
+        <h3>Local SEO &amp; Google Business Profile</h3>
+        <p>Show up for "near me" searches on Google and Maps, and in AI search answers, with proper page titles, structured data and a tuned Google Business Profile.</p>
+      </article>
+      <article class="panel tilt service" data-depth>
+        <div class="cube" aria-hidden="true"><i></i><i></i><i></i><svg viewBox="0 0 24 24"><path d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 16H5V9h14z"/></svg></div>
+        <h3>Booking, quote &amp; contact forms</h3>
+        <p>Online booking, quote requests and order forms that land straight in your inbox or a Google Sheet, without extra monthly app fees where possible.</p>
+      </article>
+      <article class="panel tilt service" data-depth>
+        <div class="cube" aria-hidden="true"><i></i><i></i><i></i><svg viewBox="0 0 24 24"><path d="M4 4h16v12H7l-3 3zm4 5h2v2H8zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg></div>
+        <h3>Smart AI features</h3>
+        <p>Optional extras that make your site work harder: an AI assistant that answers customer questions 24/7, smart search, and automatic follow-ups. <button class="inline-link" type="button" data-open-chat>Try the demo</button>.</p>
+      </article>
+      <article class="panel tilt service" data-depth>
+        <div class="cube" aria-hidden="true"><i></i><i></i><i></i><svg viewBox="0 0 24 24"><path d="M12 1 3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5z"/></svg></div>
+        <h3>Care &amp; updates</h3>
+        <p>Hosting help, backups, security updates and small text or photo changes every month, so your website never goes stale.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="process">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">// how it works</p>
+      <p class="eyebrow"><span>04</span> How it works</p>
       <h2>Simple, clear, and no tech jargon.</h2>
     </div>
     <ol class="steps">
-      <li>
+      <li class="step" data-depth>
         <span class="num">01</span>
         <h3>Free call &amp; website check</h3>
         <p>A 15 minute chat about your business and goals. If you already have a website, I'll send you a short list of what's holding it back.</p>
       </li>
-      <li>
+      <li class="step" data-depth>
         <span class="num">02</span>
         <h3>Fixed quote &amp; plan</h3>
         <p>A clear, fixed price, what's included and a timeline, agreed before any work starts. No surprises.</p>
       </li>
-      <li>
+      <li class="step" data-depth>
         <span class="num">03</span>
         <h3>Design &amp; build</h3>
         <p>You get a working preview link early and give feedback as it comes together. I handle the setup, writing help and photos.</p>
       </li>
-      <li>
+      <li class="step" data-depth>
         <span class="num">04</span>
         <h3>Launch &amp; support</h3>
         <p>I connect your domain, set up Google, and show you how to make simple edits. 30 days of free fixes after launch.</p>
@@ -242,12 +258,12 @@
 <section class="section" id="packages">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow">// packages</p>
+      <p class="eyebrow"><span>05</span> Packages</p>
       <h2>Pick a starting point. I'll tailor it to you.</h2>
       <p class="sub">Every business is different, so every project gets its own fixed quote before any work starts. Tell me what you need and I'll send one, free.</p>
     </div>
-    <div class="grid-3 price-grid">
-      <article class="price">
+    <div class="grid-3 packages">
+      <article class="panel tilt pack" data-depth>
         <h3>Starter website</h3>
         <p class="for">For new businesses that need to get online properly.</p>
         <ul>
@@ -259,7 +275,7 @@
         </ul>
         <a class="btn btn-ghost" href="#contact" data-plan="Starter website">Get a Starter quote</a>
       </article>
-      <article class="price featured">
+      <article class="panel tilt pack featured" data-depth>
         <p class="badge">Most popular</p>
         <h3>Business website</h3>
         <p class="for">For established businesses that want more customers.</p>
@@ -273,7 +289,7 @@
         </ul>
         <a class="btn" href="#contact" data-plan="Business website">Get a Business quote</a>
       </article>
-      <article class="price">
+      <article class="panel tilt pack" data-depth>
         <h3>Website redesign</h3>
         <p class="for">For businesses with a site that's outdated or slow.</p>
         <ul>
@@ -286,7 +302,7 @@
         <a class="btn btn-ghost" href="#contact" data-plan="Website redesign">Get a Redesign quote</a>
       </article>
     </div>
-    <div class="care">
+    <div class="care panel" data-depth>
       <div>
         <h3>Care plan <span>monthly, optional</span></h3>
         <p>Backups, updates, uptime checks and small changes every month, so your website stays fresh and secure.</p>
@@ -299,7 +315,7 @@
 <section class="section" id="faq">
   <div class="wrap narrow">
     <div class="section-head">
-      <p class="eyebrow">// FAQ</p>
+      <p class="eyebrow"><span>06</span> FAQ</p>
       <h2>Questions business owners ask me.</h2>
     </div>
     <div class="faq">
@@ -342,7 +358,7 @@
 <section class="section contact" id="contact">
   <div class="wrap contact-grid">
     <div class="contact-copy">
-      <p class="eyebrow">// free website check</p>
+      <p class="eyebrow"><span>07</span> Free website check</p>
       <h2>Let's talk about your website.</h2>
       <p>Tell me a little about your business. If you have a website, include the link and I'll send back a free, no-obligation review of what's working and what to fix, usually within one business day.</p>
       <ul class="contact-list">
@@ -355,6 +371,7 @@
       <a class="social-chip" href="https://www.youtube.com/@dksolutionsdev" target="_blank" rel="noopener" aria-label="DK Solutions on YouTube"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.8 15.1V8.9l5.8 3.1-5.8 3.1z"/></svg><span>YouTube</span></a>
       </div>
     </div>
+    <div class="form-wrap panel">
     <form class="form" id="contact-form" novalidate>
       <div class="row-2">
         <label>Your name<input type="text" name="user_name" autocomplete="name" required></label>
@@ -378,6 +395,7 @@
       <button class="btn" type="submit">Send my request</button>
       <p class="form-status" role="status" aria-live="polite"></p>
     </form>
+    </div>
   </div>
 </section>
 
@@ -395,6 +413,13 @@
     </nav>
   </div>
 </footer>
+
+<nav class="dock" aria-label="Quick actions">
+  <a class="btn" href="#contact">Free website check</a>
+  <button class="dock-chat" type="button" data-open-chat aria-label="Open the demo AI assistant">
+    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path fill="currentColor" d="M4 4h16v12H7l-3 3zm4 5h2v2H8zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
+  </button>
+</nav>
 
 <button class="chat-fab" type="button" data-open-chat aria-label="Open the demo AI assistant" aria-controls="chat" aria-expanded="false">
   <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M4 4h16v12H7l-3 3zm4 5h2v2H8zm4 0h2v2h-2zm4 0h2v2h-2z"/></svg>
@@ -415,6 +440,9 @@
   </form>
 </section>
 
-<script src="assets/js/main.js?v=4" defer></script>
+<script type="importmap">
+{"imports":{"three":"./assets/vendor/three/three.module.min.js"}}
+</script>
+<script src="assets/js/main.js?v=5" defer></script>
 </body>
 </html>
