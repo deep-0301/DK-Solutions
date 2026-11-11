@@ -1,6 +1,6 @@
 # DK Solutions
 
-Website for DK Solutions, Deep Patel's Ottawa studio that builds new websites and redesigns for Canadian small businesses, with optional AI features.
+Website for DK Solutions, Deep Patel's Ottawa-based studio that builds new websites and redesigns for small businesses anywhere, with optional AI features.
 
 Live at **https://dksolutions.dev/**
 
