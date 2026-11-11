@@ -19,14 +19,112 @@
   var y = document.querySelector('[data-year]');
   if (y) y.textContent = new Date().getFullYear();
 
-  // Reveal on scroll
-  var targets = document.querySelectorAll('.section-head, .card, .metric, .work, .steps li, .price, .care, .quote, .faq details');
+  var root = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+  var paused = reduce.matches;
+  var finePointer = window.matchMedia('(pointer: fine)').matches;
+
+  /* ---------- Scroll-driven 3D ----------
+     One passive scroll listener + one rAF writes CSS variables:
+     --scroll (page progress), --hero-p (hero assembly 0..1), --grid-y (floor drift),
+     and --p (0..1) on each [data-depth] element as it rises into view. */
+  var hero = document.getElementById('hero');
+  var dock = document.querySelector('.dock');
+  var contact = document.getElementById('contact');
+  var depthEls = [].slice.call(document.querySelectorAll('[data-depth]'));
+  var active = new Set(depthEls);
+  var scene3d = null, ticking = false, contactVisible = false;
+
   if ('IntersectionObserver' in window) {
-    var io = new IntersectionObserver(function (entries) {
-      entries.forEach(function (en) { if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
-    }, { rootMargin: '0px 0px -8% 0px' });
-    targets.forEach(function (el) { el.classList.add('reveal'); io.observe(el); });
+    active = new Set();
+    var dio = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) { if (en.isIntersecting) active.add(en.target); else active.delete(en.target); });
+      requestTick();
+    }, { rootMargin: '10% 0px 10% 0px' });
+    depthEls.forEach(function (el) { dio.observe(el); });
+    if (contact) new IntersectionObserver(function (en) { contactVisible = en[0].isIntersecting; requestTick(); }, { threshold: .15 }).observe(contact);
   }
+  function clamp(v) { return v < 0 ? 0 : v > 1 ? 1 : v; }
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight, sy = window.scrollY || window.pageYOffset;
+    var max = document.documentElement.scrollHeight - vh;
+    root.style.setProperty('--scroll', max > 0 ? (sy / max).toFixed(4) : 0);
+    var hp = hero ? clamp(sy / (hero.offsetHeight * 0.75)) : 1;
+    if (paused) hp = 1;
+    root.style.setProperty('--hero-p', hp.toFixed(4));
+    if (scene3d) scene3d.setProgress(hp);
+    if (!paused) root.style.setProperty('--grid-y', ((sy * 0.35) % 64).toFixed(1) + 'px');
+    active.forEach(function (el) {
+      var r = el.getBoundingClientRect();
+      // 0 when the top edge is at the bottom of the screen, 1 once it is 32% of the screen up
+      var p = paused ? 1 : clamp((vh - r.top) / (vh * 0.32));
+      el.style.setProperty('--p', p.toFixed(3));
+    });
+    if (dock) dock.classList.toggle('show', sy > vh * 0.55 && !contactVisible);
+  }
+  function requestTick() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  window.addEventListener('scroll', requestTick, { passive: true });
+  window.addEventListener('resize', requestTick, { passive: true });
+  update();
+
+  /* ---------- Pointer tilt on panels and device screens (mouse/trackpad only) ---------- */
+  if (finePointer) {
+    document.querySelectorAll('.tilt').forEach(function (el) {
+      var max = el.classList.contains('device') ? 6 : 8;
+      el.addEventListener('pointermove', function (e) {
+        if (paused) return;
+        var r = el.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+        el.classList.add('is-tilting');
+        el.style.setProperty('--ry', ((x - .5) * 2 * max).toFixed(2) + 'deg');
+        el.style.setProperty('--rx', ((.5 - y) * 2 * max).toFixed(2) + 'deg');
+        el.style.setProperty('--gx', (x * 100).toFixed(1) + '%');
+        el.style.setProperty('--gy', (y * 100).toFixed(1) + '%');
+      });
+      el.addEventListener('pointerleave', function () {
+        el.classList.remove('is-tilting');
+        el.style.setProperty('--rx', '0deg'); el.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+
+  /* ---------- Pause motion (WCAG 2.2.2) ---------- */
+  var motionBtn = document.querySelector('[data-motion-toggle]');
+  function setPaused(v, save) {
+    paused = v;
+    root.classList.toggle('paused', v);
+    if (motionBtn) {
+      motionBtn.setAttribute('aria-pressed', String(v));
+      motionBtn.setAttribute('aria-label', v ? 'Play motion' : 'Pause motion');
+      motionBtn.title = v ? 'Play motion' : 'Pause motion';
+    }
+    if (scene3d) scene3d.pause(v);
+    if (save) { try { localStorage.setItem('dk-motion', v ? 'off' : 'on'); } catch (e) {} }
+    requestTick();
+  }
+  try { if (localStorage.getItem('dk-motion') === 'off') paused = true; } catch (e) {}
+  setPaused(paused, false);
+  if (motionBtn) motionBtn.addEventListener('click', function () { setPaused(!paused, true); });
+
+  /* ---------- Real 3D hero (three.js), loaded after first paint on capable devices ---------- */
+  function canWebGL() {
+    try { var c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; }
+  }
+  var conn = navigator.connection || {};
+  var lowEnd = conn.saveData || (navigator.deviceMemory && navigator.deviceMemory <= 2) || (navigator.hardwareConcurrency && navigator.hardwareConcurrency <= 2);
+  var heroCanvas = document.querySelector('[data-hero-canvas]');
+  function boot3d() {
+    if (!heroCanvas || reduce.matches || lowEnd || !canWebGL()) return;
+    import('./hero3d.js?v=5').then(function (mod) {
+      scene3d = mod.start(heroCanvas, { paused: paused });
+      if (!scene3d) return;
+      requestAnimationFrame(function () { root.classList.add('webgl-on'); });
+      requestTick();
+    }).catch(function () { /* keep the CSS 3D poster */ });
+  }
+  function whenIdle(fn) { if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 2500 }); else setTimeout(fn, 600); }
+  if (document.readyState === 'complete') whenIdle(boot3d); else window.addEventListener('load', function () { whenIdle(boot3d); });
 
   /* ---------- Demo AI assistant ----------
      A scripted demo that answers from a small knowledge base about Deep's services,
@@ -93,12 +191,14 @@
       chips.appendChild(b);
     });
 
-    function openChat() {
+    var opener = null;
+    function openChat(e) {
+      opener = e && e.currentTarget;
       chat.hidden = false; fab.setAttribute('aria-expanded', 'true');
       if (!started) { started = true; add('Hi! I\'m a demo of an AI feature DK Solutions can add to your website. Ask me about websites, redesigns or quotes, or tap a question below.', 'bot'); }
       setTimeout(function () { input.focus(); }, 50);
     }
-    function closeChat() { chat.hidden = true; fab.setAttribute('aria-expanded', 'false'); fab.focus(); }
+    function closeChat() { chat.hidden = true; fab.setAttribute('aria-expanded', 'false'); var back = opener && opener.offsetParent ? opener : (fab.offsetParent ? fab : null); if (back) back.focus(); }
 
     document.querySelectorAll('[data-open-chat]').forEach(function (b) { b.addEventListener('click', openChat); });
     chat.querySelector('[data-close-chat]').addEventListener('click', closeChat);
@@ -156,7 +256,7 @@
     btn.disabled = true; setStatus('Sending...');
     loadEmailJS()
       .then(function (ejs) { return ejs.sendForm(EMAILJS.service, EMAILJS.template, form); })
-      .then(function () { form.reset(); setStatus('Thanks! I\'ll get back to you within one business day.', 'ok'); })
+      .then(function () { form.reset(); form.classList.add('sent'); setStatus('Thanks! Your request is in. I\'ll reply within one business day with your free website check.', 'ok'); status.setAttribute('tabindex', '-1'); status.focus(); })
       .catch(function () {
         var body = encodeURIComponent('Name: ' + form.user_name.value + '\nEmail: ' + form.user_email.value + '\n' + compose());
         var link = 'mailto:' + EMAIL + '?subject=' + encodeURIComponent('Website enquiry') + '&body=' + body;
