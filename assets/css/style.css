@@ -31,7 +31,8 @@
 *, *::before, *::after { box-sizing: border-box; }
 html { overflow-x: clip; scroll-behavior: smooth; scroll-padding-top: 84px; -webkit-text-size-adjust: 100%; background: var(--bg); }
 body {
-  margin: 0; background: var(--bg); color: var(--ink); overflow-x: clip;
+  /* transparent so the fixed 3D background (.space, z-index -1) shows; html carries the base colour */
+  margin: 0; background: transparent; color: var(--ink); overflow-x: clip;
   font: 400 17px/1.65 var(--body); -webkit-font-smoothing: antialiased;
 }
 img { max-width: 100%; height: auto; display: block; }
@@ -182,7 +183,7 @@ p { margin: 0 0 1em; }
   box-shadow: 0 1px 0 rgba(255,255,255,.07) inset, 0 6px 0 -1px rgba(20, 28, 58, .9), 0 7px 0 -1px var(--line), 0 30px 60px -20px rgba(0,0,0,.7);
   transform-style: preserve-3d; will-change: transform; }
 .js [data-depth] { --e: calc(1 - var(--p, 0));
-  transform: perspective(1200px) translate3d(0, calc(var(--e) * 70px), calc(var(--e) * -160px)) rotateX(calc(var(--e) * 26deg + var(--rx, 0deg))) rotateY(var(--ry, 0deg));
+  transform: perspective(1200px) translate3d(0, calc(var(--e) * 70px), calc(var(--e) * -160px + var(--wz, 0px))) rotateX(calc(var(--e) * 26deg + var(--rx, 0deg))) rotateY(calc(var(--ry, 0deg) + var(--wall, 0deg) * (1 - var(--e) * .5)));
   opacity: calc(.15 + var(--p, 0) * .85); }
 .js .tilt.is-tilting { transition: transform .12s linear; }
 .panel::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .3s;
@@ -251,7 +252,7 @@ p { margin: 0 0 1em; }
 .pack .btn { width: 100%; }
 .pack.featured { border-color: rgba(62, 230, 255, .5); background: linear-gradient(160deg, rgba(62, 230, 255, .14), rgba(124, 58, 237, .08) 60%), rgba(8, 11, 24, .85);
   box-shadow: 0 1px 0 rgba(255,255,255,.1) inset, 0 6px 0 -1px #0e2a44, 0 7px 0 -1px rgba(62, 230, 255, .4), 0 40px 80px -20px rgba(62, 230, 255, .25); }
-@media (min-width: 1020px) { .js .pack.featured { transform: perspective(1200px) translate3d(0, calc(var(--e) * 70px - 14px), calc(var(--e) * -160px + 30px)) rotateX(calc(var(--e) * 26deg + var(--rx, 0deg))) rotateY(var(--ry, 0deg)); } }
+@media (min-width: 1020px) { .js .pack.featured { --wz: 40px; } }
 /* .panel p sets muted colour; keep the badge dark-on-cyan */
 .panel .badge, .badge { align-self: flex-start; font: 600 .72rem var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #04121a !important; background: var(--accent); padding: 5px 10px; border-radius: 8px; margin-bottom: 16px; }
 .care { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 18px; align-items: center; justify-content: space-between; }
@@ -431,6 +432,55 @@ p { margin: 0 0 1em; }
 .cube-shadow { position: absolute; left: 50%; bottom: 0; width: calc(var(--s) * 1.3); height: 36px; transform: translateX(-50%); border-radius: 50%; background: radial-gradient(closest-side, rgba(62, 230, 255, .3), transparent); filter: blur(6px); }
 .step.is-active { border-color: rgba(62, 230, 255, .55); }
 .step.is-active .num { box-shadow: 0 4px 0 var(--accent-dark), 0 0 30px rgba(62, 230, 255, .6); }
+
+
+/* ===================== Even more 3D ===================== */
+
+/* Immersive background: three.js corridor (bg3d.js) behind a dark scrim */
+.space-canvas { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 1.6s var(--heavy); }
+.space-scrim { position: absolute; inset: 0; background: radial-gradient(120% 90% at 50% 40%, rgba(5, 6, 12, .25), rgba(5, 6, 12, .7)); opacity: 0; transition: opacity 1.6s; }
+.bg3d-on .space-canvas, .bg3d-on .space-scrim { opacity: 1; }
+.bg3d-on .space-floor { opacity: 0; transition: opacity 1s; }
+
+/* Services and packages on a curved 3D wall (wide screens) */
+@media (min-width: 1020px) {
+  .wall { perspective: 1600px; }
+  .wall > :nth-child(3n + 1) { --wall: 16deg; --wz: -10px; }
+  .wall > :nth-child(3n + 2) { --wall: 0deg; --wz: 30px; }
+  .wall > :nth-child(3n) { --wall: -16deg; --wz: -10px; }
+}
+
+/* Contact: a slowly orbiting 3D atom of rings behind the copy */
+.contact { overflow: clip; isolation: isolate; }
+.contact .contact-grid { position: relative; z-index: 1; }
+.orbit { position: absolute; z-index: 0; top: 70px; left: max(-60px, calc(50% - 720px)); width: 360px; height: 360px; perspective: 900px; opacity: .85; pointer-events: none; }
+.orbit .core { position: absolute; left: 50%; top: 50%; width: 70px; height: 70px; margin: -35px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #c9f7ff, #3ee6ff 35%, #2563eb 70%, #1e1b4b); box-shadow: 0 0 60px rgba(62, 230, 255, .6), 0 0 140px rgba(124, 58, 237, .4); }
+.orbit i { position: absolute; inset: 40px; border-radius: 50%; border: 1.5px solid rgba(62, 230, 255, .45); transform-style: preserve-3d; animation: orbit 14s linear infinite; }
+.orbit i b { position: absolute; left: 50%; top: -6px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px var(--accent); }
+.orbit .o1 { --tilt: rotateX(72deg) rotateY(0deg); }
+.orbit .o2 { --tilt: rotateX(72deg) rotateY(60deg); animation-duration: 18s; border-color: rgba(139, 108, 255, .5); }
+.orbit .o2 b { background: var(--violet); box-shadow: 0 0 14px var(--violet); }
+.orbit .o3 { --tilt: rotateX(72deg) rotateY(-60deg); animation-duration: 22s; }
+@keyframes orbit { from { transform: var(--tilt) rotateZ(0); } to { transform: var(--tilt) rotateZ(360deg); } }
+.orbit i { transform: var(--tilt); }
+@media (max-width: 939px) { .orbit { left: auto; right: -110px; top: 10px; width: 260px; height: 260px; opacity: .55; } }
+
+/* FAQ answers fold down in 3D */
+.faq details[open] p { transform-origin: 50% 0; animation: foldDown .55s var(--spring); }
+@keyframes foldDown { from { opacity: 0; transform: perspective(600px) rotateX(-75deg); } }
+
+/* Footer: a giant extruded 3D wordmark standing on a glowing floor */
+.wordmark-stage { position: relative; height: clamp(120px, 20vw, 260px); perspective: 900px; display: grid; place-items: end center; overflow: hidden; margin-bottom: 26px; }
+.wordmark { position: relative; z-index: 1; margin-bottom: clamp(8px, 2vw, 24px); font: 700 clamp(2.6rem, 11vw, 9.5rem)/1 var(--display); letter-spacing: -.05em; white-space: nowrap;
+  color: #0b1024; -webkit-text-stroke: 1px rgba(62, 230, 255, .55);
+  text-shadow: 1px 1px 0 #0e2a44, 2px 2px 0 #0e2a44, 3px 3px 0 #0e3352, 4px 4px 0 #0f3c60, 5px 5px 0 #10456e, 6px 6px 0 #124e7c, 7px 7px 0 #14578a, 8px 8px 0 #166098, 0 0 60px rgba(62, 230, 255, .25);
+  transform: rotateX(calc(24deg + var(--rx, 0deg))) rotateY(var(--ry, 0deg)); transform-origin: 50% 100%; transition: transform .6s var(--heavy); }
+.wordmark::after { content: attr(data-text); position: absolute; inset: 0; background: var(--text-grad); -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-stroke: 0; text-shadow: none; opacity: .9;
+  -webkit-mask-image: linear-gradient(180deg, #000 20%, transparent 95%); mask-image: linear-gradient(180deg, #000 20%, transparent 95%); }
+.wordmark-floor { position: absolute; left: -20%; right: -20%; bottom: 0; height: 60%; transform-origin: 50% 100%; transform: rotateX(78deg);
+  background-image: linear-gradient(rgba(62, 230, 255, .25) 1px, transparent 1px), linear-gradient(90deg, rgba(62, 230, 255, .25) 1px, transparent 1px); background-size: 48px 48px;
+  -webkit-mask-image: radial-gradient(60% 100% at 50% 100%, #000, transparent); mask-image: radial-gradient(60% 100% at 50% 100%, #000, transparent); }
 
 /* ---------- Motion off: system setting or the pause button ---------- */
 html.paused *, html.paused *::before, html.paused *::after { animation-play-state: paused !important; }

@@ -33,7 +33,7 @@
   var contact = document.getElementById('contact');
   var depthEls = [].slice.call(document.querySelectorAll('[data-depth]'));
   var active = new Set(depthEls);
-  var scene3d = null, ticking = false, contactVisible = false;
+  var scene3d = null, bg3d = null, ticking = false, contactVisible = false;
 
   if ('IntersectionObserver' in window) {
     active = new Set();
@@ -54,6 +54,7 @@
     if (paused) hp = 1;
     root.style.setProperty('--hero-p', hp.toFixed(4));
     if (scene3d) scene3d.setProgress(hp);
+    if (bg3d) bg3d.setProgress(max > 0 ? sy / max : 0);
     if (!paused) root.style.setProperty('--grid-y', ((sy * 0.35) % 64).toFixed(1) + 'px');
     active.forEach(function (el) {
       var r = el.getBoundingClientRect();
@@ -138,6 +139,7 @@
     }
     if (scene3d) scene3d.pause(v);
     if (work3d) work3d.pause(v);
+    if (bg3d) bg3d.pause(v);
     if (carouselTick) carouselTick();
     if (save) { try { localStorage.setItem('dk-motion', v ? 'off' : 'on'); } catch (e) {} }
     requestTick();
@@ -155,7 +157,7 @@
   var heroCanvas = document.querySelector('[data-hero-canvas]');
   function boot3d() {
     if (!heroCanvas || reduce.matches || lowEnd || !canWebGL()) return;
-    import('./hero3d.js?v=6').then(function (mod) {
+    import('./hero3d.js?v=7').then(function (mod) {
       scene3d = mod.start(heroCanvas, { paused: paused });
       if (!scene3d) return;
       requestAnimationFrame(function () { root.classList.add('webgl-on'); });
@@ -167,7 +169,7 @@
   function bootWork3d() {
     if (!workCanvas || reduce.matches || lowEnd || !canWebGL() || !window.matchMedia('(min-width: 1100px)').matches) return;
     var go = function () {
-      import('./work3d.js?v=6').then(function (mod) {
+      import('./work3d.js?v=7').then(function (mod) {
         workSec.classList.add('work3d-on');
         work3d = mod.start(workCanvas, works, { paused: paused });
         if (!work3d) { workSec.classList.remove('work3d-on'); return; }
@@ -181,7 +183,18 @@
   }
 
   function whenIdle(fn) { if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 2500 }); else setTimeout(fn, 600); }
-  function bootAll() { boot3d(); bootWork3d(); }
+  /* Immersive corridor behind the whole page. Phones get it only with 6+ cores and no data saver. */
+  var bgCanvas = document.querySelector('[data-bg-canvas]');
+  function bootBg3d() {
+    if (!bgCanvas || reduce.matches || lowEnd || !canWebGL()) return;
+    if (window.matchMedia('(max-width: 760px)').matches && !(navigator.hardwareConcurrency >= 6)) return;
+    import('./bg3d.js?v=7').then(function (mod) {
+      bg3d = mod.start(bgCanvas, { paused: paused });
+      if (!bg3d) return;
+      root.classList.add('bg3d-on'); requestTick();
+    }).catch(function () {});
+  }
+  function bootAll() { boot3d(); bootWork3d(); setTimeout(bootBg3d, 400); }
   if (document.readyState === 'complete') whenIdle(bootAll); else window.addEventListener('load', function () { whenIdle(bootAll); });
 
   /* ---------- Concept designs: 3D cover-flow carousel ----------
