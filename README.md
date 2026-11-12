@@ -12,6 +12,7 @@ Plain HTML, CSS and JavaScript with no build step. GitHub Pages serves it straig
 | `assets/css/style.css` | Styles. Colours and gradients are the variables at the top. |
 | `assets/js/main.js` | Menu, scroll-driven 3D (CSS variables), pointer tilt, pause-motion button, mobile dock, demo AI assistant, contact form |
 | `assets/js/hero3d.js` | The three.js hero: an "exploded" website whose glass layers click together as you scroll. Loaded after first paint, only on capable devices. |
+| `assets/js/work3d.js` | The 3D laptop in the Work section (screens wider than 1100px): the lid opens as you arrive and the screen switches to each project's screenshot. |
 | `assets/vendor/three/` | three.js r185 (MIT), self-hosted so the site needs no CDN |
 | `assets/img/` | Favicon, social preview image, project screenshots |
 | `404.html` | Page not found |
@@ -28,6 +29,8 @@ Plain HTML, CSS and JavaScript with no build step. GitHub Pages serves it straig
 
 - **Hero:** `hero3d.js` draws six layers of a website (browser, nav, headline, photo, cards, AI chat) with Canvas 2D textures, so there are no image downloads. Scroll moves them from exploded to assembled; the mouse tilts the scene. A CSS 3D copy of the same stack (`.stack` in `index.html`) shows first and stays in place when WebGL is off, data saver is on, the device is low-end, or the visitor prefers reduced motion.
 - **Sections:** anything with `data-depth` rises in from a tilted 3D angle as it scrolls into view. `.tilt` elements lean toward the mouse (desktop only).
+- **Concept designs:** the `#concepts` carousel shows homepage concepts for fictional businesses (`assets/img/concept-*.webp`). Add a `<figure class="cslide laptop">` or `phone` to add one.
+- **Process cube:** the glass cube in `#process` turns to the step being read.
 - **Pause button:** the pause icon in the header stops all motion and remembers the choice. Reduced-motion users get a still page automatically.
 
 ## Preview locally

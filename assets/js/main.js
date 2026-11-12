@@ -62,6 +62,43 @@
       el.style.setProperty('--p', p.toFixed(3));
     });
     if (dock) dock.classList.toggle('show', sy > vh * 0.55 && !contactVisible);
+    updateWork(vh);
+    updateCube(vh);
+  }
+
+  /* Work: which project is in the middle of the screen drives the 3D laptop */
+  var workSec = document.getElementById('work');
+  var workList = workSec && workSec.querySelector('.work-list');
+  var works = workSec ? [].slice.call(workSec.querySelectorAll('.work')) : [];
+  var workLabel = document.querySelector('[data-work-label]');
+  var work3d = null, workIdx = -1;
+  function updateWork(vh) {
+    if (!workList) return;
+    var r = workList.getBoundingClientRect();
+    if (r.bottom < -vh || r.top > vh * 2) return;
+    var mid = vh / 2, best = 0, bestD = Infinity;
+    works.forEach(function (w, i) { var b = w.getBoundingClientRect(); var d = Math.abs(b.top + b.height / 2 - mid); if (d < bestD) { bestD = d; best = i; } });
+    if (best !== workIdx) {
+      workIdx = best;
+      works.forEach(function (w, i) { w.classList.toggle('is-active', i === best); });
+      if (workLabel) workLabel.textContent = works[best].querySelector('h3').textContent;
+    }
+    if (work3d) work3d.set(paused ? 1 : clamp((vh - r.top) / (vh * 0.7)), best);
+  }
+
+  /* Process: the big cube turns to face the step being read */
+  var cube = document.querySelector('[data-cube]');
+  var steps = [].slice.call(document.querySelectorAll('.step'));
+  var stepIdx = -1;
+  function updateCube(vh) {
+    if (!cube || !steps.length) return;
+    var idx = 0;
+    steps.forEach(function (st, i) { if (st.getBoundingClientRect().top < vh * 0.6) idx = i; });
+    if (idx !== stepIdx) {
+      stepIdx = idx;
+      cube.style.setProperty('--cube-ry', String(-idx * 90));
+      steps.forEach(function (st, i) { st.classList.toggle('is-active', i === idx); });
+    }
   }
   function requestTick() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
   window.addEventListener('scroll', requestTick, { passive: true });
@@ -100,6 +137,8 @@
       motionBtn.title = v ? 'Play motion' : 'Pause motion';
     }
     if (scene3d) scene3d.pause(v);
+    if (work3d) work3d.pause(v);
+    if (carouselTick) carouselTick();
     if (save) { try { localStorage.setItem('dk-motion', v ? 'off' : 'on'); } catch (e) {} }
     requestTick();
   }
@@ -116,15 +155,72 @@
   var heroCanvas = document.querySelector('[data-hero-canvas]');
   function boot3d() {
     if (!heroCanvas || reduce.matches || lowEnd || !canWebGL()) return;
-    import('./hero3d.js?v=5').then(function (mod) {
+    import('./hero3d.js?v=6').then(function (mod) {
       scene3d = mod.start(heroCanvas, { paused: paused });
       if (!scene3d) return;
       requestAnimationFrame(function () { root.classList.add('webgl-on'); });
       requestTick();
     }).catch(function () { /* keep the CSS 3D poster */ });
   }
+  /* Real 3D laptop for the work section: wide screens only, loaded when the section gets close */
+  var workCanvas = document.querySelector('[data-work-canvas]');
+  function bootWork3d() {
+    if (!workCanvas || reduce.matches || lowEnd || !canWebGL() || !window.matchMedia('(min-width: 1100px)').matches) return;
+    var go = function () {
+      import('./work3d.js?v=6').then(function (mod) {
+        workSec.classList.add('work3d-on');
+        work3d = mod.start(workCanvas, works, { paused: paused });
+        if (!work3d) { workSec.classList.remove('work3d-on'); return; }
+        workIdx = -1; requestTick();
+      }).catch(function () { workSec.classList.remove('work3d-on'); });
+    };
+    if ('IntersectionObserver' in window) {
+      var wio = new IntersectionObserver(function (en) { if (en[0].isIntersecting) { wio.disconnect(); go(); } }, { rootMargin: '900px 0px' });
+      wio.observe(workSec);
+    } else go();
+  }
+
   function whenIdle(fn) { if ('requestIdleCallback' in window) requestIdleCallback(fn, { timeout: 2500 }); else setTimeout(fn, 600); }
-  if (document.readyState === 'complete') whenIdle(boot3d); else window.addEventListener('load', function () { whenIdle(boot3d); });
+  function bootAll() { boot3d(); bootWork3d(); }
+  if (document.readyState === 'complete') whenIdle(bootAll); else window.addEventListener('load', function () { whenIdle(bootAll); });
+
+  /* ---------- Concept designs: 3D cover-flow carousel ----------
+     Buttons, arrow keys, swipe, or tap a side slide. Auto-advances every 5 s while on screen,
+     stops on hover/focus and when motion is paused (WCAG 2.2.2). */
+  var carouselTick = null;
+  (function () {
+    var root = document.querySelector('[data-carousel]');
+    if (!root) return;
+    var slides = [].slice.call(root.querySelectorAll('.cslide'));
+    var status = root.querySelector('[data-status]');
+    var n = slides.length, cur = 0, hover = false, inView = false, timer = 0;
+    function render(announce) {
+      slides.forEach(function (sl, i) {
+        var d = i - cur; if (d > n / 2) d -= n; if (d < -n / 2) d += n;
+        sl.style.setProperty('--d', d); sl.style.setProperty('--ad', Math.abs(d));
+        sl.classList.toggle('is-front', d === 0);
+        sl.setAttribute('aria-hidden', d === 0 ? 'false' : 'true');
+      });
+      if (status && announce !== false) status.textContent = (cur + 1) + ' of ' + n + ': ' + slides[cur].querySelector('b').textContent;
+    }
+    function go(i, announce) { cur = (i + n) % n; render(announce); }
+    root.querySelector('[data-prev]').addEventListener('click', function () { go(cur - 1); });
+    root.querySelector('[data-next]').addEventListener('click', function () { go(cur + 1); });
+    slides.forEach(function (sl, i) { sl.addEventListener('click', function () { if (i !== cur) go(i); }); });
+    root.addEventListener('keydown', function (e) { if (e.key === 'ArrowLeft') go(cur - 1); if (e.key === 'ArrowRight') go(cur + 1); });
+    var sx = null;
+    root.addEventListener('pointerdown', function (e) { sx = e.clientX; });
+    root.addEventListener('pointerup', function (e) { if (sx !== null && Math.abs(e.clientX - sx) > 40) go(cur + (e.clientX < sx ? 1 : -1)); sx = null; });
+    root.addEventListener('mouseenter', function () { hover = true; }); root.addEventListener('mouseleave', function () { hover = false; });
+    root.addEventListener('focusin', function () { hover = true; }); root.addEventListener('focusout', function () { hover = false; });
+    carouselTick = function () {
+      clearInterval(timer);
+      if (paused || reduce.matches || !inView) return;
+      timer = setInterval(function () { if (!hover && !document.hidden) go(cur + 1, false); }, 5000);
+    };
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { inView = en[0].isIntersecting; carouselTick(); }, { threshold: .3 }).observe(root);
+    render(false);
+  })();
 
   /* ---------- Demo AI assistant ----------
      A scripted demo that answers from a small knowledge base about Deep's services,
