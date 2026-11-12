@@ -397,7 +397,12 @@ p { margin: 0 0 1em; }
   opacity: calc(1 - var(--ad) * .38); z-index: calc(10 - var(--ad)); transition: transform 1.1s var(--heavy), opacity .8s; cursor: pointer; }
 .cslide.is-front { cursor: default; }
 .c-screen { position: relative; overflow: hidden; background: #0b0e1a; box-shadow: 0 50px 90px -20px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.08), 0 0 70px rgba(62, 230, 255, .12); }
-.c-screen img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.c-screen img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; }
+/* the front concept scrolls through its whole page like a real visit, then the carousel moves on */
+.cslide.is-front .c-screen img { animation: siteScrollL 10s var(--ease, ease-in-out) 1s infinite; }
+.cslide.phone.is-front .c-screen img { animation-name: siteScrollP; animation-duration: 13s; }
+@keyframes siteScrollL { 0%, 10% { object-position: 50% 0%; } 34%, 50% { object-position: 50% 62%; } 74%, 94% { object-position: 50% 100%; } 100% { object-position: 50% 0%; } }
+@keyframes siteScrollP { 0%, 8% { object-position: 50% 0%; } 22%, 34% { object-position: 50% 33.34%; } 48%, 60% { object-position: 50% 66.67%; } 74%, 94% { object-position: 50% 100%; } 100% { object-position: 50% 0%; } }
 .c-screen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.14), transparent 35%); pointer-events: none; }
 .cslide.laptop .c-screen { width: min(540px, 62vw); aspect-ratio: 16 / 10; border: clamp(6px, 1vw, 11px) solid #0b0e1a; border-radius: 14px 14px 4px 4px; }
 .cslide.laptop::after { content: ""; position: absolute; left: -7%; right: -7%; top: calc(100% - 1px); height: clamp(10px, 1.6vw, 18px); border-radius: 2px 2px 14px 14px;

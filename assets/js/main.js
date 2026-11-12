@@ -198,7 +198,7 @@
   if (document.readyState === 'complete') whenIdle(bootAll); else window.addEventListener('load', function () { whenIdle(bootAll); });
 
   /* ---------- Concept designs: 3D cover-flow carousel ----------
-     Buttons, arrow keys, swipe, or tap a side slide. Auto-advances every 5 s while on screen,
+     Buttons, arrow keys, swipe, or tap a side slide. The front screen scrolls through its whole concept page, then the carousel advances while on screen,
      stops on hover/focus and when motion is paused (WCAG 2.2.2). */
   var carouselTick = null;
   (function () {
@@ -229,8 +229,12 @@
     carouselTick = function () {
       clearInterval(timer);
       if (paused || reduce.matches || !inView) return;
-      timer = setInterval(function () { if (!hover && !document.hidden) go(cur + 1, false); }, 5000);
     };
+    // advance once the front site has finished scrolling (one animation loop); hovering keeps it looping
+    root.addEventListener('animationiteration', function (e) {
+      if (!e.target.closest('.is-front') || hover || paused || reduce.matches || !inView || document.hidden) return;
+      go(cur + 1, false);
+    });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { inView = en[0].isIntersecting; carouselTick(); }, { threshold: .3 }).observe(root);
     render(false);
   })();
