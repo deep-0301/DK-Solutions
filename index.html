@@ -19,7 +19,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap">
-<link rel="stylesheet" href="assets/css/style.css?v=5">
+<link rel="stylesheet" href="assets/css/style.css?v=6">
 <script type="application/ld+json">
 {"@context":"https://schema.org","@type":"ProfessionalService","name":"DK Solutions","url":"https://dksolutions.dev/","email":"contact@dksolutions.dev","description":"Website design and development for small businesses anywhere: new websites, redesigns, local SEO and smart AI features.","areaServed":"Worldwide","sameAs":["https://www.instagram.com/dksolutions.dev/","https://www.facebook.com/profile.php?id=61596513503412","https://www.youtube.com/@dksolutionsdev"],"founder":{"@type":"Person","name":"Deep Patel","sameAs":["https://github.com/deep-0301","https://medium.com/@deep0301"]}}
 </script>
@@ -37,6 +37,7 @@
     </a>
     <nav class="nav" id="site-nav" aria-label="Main">
       <a href="#work">Work</a>
+      <a href="#concepts">Concepts</a>
       <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="#packages">Packages</a>
@@ -91,15 +92,11 @@
   <a class="scroll-cue" href="#work" aria-label="Scroll to the next section"><span></span></a>
 </section>
 
-<section class="marquee" aria-label="What every site includes">
-  <div class="marquee-track">
-    <ul>
-      <li>New websites</li><li>Redesigns</li><li>Mobile-first</li><li>Google-ready SEO</li><li>Booking &amp; quote forms</li><li>Smart AI features</li><li>Accessible (WCAG 2.1 AA)</li>
-    </ul>
-    <ul aria-hidden="true">
-      <li>New websites</li><li>Redesigns</li><li>Mobile-first</li><li>Google-ready SEO</li><li>Booking &amp; quote forms</li><li>Smart AI features</li><li>Accessible (WCAG 2.1 AA)</li>
-    </ul>
-  </div>
+<section class="ring-band" aria-label="What every site includes">
+  <ul class="sr">
+    <li>New websites</li><li>Redesigns</li><li>Mobile-first</li><li>Google-ready SEO</li><li>Booking &amp; quote forms</li><li>Smart AI features</li><li>Accessible (WCAG 2.1 AA)</li>
+  </ul>
+  <div class="ring-stage" aria-hidden="true"><div class="ring"><span style="--i:0">New websites</span><span style="--i:1">Redesigns</span><span style="--i:2">Mobile-first</span><span style="--i:3">Google SEO</span><span style="--i:4">Booking forms</span><span style="--i:5">AI features</span><span style="--i:6">WCAG AA</span><span style="--i:7">New websites</span><span style="--i:8">Redesigns</span><span style="--i:9">Mobile-first</span><span style="--i:10">Google SEO</span><span style="--i:11">Booking forms</span><span style="--i:12">AI features</span><span style="--i:13">WCAG AA</span></div></div>
 </section>
 
 <section class="section" id="work">
@@ -107,8 +104,10 @@
     <div class="section-head">
       <p class="eyebrow"><span>01</span> Recent work</p>
       <h2>Websites and web apps already in use.</h2>
+      <p class="sub">Real projects, live today.</p>
     </div>
     <div class="work-list">
+      <div class="work-stage" aria-hidden="true"><canvas data-work-canvas></canvas><p class="work-stage-label"><span data-work-label>Listaro</span></p></div>
       <article class="work" data-depth>
         <a class="device tilt" href="https://listaro.dev/" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true">
           <span class="device-bar"><i></i><i></i><i></i><em>listaro.dev</em></span>
@@ -156,10 +155,48 @@
   </div>
 </section>
 
+<section class="section concepts" id="concepts">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow"><span>02</span> Concept designs</p>
+      <h2>A taste of what your site could look like.</h2>
+      <p class="sub">Homepage concepts I designed for made-up local businesses: a café, a barber, a dentist and a pottery studio. Spin the carousel, then picture your business in it.</p>
+    </div>
+    <div class="carousel" data-carousel>
+      <div class="carousel-stage">
+        <div class="carousel-ring" data-ring>
+          <figure class="cslide laptop" style="--i:0">
+            <div class="c-screen"><img src="assets/img/concept-cafe.webp" alt="Concept homepage for Kettle &amp; Crema, a small-batch coffee roastery, with a latte and order-ahead button" width="960" height="600" loading="lazy" decoding="async"></div>
+            <figcaption><b>Kettle &amp; Crema</b> Café concept</figcaption>
+          </figure>
+          <figure class="cslide phone" style="--i:1">
+            <div class="c-screen"><img src="assets/img/concept-dental.webp" alt="Concept mobile homepage for Brightside Dental with a book-a-checkup button and next free slot" width="390" height="844" loading="lazy" decoding="async"></div>
+            <figcaption><b>Brightside Dental</b> Clinic concept</figcaption>
+          </figure>
+          <figure class="cslide laptop" style="--i:2">
+            <div class="c-screen"><img src="assets/img/concept-barber.webp" alt="Concept homepage for Northside Barber Co. with a barber pole and book-a-chair button" width="960" height="600" loading="lazy" decoding="async"></div>
+            <figcaption><b>Northside Barber Co.</b> Barbershop concept</figcaption>
+          </figure>
+          <figure class="cslide phone" style="--i:3">
+            <div class="c-screen"><img src="assets/img/concept-pottery.webp" alt="Concept mobile homepage for Kiln &amp; Clay pottery studio with a book-a-class button" width="390" height="844" loading="lazy" decoding="async"></div>
+            <figcaption><b>Kiln &amp; Clay</b> Pottery studio concept</figcaption>
+          </figure>
+        </div>
+      </div>
+      <div class="carousel-ctrl">
+        <button class="icon-btn" type="button" data-prev aria-label="Previous concept"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.4 7.4 14 6l-6 6 6 6 1.4-1.4L10.8 12z"/></svg></button>
+        <p class="carousel-status" aria-live="polite" data-status>1 of 4: Kettle &amp; Crema</p>
+        <button class="icon-btn" type="button" data-next aria-label="Next concept"><svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.6 16.6 10 18l6-6-6-6-1.4 1.4 4.6 4.6z"/></svg></button>
+      </div>
+      <p class="concept-note">Concept designs for fictional businesses, not client work.</p>
+    </div>
+  </div>
+</section>
+
 <section class="section" id="why">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow"><span>02</span> Sound familiar?</p>
+      <p class="eyebrow"><span>03</span> Sound familiar?</p>
       <h2>Your customers look you up on their phone first.</h2>
       <p class="sub">If your website is slow, hard to use on a phone, or missing, they call the next business on the list. I fix that.</p>
     </div>
@@ -186,7 +223,7 @@
 <section class="section" id="services">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow"><span>03</span> Services</p>
+      <p class="eyebrow"><span>04</span> Services</p>
       <h2>Everything your business website needs, from one developer.</h2>
     </div>
     <div class="grid-3 services">
@@ -227,8 +264,19 @@
 <section class="section" id="process">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow"><span>04</span> How it works</p>
+      <p class="eyebrow"><span>05</span> How it works</p>
       <h2>Simple, clear, and no tech jargon.</h2>
+    </div>
+    <div class="process-grid">
+    <div class="cube-stage" aria-hidden="true">
+      <div class="big-cube" data-cube>
+        <div class="face f1"><b>01</b><span>Free check</span></div>
+        <div class="face f2"><b>02</b><span>Fixed quote</span></div>
+        <div class="face f3"><b>03</b><span>Design &amp; build</span></div>
+        <div class="face f4"><b>04</b><span>Launch</span></div>
+        <div class="face f5"></div><div class="face f6"></div>
+      </div>
+      <div class="cube-shadow"></div>
     </div>
     <ol class="steps">
       <li class="step" data-depth>
@@ -252,13 +300,14 @@
         <p>I connect your domain, set up Google, and show you how to make simple edits. 30 days of free fixes after launch.</p>
       </li>
     </ol>
+    </div>
   </div>
 </section>
 
 <section class="section" id="packages">
   <div class="wrap">
     <div class="section-head">
-      <p class="eyebrow"><span>05</span> Packages</p>
+      <p class="eyebrow"><span>06</span> Packages</p>
       <h2>Pick a starting point. I'll tailor it to you.</h2>
       <p class="sub">Every business is different, so every project gets its own fixed quote before any work starts. Tell me what you need and I'll send one, free.</p>
     </div>
@@ -315,7 +364,7 @@
 <section class="section" id="faq">
   <div class="wrap narrow">
     <div class="section-head">
-      <p class="eyebrow"><span>06</span> FAQ</p>
+      <p class="eyebrow"><span>07</span> FAQ</p>
       <h2>Questions business owners ask me.</h2>
     </div>
     <div class="faq">
@@ -358,7 +407,7 @@
 <section class="section contact" id="contact">
   <div class="wrap contact-grid">
     <div class="contact-copy">
-      <p class="eyebrow"><span>07</span> Free website check</p>
+      <p class="eyebrow"><span>08</span> Free website check</p>
       <h2>Let's talk about your website.</h2>
       <p>Tell me a little about your business. If you have a website, include the link and I'll send back a free, no-obligation review of what's working and what to fix, usually within one business day.</p>
       <ul class="contact-list">
@@ -443,6 +492,6 @@
 <script type="importmap">
 {"imports":{"three":"./assets/vendor/three/three.module.min.js"}}
 </script>
-<script src="assets/js/main.js?v=5" defer></script>
+<script src="assets/js/main.js?v=6" defer></script>
 </body>
 </html>
