@@ -259,16 +259,6 @@ p { margin: 0 0 1em; }
 .care h3 span { font: 500 .78rem var(--mono); color: var(--accent); margin-left: 8px; }
 .care > div { flex: 1 1 320px; }
 
-/* FAQ */
-.faq { display: grid; gap: 12px; perspective: 1200px; }
-.faq details { padding: 0 22px; border-radius: 16px; border: 1px solid var(--line); background: rgba(8, 11, 24, .72); box-shadow: 0 4px 0 -1px #10183a, 0 4px 0 0 var(--line); transition: border-color .2s, transform .35s var(--spring); }
-.faq details:hover { transform: translateZ(14px); }
-.faq details[open] { border-color: rgba(62, 230, 255, .45); }
-.faq summary { cursor: pointer; list-style: none; padding: 19px 36px 19px 0; font-weight: 600; position: relative; }
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary::after { content: ""; position: absolute; right: 2px; top: 50%; width: 12px; height: 12px; margin-top: -8px; border-right: 2px solid var(--accent); border-bottom: 2px solid var(--accent); transform: rotate(45deg); transition: transform .35s var(--spring); }
-.faq details[open] summary::after { transform: rotate(225deg); margin-top: -2px; }
-.faq details p { color: var(--muted); margin: 0 0 20px; }
 
 /* Contact */
 .contact-grid { display: grid; gap: 36px; align-items: start; }
@@ -399,8 +389,8 @@ p { margin: 0 0 1em; }
 .c-screen { position: relative; overflow: hidden; background: #0b0e1a; box-shadow: 0 50px 90px -20px rgba(0,0,0,.8), 0 0 0 1px rgba(255,255,255,.08), 0 0 70px rgba(62, 230, 255, .12); }
 .c-screen img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 0%; }
 /* the front concept scrolls through its whole page like a real visit, then the carousel moves on */
-.cslide.is-front .c-screen img { animation: siteScrollL 10s var(--ease, ease-in-out) 1s infinite; }
-.cslide.phone.is-front .c-screen img { animation-name: siteScrollP; animation-duration: 13s; }
+.cslide.is-front .c-screen img { animation: siteScrollL 7s ease-in-out .8s infinite; }
+.cslide.phone.is-front .c-screen img { animation-name: siteScrollP; animation-duration: 9s; }
 @keyframes siteScrollL { 0%, 10% { object-position: 50% 0%; } 34%, 50% { object-position: 50% 62%; } 74%, 94% { object-position: 50% 100%; } 100% { object-position: 50% 0%; } }
 @keyframes siteScrollP { 0%, 8% { object-position: 50% 0%; } 22%, 34% { object-position: 50% 33.34%; } 48%, 60% { object-position: 50% 66.67%; } 74%, 94% { object-position: 50% 100%; } 100% { object-position: 50% 0%; } }
 .c-screen::after { content: ""; position: absolute; inset: 0; background: linear-gradient(115deg, rgba(255,255,255,.14), transparent 35%); pointer-events: none; }
@@ -471,9 +461,6 @@ p { margin: 0 0 1em; }
 .orbit i { transform: var(--tilt); }
 @media (max-width: 939px) { .orbit { left: auto; right: -110px; top: 10px; width: 260px; height: 260px; opacity: .55; } }
 
-/* FAQ answers fold down in 3D */
-.faq details[open] p { transform-origin: 50% 0; animation: foldDown .55s var(--spring); }
-@keyframes foldDown { from { opacity: 0; transform: perspective(600px) rotateX(-75deg); } }
 
 /* Footer: a giant extruded 3D wordmark standing on a glowing floor */
 .wordmark-stage { position: relative; height: clamp(120px, 20vw, 260px); perspective: 900px; display: grid; place-items: end center; overflow: hidden; margin-bottom: 26px; }

@@ -8,7 +8,7 @@ Plain HTML, CSS and JavaScript with no build step. GitHub Pages serves it straig
 
 | Path | What it is |
 | --- | --- |
-| `index.html` | The whole one-page site: services, work, process, packages, about, FAQ, contact |
+| `index.html` | The whole one-page site: services, work, process, packages, about, contact |
 | `assets/css/style.css` | Styles. Colours and gradients are the variables at the top. |
 | `assets/js/main.js` | Menu, scroll-driven 3D (CSS variables), pointer tilt, pause-motion button, mobile dock, demo AI assistant, contact form |
 | `assets/js/hero3d.js` | The three.js hero: an "exploded" website whose glass layers click together as you scroll. Loaded after first paint, only on capable devices. |
