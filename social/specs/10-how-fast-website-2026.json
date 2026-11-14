@@ -1,0 +1,101 @@
+{
+  "id": "10-how-fast-website-2026",
+  "topic": "Websites in 2026",
+  "scenes": [
+    {
+      "type": "visual",
+      "v": "hero",
+      "emoji": "⏱️",
+      "label": "How fast in *2026?*",
+      "say": "How fast can a small business website actually be built in 2026?",
+      "cap": "How fast can a website be built *in 2026?*"
+    },
+    {
+      "type": "visual",
+      "v": "thenNow",
+      "say": "It used to take two or three months. Today, a simple five page site can go live in about a week.",
+      "cap": "It used to take *months.* Now a simple site takes *about a week.*"
+    },
+    {
+      "type": "visual",
+      "v": "build",
+      "day": [
+        1
+      ],
+      "upto": 1,
+      "emoji": "✂️",
+      "keep": false,
+      "say": "Day one: a short call. What do customers need to find? That decides the pages."
+    },
+    {
+      "type": "visual",
+      "v": "build",
+      "day": [
+        2
+      ],
+      "upto": 2,
+      "emoji": "✂️",
+      "keep": true,
+      "say": "Day two: the homepage design, built for phones first."
+    },
+    {
+      "type": "visual",
+      "v": "build",
+      "day": [
+        3,
+        4
+      ],
+      "upto": 3,
+      "emoji": "✂️",
+      "keep": true,
+      "say": "Days three and four: every page gets built. AI helps with first drafts, a human checks everything.",
+      "cap": "AI helps with first drafts. *A human checks everything.*"
+    },
+    {
+      "type": "visual",
+      "v": "build",
+      "day": [
+        5
+      ],
+      "upto": 4,
+      "emoji": "✂️",
+      "keep": true,
+      "say": "Day five: booking, contact forms, and an optional chatbot."
+    },
+    {
+      "type": "visual",
+      "v": "build",
+      "day": [
+        6
+      ],
+      "upto": 5,
+      "emoji": "✂️",
+      "keep": true,
+      "say": "Day six: speed tests, and connecting it to Google so people can find you."
+    },
+    {
+      "type": "visual",
+      "v": "build",
+      "day": [
+        7
+      ],
+      "upto": 6,
+      "emoji": "✂️",
+      "keep": true,
+      "say": "Day seven: launch."
+    },
+    {
+      "type": "visual",
+      "v": "pile",
+      "say": "The biggest delay? Waiting on photos, text and logins. Have those ready and a week is realistic.",
+      "cap": "Biggest delay: waiting on *photos, text and logins.*"
+    },
+    {
+      "type": "end",
+      "title": "Follow for more *website tips*",
+      "body": "New explainer every week.",
+      "say": "Follow for more tips like this.",
+      "min": 2.2
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "id": "09-rate-this-website",
+  "business": {
+    "name": "Corner Bean Café", "logo": "corner bean", "since": 2006, "copyright": 2012,
+    "oldBg": "#f3efe6", "oldBar": "#4e342e", "oldTitle": "#3e2723",
+    "marquee": "TRY OUR NEW PUMPKIN LATTE!!! FREE WIFI!!! TRY OUR NEW PUMPKIN LATTE!!!",
+    "oldBlurb": "Corner Bean Cafe is a cozy coffee shop. We serve coffee, tea, sandwiches and baked goods. Menu coming soon. Follow us on social media for updates. Lorem ipsum dolor sit amet.",
+    "color": "#7c2d12", "color2": "#d97706", "emoji": "☕",
+    "kicker": "Open now · 7am to 6pm", "headline": "Your neighbourhood coffee, ready when you are.",
+    "sub": "Order ahead and skip the line. Fresh pastries every morning.",
+    "cta": "Order ahead", "cta2": "See menu", "review": "4.8 from 540 Google reviews",
+    "services": [["Coffee", "Single-origin espresso."], ["Breakfast", "Served till 11am."], ["Lunch", "Soups and sandwiches."], ["Catering", "Coffee for your office."]]
+  },
+  "scenes": [
+    { "type": "text", "kicker": "Be honest", "title": "Rate this café's website *1 to 10.* 👇", "duration": 2.4 },
+    { "type": "phone", "site": "before", "tone": "bad", "label": "Score: ?/10", "title": "Their current site", "notes": ["\"Menu coming soon\"", "No hours", "No way to order", "© 2012"], "duration": 3.6 },
+    { "type": "text", "kicker": "We'd give it a", "title": "*3/10.* Here's our redesign.", "duration": 2.0 },
+    { "type": "phone", "site": "after", "tone": "good", "label": "Score: 9/10", "title": "Our redesign", "notes": ["Order ahead button", "Open hours up top", "540 reviews shown", "Menu one tap away"], "duration": 3.6, "transition": "wiperight" },
+    { "type": "cta", "title": "Want your site rated? Comment *\"RATE\"*", "sub": "Free, honest website review for small businesses.", "duration": 3.0 }
+  ]
+}

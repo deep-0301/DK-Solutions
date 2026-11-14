@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1080, height=1920" />
+    <script src="assets/js/gsap.min.js"></script>
+    <script src="assets/js/three.min.js"></script>
+    <script src="assets/js/GLTFLoader.js"></script>
+    <style>
+      html, body { margin: 0; width: 1080px; height: 1920px; overflow: hidden; background: /*BGCSS*/#120407; }
+      #root { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: /*BGCSS*/#120407; }
+      #theater { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+      #cap { position: absolute; left: 0; top: 0; width: 780px; height: 1688px; z-index: -1; pointer-events: none; }
+      #cap-inner { width: 780px; height: 1688px; overflow: hidden; }
+      #phone-html { width: 390px; height: 844px; transform: scale(2); transform-origin: 0 0; position: relative; overflow: hidden; container-type: size; }
+      #hf-tag { position: absolute; left: 0; right: 0; top: 1700px; text-align: center; color: #fff; font: 600 34px/1 "Cormorant", serif; letter-spacing: .14em; opacity: 0; text-shadow: 0 4px 24px rgba(0,0,0,.6); }
+      #fade { position: absolute; inset: 0; background: #000; opacity: 1; pointer-events: none; }
+      @font-face { font-family: Cormorant; src: url(assets/fonts/cormorant-garamond-latin-600-normal.woff2); font-weight: 600; }
+      /*SITE_CSS*/
+    </style>
+  </head>
+  <body>
+    <div id="root" data-composition-id="main" data-start="0" data-duration="15" data-width="1080" data-height="1920" data-fps="30">
+      <!-- The site, live: captured into the phone screen texture every frame. -->
+      <canvas id="cap" data-layout-ignore layoutsubtree width="780" height="1688">
+        <div id="cap-inner"><div id="phone-html"><!--SITE_HTML--></div></div>
+      </canvas>
+      <canvas id="theater" width="1080" height="1920"></canvas>
+      <div id="hf-tag" class="clip" data-start="12.4" data-duration="2.6" data-track-index="1"><span id="tag-in">@dksolutions.dev</span></div>
+      <div id="fade"></div>
+      <audio id="music" class="clip" src="assets/music.wav" data-start="0" data-duration="15" data-track-index="2"></audio>
+    </div>
+    <script>
+      /*SITE_JS*/
+    </script>
+    <script>
+      (function () {
+      var THEME = /*THEME*/{ bg: 0x120407, base: [0.07, 0.015, 0.025], glowA: [0.35, 0.12, 0.04], glowB: [0.22, 0.05, 0.08], hue: 0.08, sat: 0.9, petals: 14, petalTint: ["#ffffff", "#ffb24a", "#ffd36b"], rim: 0xffb25a, fill: 0xd8476b };
+      var W = 1080, H = 1920, PI = Math.PI;
+      var renderer = new THREE.WebGLRenderer({ canvas: document.getElementById("theater"), antialias: true, preserveDrawingBuffer: true });
+      renderer.setSize(W, H, false); renderer.setPixelRatio(1);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.1;
+      renderer.outputEncoding = THREE.sRGBEncoding;
+      var scene = new THREE.Scene();
+      scene.background = new THREE.Color(THEME.bg);
+      var camera = new THREE.PerspectiveCamera(30, W / H, 0.1, 100);
+
+      // Warm environment for reflections on the phone's metal and glass.
+      var eC = document.createElement("canvas"); eC.width = 1024; eC.height = 512;
+      var ec = eC.getContext("2d"), eg = ec.createLinearGradient(0, 0, 1024, 0);
+      eg.addColorStop(0, "#1a0508"); eg.addColorStop(0.25, "#ffe2b0"); eg.addColorStop(0.4, "#3a0c12"); eg.addColorStop(0.7, "#fff3dc"); eg.addColorStop(1, "#1a0508");
+      ec.fillStyle = eg; ec.fillRect(0, 0, 1024, 512);
+      var eT = new THREE.CanvasTexture(eC); eT.mapping = THREE.EquirectangularReflectionMapping;
+      var pm = new THREE.PMREMGenerator(renderer); scene.environment = pm.fromEquirectangular(eT).texture;
+
+      // Backdrop: deep maroon with two warm glows.
+      var bg = new THREE.Mesh(new THREE.PlaneGeometry(40, 60), new THREE.ShaderMaterial({ depthWrite: false, vertexShader: "varying vec2 v;void main(){v=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}",
+        fragmentShader: "varying vec2 v;void main(){vec3 c=vec3(" + THEME.base.join(",") + ");c+=vec3(" + THEME.glowA.join(",") + ")*exp(-pow(length((v-vec2(0.38,0.6))*vec2(1.0,0.7)),2.0)*28.0);c+=vec3(" + THEME.glowB.join(",") + ")*exp(-pow(length(v-vec2(0.62,0.42)),2.0)*30.0);gl_FragColor=vec4(c,1.0);}" }));
+      bg.position.z = -14; scene.add(bg);
+
+      // Bokeh: soft warm discs at depth (out-of-focus string lights / diyas).
+      var dC = document.createElement("canvas"); dC.width = dC.height = 128;
+      var dc = dC.getContext("2d"), dg = dc.createRadialGradient(64, 64, 0, 64, 64, 64);
+      dg.addColorStop(0, "rgba(255,220,160,1)"); dg.addColorStop(0.55, "rgba(255,190,110,.75)"); dg.addColorStop(0.8, "rgba(255,170,80,.25)"); dg.addColorStop(1, "rgba(255,160,60,0)");
+      dc.fillStyle = dg; dc.fillRect(0, 0, 128, 128);
+      var discTex = new THREE.CanvasTexture(dC);
+      var bseed = 5; function brnd() { bseed = (bseed * 16807) % 2147483647; return bseed / 2147483647; }
+      var bokeh = [];
+      for (var i = 0; i < 46; i++) {
+        var mat = new THREE.SpriteMaterial({ map: discTex, color: new THREE.Color().setHSL(THEME.hue + brnd() * 0.05, THEME.sat, 0.55 + brnd() * 0.2), transparent: true, opacity: 0.25 + brnd() * 0.45, depthWrite: false, blending: THREE.AdditiveBlending });
+        var sp = new THREE.Sprite(mat); var z = -4 - brnd() * 8; var sc = 0.5 + brnd() * 1.4;
+        sp.position.set((brnd() - 0.5) * 14, (brnd() - 0.5) * 20, z); sp.scale.set(sc, sc, 1);
+        sp.userData = { x: sp.position.x, y: sp.position.y, ph: brnd() * 6.28, sp: 0.2 + brnd() * 0.4 };
+        scene.add(sp); bokeh.push(sp);
+      }
+      // Foreground petals drifting past the lens.
+      var pC = document.createElement("canvas"); pC.width = 64; pC.height = 96;
+      var pc = pC.getContext("2d"); pc.fillStyle = "#e0486e"; pc.beginPath(); pc.ellipse(32, 48, 22, 40, 0, 0, 7); pc.fill();
+      var petalTex = new THREE.CanvasTexture(pC), petals = [];
+      for (var j = 0; j < THEME.petals; j++) {
+        var pmz = new THREE.MeshBasicMaterial({ map: petalTex, color: new THREE.Color(THEME.petalTint[j % THEME.petalTint.length]), transparent: true, opacity: 0.85, side: THREE.DoubleSide, depthWrite: false });
+        var pt = new THREE.Mesh(new THREE.PlaneGeometry(0.12, 0.18), pmz);
+        pt.userData = { x: (brnd() - 0.5) * 5, z: 1 + brnd() * 2.5, ph: brnd(), sp: 0.07 + brnd() * 0.06, r: brnd() * 6.28 };
+        scene.add(pt); petals.push(pt);
+      }
+
+      scene.add(new THREE.AmbientLight(0x442222, 0.6));
+      var key = new THREE.DirectionalLight(0xfff0dc, 2.0); key.position.set(-3, 4, 6); scene.add(key);
+      var rim = new THREE.PointLight(THEME.rim, 3.0, 14); rim.position.set(3.5, 2.5, -1.5); scene.add(rim);
+      var fill = new THREE.PointLight(THEME.fill, 1.2, 12); fill.position.set(-3, -2, 3); scene.add(fill);
+
+      // Live HTML -> texture
+      var capCvs = document.getElementById("cap"), capCtx = capCvs.getContext("2d"), capEl = document.getElementById("cap-inner");
+      var apiOk = (function () { var tc = document.createElement("canvas"); if (!("layoutSubtree" in tc)) return false; tc.setAttribute("layoutsubtree", ""); var c = tc.getContext("2d"); return c && typeof c.drawElementImage === "function"; })();
+      window.__apiOk = apiOk;
+      var phoneTex = new THREE.CanvasTexture(capCvs); phoneTex.minFilter = THREE.LinearFilter; phoneTex.generateMipmaps = false; phoneTex.encoding = THREE.sRGBEncoding;
+      var paintReady = false;
+      function capture() { if (!apiOk || !paintReady) return; try { capCtx.clearRect(0, 0, 780, 1688); capCtx.drawElementImage(capEl, 0, 0, 780, 1688); phoneTex.needsUpdate = true; } catch (e) {} }
+
+      function planarScreenUv(mesh) {
+        var g = mesh.geometry; g.computeBoundingBox(); var bb = g.boundingBox, pos = g.attributes.position;
+        var w = bb.max.x - bb.min.x || 1, h = bb.max.y - bb.min.y || 1, uv = new Float32Array(pos.count * 2);
+        for (var i = 0; i < pos.count; i++) { uv[i * 2] = (pos.getX(i) - bb.min.x) / w; uv[i * 2 + 1] = (pos.getY(i) - bb.min.y) / h; }
+        g.setAttribute("uv", new THREE.BufferAttribute(uv, 2));
+      }
+      function alignScreenToMinusZ(root, f, b) {
+        var front = root.getObjectByName(f), back = root.getObjectByName(b); if (!front || !back) return;
+        root.updateWorldMatrix(true, true); var fp = new THREE.Vector3(), bp = new THREE.Vector3();
+        front.getWorldPosition(fp); back.getWorldPosition(bp); if (fp.z > bp.z) root.rotation.y += Math.PI;
+      }
+      var phone = new THREE.Group(); scene.add(phone);
+
+      function cbz(p1x, p1y, p2x, p2y) { var ax = 3 * p1x - 3 * p2x + 1, bx = 3 * p2x - 6 * p1x, cx = 3 * p1x, ay = 3 * p1y - 3 * p2y + 1, by = 3 * p2y - 6 * p1y, cy = 3 * p1y;
+        return function (t) { var s = t; for (var i = 0; i < 12; i++) { var x = ((ax * s + bx) * s + cx) * s - t, dx = (3 * ax * s + 2 * bx) * s + cx; if (Math.abs(dx) < 1e-10) break; s -= x / dx; } s = Math.max(0, Math.min(1, s)); return ((ay * s + by) * s + cy) * s; }; }
+      var enter = cbz(0.16, 1, 0.3, 1), glide = cbz(0.45, 0, 0.15, 1), breathe = cbz(0.37, 0, 0.63, 1);
+
+      // Camera + phone state, timed to the site's scroll bars (2.5 s each).
+      var S = { t: 0, phY: -2.2, phRX: 0.35, phRY: PI + 0.75, phRZ: 0.06, cX: 0.25, cY: -0.2, cZ: 10.2, fade: 1, tag: 0 };
+      var tl = gsap.timeline({ paused: true, onUpdate: function () { try { render(); } catch (e) { console.log("render error: " + e.message); } } });
+      tl.to(S, { t: 15, duration: 15, ease: "none" }, 0);
+      tl.to(S, { fade: 0, duration: 0.6, ease: "none" }, 0);
+      tl.to(S, { phY: 0, phRX: 0, phRY: PI, phRZ: 0, duration: 2.4, ease: enter }, 0);
+      tl.to(S, { cZ: 9.2, cY: 0, cX: 0, duration: 2.4, ease: glide }, 0);
+      tl.to(S, { cZ: 8.6, phRY: PI - 0.14, duration: 2.5, ease: breathe }, 2.5);
+      tl.to(S, { phRY: PI + 0.06, cY: 0.15, duration: 2.5, ease: breathe }, 5);
+      tl.to(S, { cX: 0.6, cZ: 8.0, phRY: PI - 0.22, phRZ: -0.03, duration: 2.5, ease: breathe }, 7.5);
+      tl.to(S, { phRY: PI - 0.1, duration: 1.25, ease: breathe }, 10);
+      tl.to(S, { cX: 0, cZ: 9.0, cY: 0, phRY: PI, phRZ: 0, duration: 2.5, ease: breathe }, 11.25);
+      tl.to(S, { phRX: -0.08, cZ: 9.6, duration: 1.25, ease: glide }, 13.75);
+      tl.to(S, { tag: 1, duration: 0.6, ease: "power2.out" }, 12.6);
+      tl.to(S, { fade: 1, duration: 0.5, ease: "none" }, 14.5);
+
+      function render() {
+        var t = S.t;
+        if (window.update) window.update(Math.min(t, 14.99));
+        capture();
+        phone.position.set(Math.sin(t * 0.6) * 0.02, S.phY + Math.sin(t * 0.8) * 0.03, 0);
+        phone.rotation.set(S.phRX + Math.sin(t * 0.7) * 0.01, S.phRY, S.phRZ);
+        camera.position.set(S.cX + Math.sin(t * 1.1) * 0.015, S.cY + Math.sin(t * 1.4 + 1) * 0.012, S.cZ);
+        camera.lookAt(S.cX * 0.35, S.cY * 0.5, 0);
+        key.position.set(-3 + Math.sin(t * 0.4) * 1.5, 4, 6);
+        bokeh.forEach(function (b) { var u = b.userData; b.position.x = u.x + Math.sin(t * u.sp + u.ph) * 0.3; b.position.y = u.y + Math.cos(t * u.sp * 0.8 + u.ph) * 0.25; b.material.rotation = 0; });
+        petals.forEach(function (p) { var u = p.userData, life = (t * u.sp + u.ph) % 1; p.position.set(u.x + Math.sin(t * 0.9 + u.r) * 0.3, 3.2 - life * 6.4, u.z); p.rotation.set(t * 1.3 + u.r, t * 0.9, u.r); });
+        renderer.render(scene, camera);
+        document.getElementById("fade").style.opacity = String(S.fade);
+        document.getElementById("tag-in").parentNode.style.opacity = String(S.tag);
+      }
+
+      var loader = new THREE.GLTFLoader();
+      loader.load("assets/iphone.glb", function (gltf) {
+        var m = gltf.scene, box = new THREE.Box3().setFromObject(m), sz = box.getSize(new THREE.Vector3());
+        m.scale.setScalar(3.2 / sz.y); box.setFromObject(m); m.position.sub(box.getCenter(new THREE.Vector3()));
+        m.traverse(function (c) { if (c.isMesh && c.name.indexOf("front-glass") === 0) { planarScreenUv(c); c.material = new THREE.MeshBasicMaterial({ map: phoneTex, toneMapped: false }); } });
+        alignScreenToMinusZ(m, "front-glass", "rear-window");
+        phone.add(m);
+        var done = function () { paintReady = true; render(); window.__timelines = window.__timelines || {}; window.__timelines["main"] = tl; };
+        if (typeof capCvs.requestPaint === "function") { var fired = false; capCvs.onpaint = function () { if (!fired) { fired = true; done(); } }; capCvs.requestPaint(); setTimeout(function () { if (!fired) { fired = true; done(); } }, 150); } else done();
+      });
+      })();
+    </script>
+  </body>
+</html>

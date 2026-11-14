@@ -1,0 +1,20 @@
+{
+  "id": "03-barber-before-after",
+  "business": {
+    "name": "Fade District Barbers", "logo": "FADE DISTRICT", "since": 2012, "copyright": 2016,
+    "oldBg": "#111", "oldBar": "#600", "oldTitle": "#ff3333",
+    "marquee": "WALK INS WELCOME!!! CASH ONLY!!! WALK INS WELCOME!!!",
+    "oldBlurb": "Fade District is the best barber shop. We do fades, line ups, beards and kids cuts. Check our Instagram for pictures. Call for appointments, no texts please. Lorem ipsum dolor sit amet.",
+    "dark": true, "color": "#7c3aed", "color2": "#db2777", "emoji": "💈",
+    "kicker": "Open till 8pm tonight", "headline": "Fresh fades. Zero waiting.",
+    "sub": "Pick your barber and your time. We'll text you a reminder.",
+    "cta": "Book a chair", "cta2": "Our work", "review": "5.0 from 180 Google reviews",
+    "services": [["Skin fade", "Clean, sharp, every time."], ["Beard trim", "Hot towel finish."], ["Kids cut", "Under 12s welcome."], ["Line up", "Quick touch-up."]]
+  },
+  "scenes": [
+    { "type": "text", "kicker": "Website makeover", "title": "Barbers: your site should *book chairs* while you cut.", "duration": 2.8 },
+    { "type": "phone", "site": "before", "tone": "bad", "title": "The old site", "notes": ["\"Call for appointments\"", "No photos of the work", "Unreadable on dark", "No opening hours"], "duration": 3.6 },
+    { "type": "phone", "site": "after", "tone": "good", "title": "The new site", "notes": ["Online booking 24/7", "Open hours up top", "5-star reviews shown", "Made for phones"], "duration": 4.0, "transition": "wiperight" },
+    { "type": "cta", "title": "Let your website *fill your chairs.*", "sub": "Free quote. New sites and redesigns for barbers and salons.", "duration": 3.2 }
+  ]
+}
