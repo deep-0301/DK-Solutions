@@ -91,7 +91,7 @@ def full_caption(item):
 
 def reel_url(item):
     base = os.environ.get("SITE_URL", "https://dksolutions.dev").rstrip("/")
-    return f"{base}/social/reels/{item['id']}.mp4"
+    return f"{base}/{item.get('video') or f'social/reels/{item['id']}.mp4'}"
 
 
 # ---------- Facebook Page reels ----------

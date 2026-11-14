@@ -74,7 +74,7 @@ def post_next():
         return False
     item = sorted(due, key=lambda i: i["post_after"])[0]
     base = os.environ.get("SITE_URL", "https://dksolutions.dev").rstrip("/")
-    video_url = f"{base}/social/reels/{item['id']}.mp4"
+    video_url = f"{base}/{item.get('video') or f'social/reels/{item['id']}.mp4'}"
     cover_url = f"{base}/social/reels/{item['id']}.jpg"
     print(f"Posting {item['id']} from {video_url}")
     if os.environ.get("DRY_RUN") == "1":
