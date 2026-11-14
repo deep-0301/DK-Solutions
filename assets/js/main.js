@@ -198,15 +198,16 @@
   if (document.readyState === 'complete') whenIdle(bootAll); else window.addEventListener('load', function () { whenIdle(bootAll); });
 
   /* ---------- Concept designs: 3D cover-flow carousel ----------
-     Buttons, arrow keys, swipe, or tap a side slide. The front screen scrolls through its whole concept page, then the carousel advances while on screen,
-     stops on hover/focus and when motion is paused (WCAG 2.2.2). */
+     Buttons, arrow keys, swipe, or tap a side slide. It moves on by itself: the front screen scrolls
+     through its concept page, then the next site slides in. A manual move holds it for 8 s; keyboard
+     focus, paused motion (WCAG 2.2.2), reduced motion and being off screen stop it. */
   var carouselTick = null;
   (function () {
     var root = document.querySelector('[data-carousel]');
     if (!root) return;
     var slides = [].slice.call(root.querySelectorAll('.cslide'));
     var status = root.querySelector('[data-status]');
-    var n = slides.length, cur = 0, hover = false, inView = false, timer = 0;
+    var n = slides.length, cur = 0, hold = 0, inView = false, timer = 0;
     function render(announce) {
       slides.forEach(function (sl, i) {
         var d = i - cur; if (d > n / 2) d -= n; if (d < -n / 2) d += n;
@@ -216,7 +217,7 @@
       });
       if (status && announce !== false) status.textContent = (cur + 1) + ' of ' + n + ': ' + slides[cur].querySelector('b').textContent;
     }
-    function go(i, announce) { cur = (i + n) % n; render(announce); }
+    function go(i, announce) { cur = (i + n) % n; render(announce); if (announce !== false) hold = Date.now() + 8000; }
     root.querySelector('[data-prev]').addEventListener('click', function () { go(cur - 1); });
     root.querySelector('[data-next]').addEventListener('click', function () { go(cur + 1); });
     slides.forEach(function (sl, i) { sl.addEventListener('click', function () { if (i !== cur) go(i); }); });
@@ -224,15 +225,13 @@
     var sx = null;
     root.addEventListener('pointerdown', function (e) { sx = e.clientX; });
     root.addEventListener('pointerup', function (e) { if (sx !== null && Math.abs(e.clientX - sx) > 40) go(cur + (e.clientX < sx ? 1 : -1)); sx = null; });
-    root.addEventListener('mouseenter', function () { hover = true; }); root.addEventListener('mouseleave', function () { hover = false; });
-    root.addEventListener('focusin', function () { hover = true; }); root.addEventListener('focusout', function () { hover = false; });
     carouselTick = function () {
       clearInterval(timer);
       if (paused || reduce.matches || !inView) return;
     };
-    // advance once the front site has finished scrolling (one animation loop); hovering keeps it looping
+    // advance once the front site has finished scrolling (one animation loop)
     root.addEventListener('animationiteration', function (e) {
-      if (!e.target.closest('.is-front') || hover || paused || reduce.matches || !inView || document.hidden) return;
+      if (!e.target.closest('.is-front') || Date.now() < hold || root.querySelector(':focus-visible') || paused || reduce.matches || !inView || document.hidden) return;
       go(cur + 1, false);
     });
     if ('IntersectionObserver' in window) new IntersectionObserver(function (en) { inView = en[0].isIntersecting; carouselTick(); }, { threshold: .3 }).observe(root);
