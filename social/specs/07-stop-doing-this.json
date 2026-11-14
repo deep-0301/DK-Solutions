@@ -1,0 +1,9 @@
+{
+  "id": "07-stop-doing-this",
+  "scenes": [
+    { "type": "text", "kicker": "Small business owners", "title": "*Stop* doing this on your website. 🚫", "duration": 2.4 },
+    { "type": "list", "title": "Website red flags:", "items": ["\"Call for prices\" and *no phone number* in sight", "A contact form that *never replies*", "Your Facebook page as your only website", "Stock photos of people who *don't work there*"], "each": 1.8, "last": 2.6 },
+    { "type": "text", "kicker": "Do this instead", "title": "Real photos, a *one-tap call button*, and hours that are always right.", "duration": 3.0 },
+    { "type": "cta", "title": "Want us to check yours? Comment *\"WEBSITE\"*", "sub": "Free quote for new sites and redesigns.", "duration": 3.0 }
+  ]
+}

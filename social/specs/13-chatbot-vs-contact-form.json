@@ -1,0 +1,32 @@
+{
+  "id": "13-chatbot-vs-contact-form",
+  "topic": "Chatbots explained",
+  "scenes": [
+    {
+      "type": "visual",
+      "v": "hero",
+      "emoji": "🥊",
+      "label": "Form *vs* chatbot",
+      "say": "Contact form versus chatbot. Which one actually gets you more customers?",
+      "cap": "Contact form *vs* chatbot"
+    },
+    {
+      "type": "visual",
+      "v": "formVsChat",
+      "say": "A contact form makes people wait, sometimes for hours. A chatbot answers in seconds, and can book them on the spot.",
+      "cap": "Form: *hours.* Chatbot: *seconds.*"
+    },
+    {
+      "type": "visual",
+      "v": "both",
+      "say": "So should you delete your form? No. Keep both. The form for detailed requests, the chatbot for quick questions.",
+      "cap": "Keep both. Chatbot for *quick questions.*"
+    },
+    {
+      "type": "end",
+      "title": "Follow for more *AI tips* for small business",
+      "say": "Follow for more.",
+      "min": 2.2
+    }
+  ]
+}

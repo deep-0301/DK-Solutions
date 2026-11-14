@@ -1,0 +1,21 @@
+{
+  "id": "08-pov-customer-googles-you",
+  "business": {
+    "name": "Lotus Nail & Beauty Studio", "logo": "Lotus Studio", "since": 2011, "copyright": 2016,
+    "oldBg": "#fde2ec", "oldBar": "#c2185b", "oldTitle": "#880e4f",
+    "marquee": "NEW!!! Gel nails now available!!! Call for appointment!!! NEW!!!",
+    "oldBlurb": "Welcome to Lotus Nail and Beauty. We offer manicure, pedicure, gel, acrylic and waxing. Walk in or call. Gift certificates available in store only. Lorem ipsum dolor sit amet.",
+    "color": "#db2777", "color2": "#f472b6", "emoji": "💅",
+    "kicker": "Open today · 10am to 7pm", "headline": "Beautiful nails, booked in 30 seconds.",
+    "sub": "Pick your service, your artist and your time. No phone tag.",
+    "cta": "Book now", "cta2": "Gift cards", "review": "4.9 from 260 Google reviews",
+    "services": [["Gel manicure", "Lasts 3 weeks."], ["Pedicure", "Spa chairs, relaxing."], ["Nail art", "See our gallery."], ["Waxing", "Quick and gentle."]]
+  },
+  "scenes": [
+    { "type": "text", "kicker": "POV", "title": "A customer *finds you on Google* at 11pm and wants to book.", "duration": 2.8 },
+    { "type": "phone", "site": "before", "tone": "bad", "label": "What they see", "title": "Option A", "notes": ["Can't book online", "\"Call for appointment\"", "Gift cards in store only", "Looks closed"], "duration": 3.4 },
+    { "type": "text", "kicker": "So they...", "title": "Book with the salon *down the street* instead. 😬", "duration": 2.2 },
+    { "type": "phone", "site": "after", "tone": "good", "label": "What they need", "title": "Option B", "notes": ["Book in 30 seconds", "Hours right up top", "Gift cards online", "Reviews that sell"], "duration": 3.6, "transition": "wiperight" },
+    { "type": "cta", "title": "Your website works the *night shift.*", "sub": "Free quote. Booking-ready sites for salons and studios.", "duration": 3.0 }
+  ]
+}

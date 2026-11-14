@@ -2,6 +2,9 @@
   // EmailJS settings (DK Solutions account; template sends to contact@dksolutions.dev). The public key is meant to be visible in the browser.
   var EMAILJS = { service: 'service_dspk1yn', template: 'template_mdna45f', publicKey: 'fIxpV5-VgHExTa4hp' };
   var EMAIL = 'contact@dksolutions.dev';
+  // The AI assistant's Cloudflare Worker (chatbot/worker.js). If it can't be reached,
+  // the chat falls back to the built-in answers below, so the site never shows a broken chat.
+  var CHAT_ENDPOINT = 'https://dk-solutions-chat.dkp99984.workers.dev';
 
   // Mobile menu
   var menuBtn = document.querySelector('[data-menu-toggle]');
@@ -238,9 +241,11 @@
     render(false);
   })();
 
-  /* ---------- Demo AI assistant ----------
-     A scripted demo that answers from a small knowledge base about Deep's services,
-     the same way a client's assistant answers only from their own business info. */
+  /* ---------- AI assistant ----------
+     Real AI answers stream from CHAT_ENDPOINT (Cloudflare Workers AI). When a visitor
+     wants a quote, the assistant collects their details and the lead is emailed to
+     contact@dksolutions.dev automatically. The keyword answers below are only an
+     offline fallback for when the AI can't be reached. */
   var KB = [
     { k: ['hi', 'hello', 'hey', 'bonjour', 'salut'], a: 'Hi! I\'m the DK Solutions assistant. Ask me about new websites, redesigns, timelines, or how to get a free website check.' },
     { k: ['services', 'service', 'offer', 'build', 'provide', 'sell', 'make'], a: 'DK Solutions builds new websites and redesigns outdated ones for small businesses anywhere in the world, plus local SEO, booking and quote forms, optional AI features and monthly care. <a href="#services">See all services</a>.' },
@@ -253,12 +258,12 @@
     { k: ['french', 'francais', 'français', 'bilingual', 'language', 'quebec'], a: 'Yes. Websites can be built in English plus another language, such as French or Spanish, with a language switch.' },
     { k: ['update', 'edit', 'change', 'maintain', 'care', 'maintenance', 'hosting'], a: 'You can make simple edits yourself and Deep will show you how. Or the optional care plan covers backups, updates and small changes every month.' },
     { k: ['where', 'located', 'location', 'ottawa', 'canada', 'local', 'meet', 'country', 'usa', 'uk', 'outside', 'abroad', 'international', 'worldwide', 'remote'], a: 'DK Solutions is based in Ottawa, Canada, and works with small businesses anywhere in the world by email, phone and video. Happy to meet in person around Ottawa.' },
-    { k: ['who', 'deep', 'dk', 'solutions', 'about', 'experience', 'background', 'qualified'], a: 'DK Solutions is run by Deep Patel, a web developer who handles every project personally, from first call to launch. <a href="#work">See past work</a>.' },
+    { k: ['who', 'deep', 'dk', 'solutions', 'about', 'experience', 'background', 'qualified'], a: 'DK Solutions is run by Deep, a web developer who handles every project personally, from first call to launch. <a href="#work">See past work</a>.' },
     { k: ['work', 'portfolio', 'examples', 'projects', 'past', 'example'], a: 'Recent work includes Listaro, a subscription web platform for Marketplace sellers (listaro.dev), a website redesign for Safal Embedded Solution, and a timesheet web app for Ottawa transit operators. <a href="#work">See the projects</a>.' },
     { k: ['contact', 'email', 'call', 'talk', 'reach', 'book', 'check', 'free'], a: 'The easiest way is the free website check: fill in the <a href="#contact">form</a> or email <a href="mailto:' + EMAIL + '">' + EMAIL + '</a>. Deep replies within one business day.' }
   ];
-  var FALLBACK = 'Good question. I\'m a demo, so I only know about DK Solutions\' services. Send it through the <a href="#contact">contact form</a> and Deep will answer personally.';
-  var CHIPS = ['Can you redesign my website?', 'How long does a website take?', 'How do I get a quote?', 'Will I show up on Google?', 'Do you work outside Canada?'];
+  var FALLBACK = 'Good question. I can\'t answer that one right now, so send it through the <a href="#contact">contact form</a> and Deep will answer personally.';
+  var CHIPS = ['Can you redesign my website?', 'How long does a website take?', 'I\'d like a free quote', 'Will I show up on Google?', 'Do you work outside Canada?'];
 
   function answer(q) {
     var words = q.toLowerCase().replace(/[^a-zàâçéèêëîïôûùüÿñæœ0-9\s]/gi, ' ').split(/\s+/).filter(Boolean);
@@ -288,14 +293,119 @@
       log.appendChild(p); log.scrollTop = log.scrollHeight;
       return p;
     }
-    function reply(q) {
+    var history = [];     // the conversation sent to the AI
+    var aiDown = !CHAT_ENDPOINT, busy = false, leadSent = '';
+    var sendBtn = chatForm.querySelector('button[type="submit"]');
+
+    function esc(t) { return t.replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+    // Light Markdown from the AI: **bold**, [links](#anchor|https|mailto), bare emails, lists and line breaks.
+    function md(t) {
+      var h = esc(t.trim());
+      h = h.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+      h = h.replace(/\[([^\]]+)\]\(((?:https:\/\/|mailto:|#)[^)\s]*)\)/g, function (m, label, url) {
+        var ext = url.indexOf('https://') === 0;
+        return '<a href="' + url + '"' + (ext ? ' target="_blank" rel="noopener"' : '') + '>' + label + '</a>';
+      });
+      h = h.replace(/(^|[\s(])([\w.+-]+@[\w-]+\.[\w.-]*\w)/g, '$1<a href="mailto:$2">$2</a>');
+      h = h.replace(/^\s*(?:[-*]|\d+\.)\s+(.+)$/gm, '\u2022 $1');
+      return h.replace(/\n/g, '<br>');
+    }
+    // Hide the lead tag (and any half-streamed start of it) from the visitor.
+    function visible(t) { var i = t.search(/<\s*lead|<\s*$|<\s*l(e(a)?)?$/i); return i === -1 ? t : t.slice(0, i); }
+
+    function typing() {
       var t = document.createElement('p');
       t.className = 'msg bot typing'; t.innerHTML = '<i></i><i></i><i></i>';
       t.setAttribute('aria-label', 'Assistant is typing');
       log.appendChild(t); log.scrollTop = log.scrollHeight;
-      setTimeout(function () { t.remove(); add(answer(q), 'bot'); }, 650 + Math.random() * 450);
+      return t;
     }
-    function ask(q) { q = q.trim(); if (!q) return; add(q, 'user'); reply(q); }
+    function scripted(q, t) {
+      setTimeout(function () { t.remove(); add(answer(q), 'bot'); done(); }, 650 + Math.random() * 450);
+    }
+    function done() { busy = false; sendBtn.disabled = false; }
+
+    function handleLead(full) {
+      var m = full.match(/<\s*lead\s*>([\s\S]*?)<\s*\/\s*lead\s*>/i);
+      if (!m) return;
+      var lead;
+      try { lead = JSON.parse(m[1].trim()); } catch (e) { return; }
+      var email = String(lead.email || '').trim();
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email) || email === leadSent) return;
+      leadSent = email;
+      var transcript = history.map(function (h) { return (h.role === 'user' ? 'Visitor: ' : 'Assistant: ') + h.content.replace(/<\s*lead[\s\S]*$/i, '').trim(); }).join('\n\n');
+      var p = {
+        user_name: String(lead.name || 'Website visitor').slice(0, 120),
+        user_email: email.slice(0, 200),
+        business: String(lead.business || '').slice(0, 200),
+        website: String(lead.website || '').slice(0, 300),
+        need: String(lead.need || '').slice(0, 300),
+        details: String(lead.summary || '').slice(0, 1000)
+      };
+      p.message = ['Lead from the website AI assistant', '', 'Business: ' + (p.business || '-'), 'Website: ' + (p.website || '-'), 'Needs: ' + (p.need || '-'), '', p.details || '', '', '--- Chat transcript ---', transcript].join('\n').slice(0, 9000);
+      loadEmailJS()
+        .then(function (ejs) { return ejs.send(EMAILJS.service, EMAILJS.template, p); })
+        .catch(function () {
+          leadSent = '';
+          var body = encodeURIComponent('Name: ' + p.user_name + '\nEmail: ' + p.user_email + '\n' + p.message);
+          add('Sorry, I couldn\'t pass your details on just now. <a href="mailto:' + EMAIL + '?subject=' + encodeURIComponent('Website enquiry') + '&body=' + body + '">Email Deep directly</a> or use the <a href="#contact">contact form</a>.', 'bot');
+        });
+    }
+
+    function aiReply(q, t) {
+      history.push({ role: 'user', content: q });
+      var bubble = null, full = '', ok = false;
+      var ctrl = 'AbortController' in window ? new AbortController() : null;
+      var timer = setTimeout(function () { if (ctrl) ctrl.abort(); }, 30000);
+      function show() {
+        var v = visible(full);
+        if (!v.trim()) return;
+        if (!bubble) { t.remove(); bubble = add('', 'bot'); }
+        bubble.innerHTML = md(v); log.scrollTop = log.scrollHeight;
+      }
+      fetch(CHAT_ENDPOINT, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history }), signal: ctrl ? ctrl.signal : undefined })
+        .then(function (res) {
+          if (!res.ok || !res.body) return res.json().catch(function () { return {}; }).then(function (j) { throw new Error(j.error || 'HTTP ' + res.status); });
+          var reader = res.body.getReader(), dec = new TextDecoder(), buf = '';
+          function pump() {
+            return reader.read().then(function (r) {
+              if (r.done) return;
+              buf += dec.decode(r.value, { stream: true });
+              var parts = buf.split('\n\n'); buf = parts.pop();
+              parts.forEach(function (ev) {
+                var type = (ev.match(/^event: (.*)$/m) || [])[1], data = (ev.match(/^data: (.*)$/m) || [])[1];
+                var d = {}; try { d = JSON.parse(data || '{}'); } catch (e) { /* skip */ }
+                if (type === 'delta' && d.text) { full += d.text; show(); }
+                else if (type === 'done') ok = true;
+                else if (type === 'error') throw new Error(d.error || 'error');
+              });
+              return pump();
+            });
+          }
+          return pump();
+        })
+        .then(function () {
+          if (!visible(full).trim()) throw new Error('empty');
+          history.push({ role: 'assistant', content: full });
+          handleLead(full);
+        })
+        .catch(function (err) {
+          history.pop();
+          if (bubble && full) { history.push({ role: 'user', content: q }, { role: 'assistant', content: full }); return; }
+          t.remove();
+          // First failure: switch to the built-in answers so the visitor still gets help.
+          if (!/Too many/.test(err && err.message)) aiDown = true;
+          add(/Too many/.test(err && err.message) ? 'You\'re sending messages quickly. Please wait a minute and try again.' : answer(q), 'bot');
+        })
+        .then(function () { clearTimeout(timer); done(); });
+    }
+
+    function reply(q) {
+      busy = true; sendBtn.disabled = true;
+      var t = typing();
+      if (aiDown) scripted(q, t); else aiReply(q, t);
+    }
+    function ask(q) { q = q.trim().slice(0, 600); if (!q || busy) return; add(q, 'user'); reply(q); }
 
     CHIPS.forEach(function (c) {
       var b = document.createElement('button'); b.type = 'button'; b.textContent = c;
@@ -307,7 +417,7 @@
     function openChat(e) {
       opener = e && e.currentTarget;
       chat.hidden = false; fab.setAttribute('aria-expanded', 'true');
-      if (!started) { started = true; add('Hi! I\'m a demo of an AI feature DK Solutions can add to your website. Ask me about websites, redesigns or quotes, or tap a question below.', 'bot'); }
+      if (!started) { started = true; add('Hi! I\'m the DK Solutions AI assistant. Ask me anything about websites, redesigns or getting found on Google. If you\'d like a free quote, I can pass your details straight to Deep.', 'bot'); }
       setTimeout(function () { input.focus(); }, 50);
     }
     function closeChat() { chat.hidden = true; fab.setAttribute('aria-expanded', 'false'); var back = opener && opener.offsetParent ? opener : (fab.offsetParent ? fab : null); if (back) back.focus(); }

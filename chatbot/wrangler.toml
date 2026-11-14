@@ -1,0 +1,22 @@
+# DK Solutions website assistant. Deploy: npx wrangler deploy (from this folder)
+name = "dk-solutions-chat"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# Websites allowed to use this chat, comma separated, no trailing slash.
+ALLOWED_ORIGINS = "https://dksolutions.dev,https://www.dksolutions.dev,https://deep-0301.github.io"
+WORKERS_AI_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast"
+
+# Cloudflare Workers AI: free daily allowance, no API key.
+[ai]
+binding = "AI"
+
+# 20 messages per minute per visitor IP.
+[[ratelimits]]
+name = "RATE_LIMITER"
+namespace_id = "1002"
+simple = { limit = 20, period = 60 }
+
+[observability]
+enabled = true
