@@ -1,0 +1,50 @@
+name: Cross-post reels to Facebook and YouTube
+
+# Same reels and same approval rule as Instagram: only entries in
+# social/schedule.json with approved: true whose post_after has passed.
+# Runs an hour after the Instagram job, Tue/Thu/Sat 16:30 UTC.
+on:
+  schedule:
+    - cron: "30 16 * * 2,4,6"
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (show what would post, post nothing)"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: crosspost
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 1
+      fail-fast: false
+      matrix:
+        platform: [facebook, youtube]
+    steps:
+      - uses: actions/checkout@v4
+      - name: Post next reel to ${{ matrix.platform }}
+        env:
+          FB_PAGE_ID: ${{ secrets.FB_PAGE_ID }}
+          FB_PAGE_TOKEN: ${{ secrets.FB_PAGE_TOKEN }}
+          YT_CLIENT_ID: ${{ secrets.YT_CLIENT_ID }}
+          YT_CLIENT_SECRET: ${{ secrets.YT_CLIENT_SECRET }}
+          YT_REFRESH_TOKEN: ${{ secrets.YT_REFRESH_TOKEN }}
+          DRY_RUN: ${{ inputs.dry_run && '1' || '0' }}
+        run: python3 social/tools/crosspost.py ${{ matrix.platform }}
+      - name: Record what was posted
+        run: |
+          git add social/state
+          if ! git diff --cached --quiet; then
+            git config user.name "dk-solutions-bot"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git commit -m "${{ matrix.platform }}: mark reel as posted"
+            for i in 1 2 3; do git pull --rebase -q && git push && break; sleep 5; done
+          fi
