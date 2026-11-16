@@ -41,7 +41,8 @@ jobs:
         run: python3 social/tools/crosspost.py ${{ matrix.platform }}
       - name: Record what was posted
         run: |
-          git add social/state
+          mkdir -p social/state
+          git add -A social/state
           if ! git diff --cached --quiet; then
             git config user.name "dk-solutions-bot"
             git config user.email "github-actions[bot]@users.noreply.github.com"
